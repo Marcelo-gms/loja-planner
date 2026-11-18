@@ -1,0 +1,4 @@
+Coloque aqui o CONTEÚDO da pasta gerada por:
+  docker compose run --rm planner node src/generate.js --bundle
+  -> planner/output/entrega/meu-ano-leve-2027/
+(manifest.json, LEIA-ME.txt e as pastas Lavanda/, Sálvia/, Terracota/)

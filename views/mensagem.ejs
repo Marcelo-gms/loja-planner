@@ -1,0 +1,10 @@
+<%- include('partials/top') %>
+<div class="wrap narrow">
+  <section class="card center">
+    <span class="hand">✿</span>
+    <h1><%= title %></h1>
+    <% if (text) { %><p class="muted mt"><%= text %></p><% } %>
+    <% if (typeof back !== 'undefined' && back) { %><p class="mt"><a class="btn soft" href="<%= back %>">Voltar</a></p><% } %>
+  </section>
+</div>
+<%- include('partials/bottom') %>

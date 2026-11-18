@@ -1,0 +1,92 @@
+<%- include('partials/top') %>
+<div class="wrap">
+  <div class="checkout">
+    <section class="card">
+      <span class="hand">falta pouquinho ✿</span>
+      <h1>Seus dados</h1>
+      <p class="muted mt-s">O acesso ao planner chega no e-mail informado assim que o pagamento for confirmado.</p>
+      <% if (notice) { %><div class="notice err"><%= notice %></div><% } %>
+
+      <form method="post" action="/checkout" id="checkoutForm" novalidate>
+        <input type="hidden" name="_csrf" value="<%= csrfToken() %>">
+        <div class="<%= errors.name ? 'has-error' : '' %>">
+          <label for="name">Nome completo</label>
+          <input type="text" id="name" name="name" autocomplete="name" required value="<%= values.name || '' %>">
+          <% if (errors.name) { %><div class="field-error"><%= errors.name %></div><% } %>
+        </div>
+        <div class="<%= errors.email ? 'has-error' : '' %>">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="email" autocomplete="email" required value="<%= values.email || '' %>">
+          <% if (errors.email) { %><div class="field-error"><%= errors.email %></div><% } %>
+        </div>
+        <div class="row">
+          <div class="<%= errors.cpf ? 'has-error' : '' %>">
+            <label for="cpf">CPF</label>
+            <input type="tel" id="cpf" name="cpf" inputmode="numeric" maxlength="14" placeholder="000.000.000-00" required value="<%= values.cpf || '' %>">
+            <% if (errors.cpf) { %><div class="field-error"><%= errors.cpf %></div><% } %>
+          </div>
+          <div class="<%= errors.phone ? 'has-error' : '' %>">
+            <label for="phone">Celular <span class="muted small">(opcional)</span></label>
+            <input type="tel" id="phone" name="phone" inputmode="numeric" maxlength="15" placeholder="(11) 99999-9999" autocomplete="tel" value="<%= values.phone || '' %>">
+            <% if (errors.phone) { %><div class="field-error"><%= errors.phone %></div><% } %>
+          </div>
+        </div>
+
+        <label>Forma de pagamento</label>
+        <div class="methods">
+          <label class="method"><input type="radio" name="method" value="PIX" <%= values.method !== 'CREDIT_CARD' ? 'checked' : '' %>>
+            <span class="ico">⚡</span><span>PIX<small>aprovação na hora</small></span></label>
+          <label class="method"><input type="radio" name="method" value="CREDIT_CARD" <%= values.method === 'CREDIT_CARD' ? 'checked' : '' %>>
+            <span class="ico">💳</span><span>Cartão<small>até <%= offer.maxInstallments %>x sem juros</small></span></label>
+        </div>
+
+        <div id="installmentsBox" <%= values.method === 'CREDIT_CARD' ? '' : 'hidden' %>>
+          <label for="installments">Parcelas</label>
+          <select id="installments" name="installments">
+            <% options.forEach((o) => { %>
+              <option value="<%= o.n %>" <%= String(values.installments) === String(o.n) ? 'selected' : '' %>>
+                <%= o.n === 1 ? `À vista: R$ ${money(offer.priceCents, { always: true })}` : `${o.n}x de R$ ${money(o.cents, { always: true })} sem juros` %>
+              </option>
+            <% }) %>
+          </select>
+          <p class="muted small mt-s">Você digita os dados do cartão na página segura do Asaas, nosso parceiro de pagamento.</p>
+        </div>
+
+        <p class="mt"><button class="btn block" type="submit" id="payBtn">Ir para o pagamento →</button></p>
+        <p class="secure">🔒 Pagamento processado pelo Asaas · seus dados protegidos</p>
+      </form>
+    </section>
+
+    <aside class="card summary">
+      <img class="thumb" src="/assets/shots/lavanda-vertical-cover.webp" alt="Capa do planner">
+      <h3><%= product %></h3>
+      <ul>
+        <li>Planner completo, vertical e horizontal</li>
+        <li>3 cores, com o seu nome na capa</li>
+        <li>30 capas extras</li>
+        <li>Acesso imediato na área de membros</li>
+      </ul>
+      <div class="total"><span class="muted">Total</span><b>R$ <%= offer.price %></b></div>
+      <div class="guarantee-mini"><span style="font-size:26px">🛡️</span><span><b><%= offer.guaranteeDays %> dias de garantia.</b> Não gostou? Devolvemos 100%.</span></div>
+    </aside>
+  </div>
+</div>
+<script>
+(() => {
+  const f = document.getElementById('checkoutForm');
+  const box = document.getElementById('installmentsBox');
+  const btn = document.getElementById('payBtn');
+  const sync = () => {
+    const card = f.method.value === 'CREDIT_CARD';
+    box.hidden = !card;
+    btn.textContent = card ? 'Pagar com cartão →' : 'Gerar PIX →';
+  };
+  f.querySelectorAll('input[name=method]').forEach((i) => i.addEventListener('change', sync));
+  sync();
+  const mask = (el, fn) => el.addEventListener('input', () => { el.value = fn(el.value.replace(/\D/g, '')); });
+  mask(f.cpf, (d) => d.slice(0, 11).replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d{1,2})$/, '$1-$2'));
+  mask(f.phone, (d) => d.slice(0, 11).replace(/^(\d{2})(\d)/, '($1) $2').replace(/(\d)(\d{4})$/, '$1-$2'));
+  f.addEventListener('submit', () => { btn.classList.add('loading'); });
+})();
+</script>
+<%- include('partials/bottom') %>

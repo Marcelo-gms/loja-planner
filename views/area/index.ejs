@@ -1,0 +1,90 @@
+<%- include('../partials/top') %>
+<%
+  const first = (customer.name || '').split(' ')[0];
+  const main = catalog.palettes[0];
+  const v = main.files.vertical || Object.values(main.files)[0];
+  const s = v.stamp || { x: 0, y: 0, w: v.width, h: 40 };
+  const pct = (a, b) => `${((a / b) * 100).toFixed(3)}%`;
+  const ownerStyle = `left:${pct(s.x, v.width)};top:${pct(s.y, v.height)};width:${pct(s.w, v.width)};height:${pct(s.h - 6, v.height)};font-size:${((30 / v.width) * 100).toFixed(3)}cqw`;
+  const mb = (b) => `${(b / 1024 / 1024).toFixed(0)} MB`;
+  const coversOf = (p) => [...(p.covers.vertical || []), ...(p.covers.horizontal || [])];
+%>
+<div class="wrap">
+  <section class="card"><div class="hero">
+    <div>
+      <span class="hand">que bom ter você aqui ✿</span>
+      <h1>Oi, <%= first %>! Seu planner está pronto.</h1>
+      <p class="muted mt-s">Escreva o nome que vai na capa e veja como fica. Ele entra em todos os arquivos, nas <%= catalog.palettes.length %> cores.</p>
+      <% if (notice) { %><div class="notice <%= notice.type %>"><%= notice.text %></div><% } %>
+      <form method="post" action="/area/nome">
+        <input type="hidden" name="_csrf" value="<%= csrfToken() %>">
+        <label for="owner">Este planner pertence a…</label>
+        <input type="text" id="owner" name="owner" maxlength="40" autocomplete="name" placeholder="Seu nome" value="<%= customer.owner_name || '' %>">
+        <div class="swatches" role="group" aria-label="Ver a capa em">
+          <% catalog.palettes.forEach((p, i) => { %>
+            <button type="button" class="swatch" data-src="/area/previa/<%= p.key %>" aria-pressed="<%= i === 0 %>"><i style="background:<%= p.accent %>"></i><%= p.label %></button>
+          <% }) %>
+        </div>
+        <p class="mt"><button class="btn" type="submit">Salvar nome na capa</button></p>
+      </form>
+    </div>
+    <div class="preview"><img id="coverImg" src="/area/previa/<%= main.key %>" alt="Prévia da capa">
+      <div class="owner" id="ownerPreview" style="<%= ownerStyle %>"><%= customer.owner_name || '' %></div></div>
+  </div></section>
+
+  <section class="card" id="downloads">
+    <h2>Baixe o seu planner</h2>
+    <p class="muted"><%= catalog.pages %> páginas e <%= Number(catalog.links).toLocaleString('pt-BR') %> links em cada arquivo.
+      <% if (customer.owner_name) { %>Com o nome <b><%= customer.owner_name %></b> na capa.<% } else { %>Ainda sem nome na capa: salve o nome acima antes de baixar, se quiser.<% } %>
+      O primeiro download de cada arquivo leva alguns segundos para ser preparado.</p>
+    <div class="grid3">
+      <% catalog.palettes.forEach((p) => { %>
+        <div class="pal"><h3><i style="background:<%= p.accent %>"></i><%= p.label %></h3>
+          <% ['vertical', 'horizontal'].filter((o) => p.files[o]).forEach((o) => { %>
+            <a class="btn <%= o === 'vertical' ? '' : 'soft' %> dl" href="/area/pdf/<%= p.key %>/<%= o %>"><%= o === 'vertical' ? 'Vertical' : 'Horizontal' %> · <%= mb(p.files[o].bytes) %></a>
+          <% }) %>
+        </div>
+      <% }) %>
+    </div>
+    <p class="muted small mt">Downloads restantes: <%= left %> de <%= maxDownloads %>. Precisa de mais? É só falar com a gente.</p>
+  </section>
+
+  <section class="card">
+    <h2>Capas extras</h2>
+    <p class="muted">5 estilos em cada cor e formato. Toque para baixar e use a opção de trocar a capa do seu app.</p>
+    <% catalog.palettes.forEach((p) => { %>
+      <details><summary><%= p.label %> · <%= coversOf(p).length %> capas</summary>
+        <div class="covers">
+          <% coversOf(p).forEach((f) => { %>
+            <a href="/area/capa/<%= p.key %>/<%= f %>?dl=1" title="Baixar <%= f %>"><img loading="lazy" src="/area/capa/<%= p.key %>/<%= f %>" alt="Capa <%= f %>"></a>
+          <% }) %>
+        </div>
+      </details>
+    <% }) %>
+  </section>
+
+  <section class="card">
+    <h2>Como usar</h2>
+    <ol class="steps">
+      <li><b>Escolha a cor e o formato.</b> Vertical é como um caderno; horizontal é para o tablet deitado ou com teclado.</li>
+      <li><b>Importe no seu app de notas</b> (Goodnotes, Samsung Notes, StarNote, Noteshelf…) pelo “Abrir com…” ou “Importar”.</li>
+      <li><b>Comece pela página 2, “Comece aqui”</b>: ela mostra como navegar pelas abas e links.</li>
+      <li>Se o toque escrever em vez de navegar, toque com o dedo ou ative o modo de leitura do app.</li>
+    </ol>
+    <% if (supportEmail) { %><p class="muted mt">Dúvidas? Escreva para <a href="mailto:<%= supportEmail %>"><%= supportEmail %></a>.</p><% } %>
+  </section>
+</div>
+<script>
+(() => {
+  const input = document.getElementById('owner'), prev = document.getElementById('ownerPreview'), img = document.getElementById('coverImg');
+  input.addEventListener('input', () => { prev.textContent = input.value; });
+  document.querySelectorAll('.swatch').forEach((b) => b.addEventListener('click', () => {
+    document.querySelectorAll('.swatch').forEach((x) => x.setAttribute('aria-pressed', 'false'));
+    b.setAttribute('aria-pressed', 'true'); img.src = b.dataset.src;
+  }));
+  document.querySelectorAll('.dl').forEach((a) => a.addEventListener('click', () => {
+    a.classList.add('loading'); setTimeout(() => a.classList.remove('loading'), 7000);
+  }));
+})();
+</script>
+<%- include('../partials/bottom') %>

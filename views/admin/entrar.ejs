@@ -1,0 +1,14 @@
+<%- include('../partials/top') %>
+<div class="wrap narrow">
+  <section class="card">
+    <h1>Painel</h1>
+    <% if (error) { %><div class="notice err"><%= error %></div><% } %>
+    <form method="post" action="/admin/entrar">
+      <input type="hidden" name="_csrf" value="<%= csrfToken() %>">
+      <label for="email">E-mail</label><input type="email" id="email" name="email" autocomplete="username" required>
+      <label for="password">Senha</label><input type="password" id="password" name="password" autocomplete="current-password" required>
+      <p class="mt"><button class="btn block" type="submit">Entrar</button></p>
+    </form>
+  </section>
+</div>
+<%- include('../partials/bottom') %>

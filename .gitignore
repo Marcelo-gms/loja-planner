@@ -1,0 +1,5 @@
+node_modules/
+.env
+storage/
+produto/*
+!produto/LEIA-ME-DEPLOY.txt

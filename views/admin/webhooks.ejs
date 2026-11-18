@@ -1,0 +1,25 @@
+<%- include('../partials/top') %>
+<div class="wrap">
+  <section class="card">
+    <h2>Últimos webhooks do Asaas</h2>
+    <p class="muted">Cada evento é processado uma vez só. "Resultado" mostra o que a loja fez com ele.</p>
+    <div style="overflow-x:auto" class="mt">
+      <table>
+        <thead><tr><th>Recebido</th><th>Evento</th><th>Pagamento</th><th>Resultado</th><th></th></tr></thead>
+        <tbody>
+        <% if (!events.length) { %><tr><td colspan="5" class="muted">Nenhum webhook recebido ainda.</td></tr><% } %>
+        <% events.forEach((e) => { %>
+          <tr>
+            <td><%= new Date(e.received_at).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }) %></td>
+            <td><%= e.event %></td>
+            <td><%= e.payment_id || '' %></td>
+            <td><%= e.result || '' %></td>
+            <td><details><summary>payload</summary><pre style="white-space:pre-wrap;font-size:12px;max-width:520px"><%= e.payload %></pre></details></td>
+          </tr>
+        <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
+<%- include('../partials/bottom') %>

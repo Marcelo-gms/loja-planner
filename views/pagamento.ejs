@@ -1,0 +1,69 @@
+<%- include('partials/top') %>
+<div class="wrap">
+<% const live = order.status === 'pending'; %>
+<% if (live && order.method === 'PIX' && order.pix_payload) { %>
+  <section class="card">
+    <span class="hand">quase lá ✿</span>
+    <h1>Pague com PIX</h1>
+    <p class="muted mt-s">Valor: <b>R$ <%= amount %></b>. Assim que o pagamento cair, esta página muda sozinha e você já entra no seu planner.</p>
+    <div class="pix mt">
+      <div class="qr"><img src="data:image/png;base64,<%= order.pix_image %>" alt="QR code PIX"></div>
+      <div>
+        <ol class="steps">
+          <li>Abra o app do seu banco e escolha <b>PIX → Pagar com QR code</b> (ou "Copia e cola").</li>
+          <li>Aponte a câmera para o QR code ou cole o código abaixo.</li>
+          <li>Confirme o pagamento. Pronto!</li>
+        </ol>
+        <label for="pixCode">PIX copia e cola</label>
+        <div class="copy">
+          <input type="text" id="pixCode" readonly value="<%= order.pix_payload %>">
+          <button class="btn small" type="button" id="copyBtn">Copiar</button>
+        </div>
+        <div class="waiting"><span class="dot"></span><span id="waitText">Aguardando o pagamento…</span></div>
+      </div>
+    </div>
+  </section>
+<% } else if (live) { %>
+  <section class="card center">
+    <span class="hand">quase lá ✿</span>
+    <h1>Confirmando seu pagamento</h1>
+    <p class="muted mt">Assim que o Asaas confirmar, esta página muda sozinha. Com cartão, costuma levar poucos segundos.</p>
+    <div class="waiting" style="justify-content:center"><span class="dot"></span><span id="waitText">Aguardando confirmação…</span></div>
+    <% if (order.invoice_url) { %><p class="mt"><a class="btn soft" href="<%= order.invoice_url %>">Ainda não paguei: ir para o pagamento</a></p><% } %>
+  </section>
+<% } else { %>
+  <section class="card center">
+    <h1><%= order.status === 'expired' ? 'Este pagamento venceu' : 'Este pedido foi cancelado' %></h1>
+    <p class="muted mt">Sem problema: é só gerar um novo pagamento.</p>
+    <p class="mt"><a class="btn" href="/checkout">Fazer novo pedido</a></p>
+  </section>
+<% } %>
+</div>
+<% if (live) { %>
+<script>
+(() => {
+  const copy = document.getElementById('copyBtn');
+  if (copy) copy.addEventListener('click', async () => {
+    const input = document.getElementById('pixCode');
+    try { await navigator.clipboard.writeText(input.value); } catch { input.select(); document.execCommand('copy'); }
+    copy.textContent = 'Copiado ✓';
+    setTimeout(() => { copy.textContent = 'Copiar'; }, 2500);
+  });
+  const check = async () => {
+    try {
+      const r = await fetch('/pagamento/<%= order.public_id %>/status', { cache: 'no-store' });
+      const { status } = await r.json();
+      if (status === 'paid') {
+        document.getElementById('waitText').textContent = 'Pagamento confirmado! Abrindo seu planner…';
+        location.href = '/pagamento/<%= order.public_id %>/acesso';
+        return;
+      }
+      if (status !== 'pending') { location.reload(); return; }
+    } catch (e) { /* tenta de novo */ }
+    setTimeout(check, 4000);
+  };
+  setTimeout(check, 3000);
+})();
+</script>
+<% } %>
+<%- include('partials/bottom') %>

@@ -1,0 +1,24 @@
+<%- include('../partials/top') %>
+<div class="wrap narrow">
+  <section class="card">
+    <% if (welcome) { %>
+      <span class="hand">pagamento confirmado ✿</span>
+      <h1>Bem-vinda, <%= customer.name.split(' ')[0] %>!</h1>
+      <p class="muted mt-s">Crie uma senha para entrar na área de membros sempre que quiser baixar seu planner.</p>
+    <% } else { %>
+      <h1><%= title %></h1>
+      <p class="muted mt-s">Conta: <b><%= customer.email %></b></p>
+    <% } %>
+    <% if (error) { %><div class="notice err"><%= error %></div><% } %>
+    <form method="post" action="/criar-senha/<%= token %>">
+      <input type="hidden" name="_csrf" value="<%= csrfToken() %>">
+      <input type="email" name="username" value="<%= customer.email %>" autocomplete="username" hidden>
+      <label for="password">Senha (mínimo 8 caracteres)</label>
+      <input type="password" id="password" name="password" autocomplete="new-password" minlength="8" required>
+      <label for="confirm">Repita a senha</label>
+      <input type="password" id="confirm" name="confirm" autocomplete="new-password" minlength="8" required>
+      <p class="mt"><button class="btn block" type="submit">Salvar e acessar meu planner</button></p>
+    </form>
+  </section>
+</div>
+<%- include('../partials/bottom') %>

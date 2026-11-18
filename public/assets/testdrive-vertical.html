@@ -1,0 +1,943 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<title>Meu Ano Leve 2027</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,400&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #FBF7EF;
+  --ink: #3A3540;
+  --muted: #9A929F;
+  --line: #E2DACF;
+  --accent: #8E7CC3;
+  --accent-dark: #5E4E8F;
+  --soft: #ECE6F6;
+  --softer: #F5F1FA;
+  --tab: #D8CEEC;
+  --W: 768px; --H: 1024px; --tabs: 50px; --top: 42px;
+}
+@page { size: 768px 1024px; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--paper); }
+body { font-family: 'Nunito', 'Liberation Sans', sans-serif; color: var(--ink); font-size: 13px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+a { color: inherit; text-decoration: none; }
+h1, h2, h3, .serif { font-family: 'Fraunces', Georgia, serif; font-weight: 600; }
+
+.page { width: var(--W); height: var(--H); position: relative; overflow: hidden; background: var(--paper); break-after: page; page-break-after: always; }
+.page:last-child { break-after: auto; page-break-after: auto; }
+
+/* Barra superior */
+.topbar { position: absolute; top: 0; left: 0; right: var(--tabs); height: var(--top); display: flex; align-items: center; gap: 4px; padding: 0 22px; border-bottom: 1px solid var(--line); }
+.top-link { font-size: 11.5px; font-weight: 700; letter-spacing: .02em; padding: 5px 10px; border-radius: 99px; color: var(--accent-dark); }
+.top-link.on { background: var(--soft); }
+
+/* Abas laterais */
+.tabs { position: absolute; top: 0; right: 0; width: var(--tabs); height: 100%; display: flex; flex-direction: column; padding: 14px 0 14px 6px; gap: 3px; background: var(--softer); border-left: 1px solid var(--line); }
+.tab { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 10.5px; font-weight: 800; letter-spacing: .06em; color: var(--accent-dark); background: var(--tab); border-radius: 10px 0 0 10px; writing-mode: vertical-rl; transform: rotate(180deg); }
+.tab.on { background: var(--accent); color: #fff; }
+.tab-area { writing-mode: horizontal-tb; transform: none; font-size: 15px; letter-spacing: 0; background: var(--soft); }
+.tab-gap { height: 14px; flex: none; }
+
+/* Conteúdo */
+.content { position: absolute; top: var(--top); left: 0; right: var(--tabs); bottom: 0; padding: 22px 28px 24px; display: flex; flex-direction: column; gap: 14px; }
+.page-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; }
+.page-head small { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--accent-dark); }
+.page-head h1 { font-size: 38px; line-height: 1.05; }
+.section-title { font-size: 18px; color: var(--accent-dark); margin-top: 4px; }
+.quote { font-family: 'Fraunces', Georgia, serif; font-style: italic; color: var(--muted); font-size: 14px; margin-top: -6px; }
+.intro { color: var(--muted); font-size: 13px; margin-top: -4px; }
+.muted { color: var(--muted); }
+.nolink { cursor: default; }
+
+.pager { display: flex; align-items: center; gap: 8px; }
+.pager-btn { width: 34px; height: 34px; border-radius: 50%; background: var(--soft); color: var(--accent-dark); display: flex; align-items: center; justify-content: center; font-size: 22px; line-height: 1; padding-bottom: 3px; }
+.pager-btn.nolink { opacity: .35; }
+.pager-label { font-size: 11px; font-weight: 700; color: var(--muted); min-width: 30px; text-align: center; }
+.chip { display: inline-block; font-size: 11.5px; font-weight: 700; padding: 6px 12px; border-radius: 99px; background: var(--soft); color: var(--accent-dark); margin: 0 6px 6px 0; }
+
+/* Blocos e linhas de escrita */
+.box { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 10px 14px 8px; }
+.box h4 { font-size: 10.5px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--accent-dark); margin-bottom: 4px; }
+.lines i { display: block; height: 26px; border-bottom: 1px solid var(--line); }
+.checks i { display: flex; align-items: center; height: 26px; border-bottom: 1px solid var(--line); }
+.checks b { width: 12px; height: 12px; border: 1.5px solid var(--accent); border-radius: 3px; display: block; }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.row3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.fill { flex: 1; min-height: 0; }
+.fill > .box, .box.fill { overflow: hidden; }
+.lines.dotted i { border-bottom: 1.5px dotted var(--tab); }
+
+/* Índice */
+.idx-cal { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.idx-year { grid-column: 1 / -1; background: var(--accent); color: #fff; font-weight: 800; padding: 10px 14px; border-radius: 12px; }
+.idx-month { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; font-weight: 700; }
+.idx-month b { color: var(--accent); margin-right: 8px; }
+.idx-areas { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.idx-area { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; }
+.idx-area h3 { font-size: 17px; color: var(--accent-dark); margin-bottom: 6px; }
+.idx-tool { display: block; padding: 5px 0; border-bottom: 1px dashed var(--line); font-weight: 600; }
+.howto { margin-top: auto; font-size: 11.5px; color: var(--muted); }
+
+/* Ano */
+.year-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px 14px; }
+.mini { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 8px 12px 6px; }
+.mini-title { display: block; font-family: 'Fraunces', Georgia, serif; font-size: 15px; font-weight: 600; color: var(--accent-dark); margin-bottom: 4px; }
+.mini-grid { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 10.5px; row-gap: 1px; }
+.mini-grid i { font-style: normal; font-weight: 800; color: var(--muted); font-size: 9px; }
+.mini-day { padding: 1px 0; border-radius: 6px; }
+.word-box { height: 100%; }
+
+/* Mês */
+.cal-grid { flex: 1; min-height: 0; display: grid; grid-template-columns: 34px repeat(7, 1fr); grid-template-rows: auto; grid-auto-rows: minmax(0, 1fr); gap: 4px; }
+.cal-grid > i { font-style: normal; font-size: 10px; font-weight: 800; letter-spacing: .08em; color: var(--muted); text-align: center; }
+.cal-week { display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; color: var(--accent-dark); background: var(--soft); border-radius: 8px; }
+.cal-day { min-height: 0; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 5px 7px; }
+.cal-day b { font-size: 13px; color: var(--accent-dark); }
+.cal-day.empty { background: transparent; border-style: dashed; }
+.quick { margin-bottom: -6px; }
+
+/* Semana */
+.wk-grid { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 1fr; grid-auto-rows: minmax(0, 1fr); gap: 10px; }
+.wk-day { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 8px 14px 4px; overflow: hidden; }
+.wk-day-title { display: block; font-size: 12px; font-weight: 700; color: var(--accent-dark); }
+.wk-day-title b { font-family: 'Fraunces', Georgia, serif; font-size: 20px; margin-right: 4px; }
+.wk-focus { background: var(--softer); }
+.wk-focus .wk-day-title { padding: 5px 0 4px; letter-spacing: .1em; text-transform: uppercase; font-size: 10.5px; font-weight: 800; }
+.hb-row { display: grid; grid-template-columns: 1fr repeat(7, 24px); gap: 4px; align-items: center; height: 28px; }
+.hb-name { border-bottom: 1px solid var(--line); height: 20px; font-style: normal; }
+.hb-head .hb-name { border: 0; font-size: 10.5px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--accent-dark); }
+.hb-dot { width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--tab); display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 800; color: var(--muted); font-style: normal; }
+.hb-head .hb-dot { border: 0; }
+
+/* Dia */
+.day-head { align-items: center; }
+.day-num { font-family: 'Fraunces', Georgia, serif; font-size: 66px; line-height: .9; color: var(--accent); font-weight: 600; }
+.day-meta { flex: 1; }
+.day-meta h1 { font-size: 26px; }
+.day-meta small a { color: var(--accent-dark); }
+.day-grid { flex: 1; min-height: 0; display: grid; grid-template-columns: 1.1fr 1fr; grid-template-rows: minmax(0, 1fr); gap: 12px; }
+.schedule { display: flex; flex-direction: column; }
+.hour { display: flex; align-items: center; flex: 1; min-height: 0; border-bottom: 1px solid var(--line); }
+.hour span { width: 34px; font-size: 10.5px; font-weight: 800; color: var(--muted); }
+.day-side { display: flex; flex-direction: column; gap: 10px; min-height: 0; }
+.day-side .grow { flex: 1; min-height: 0; overflow: hidden; }
+.prio { display: flex; flex-direction: column; gap: 5px; }
+.prio i { font-style: normal; height: 26px; border-radius: 8px; background: var(--softer); padding-left: 9px; font-size: 11px; font-weight: 800; color: var(--accent); display: flex; align-items: center; }
+.water { display: flex; gap: 9px; padding: 3px 0 4px; }
+.drop { width: 20px; height: 20px; border: 1.5px solid var(--accent); border-radius: 50% 0 50% 50%; transform: rotate(-45deg); }
+.moods { display: flex; justify-content: space-between; padding: 0 4px 2px; }
+.mood { width: 26px; height: 26px; fill: none; stroke: var(--accent); stroke-width: 1.6; stroke-linecap: round; }
+.mood .eye { fill: var(--accent); stroke: none; }
+.meal { display: flex; align-items: flex-end; height: 24px; gap: 8px; }
+.meal span { font-size: 10.5px; font-weight: 700; color: var(--muted); width: 92px; }
+.meal i { flex: 1; border-bottom: 1px solid var(--line); height: 1px; }
+
+/* Área */
+.area-cards { display: flex; flex-direction: column; gap: 12px; }
+.area-card { display: block; background: #fff; border: 1px solid var(--line); border-left: 6px solid var(--accent); border-radius: 14px; padding: 16px 18px; }
+.area-card b { display: block; font-family: 'Fraunces', Georgia, serif; font-size: 20px; font-weight: 600; }
+.area-card span { color: var(--muted); }
+
+/* Ferramentas */
+.tool { display: flex; flex-direction: column; gap: 12px; }
+.tbl { display: grid; background: #fff; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.tbl span { font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-dark); background: var(--soft); padding: 9px 8px; }
+.tbl i { height: 31px; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); }
+.groups { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.hg { display: grid; gap: 2px; font-size: 8.5px; text-align: center; align-items: center; }
+.hg span { font-weight: 800; color: var(--muted); }
+.hg .hg-name { text-align: left; font-size: 11px; color: var(--ink); font-weight: 700; border-bottom: 1px solid var(--line); height: 44px; display: flex; align-items: flex-end; padding-bottom: 3px; }
+.hg span.hg-name:first-child { color: var(--accent-dark); border: 0; letter-spacing: .1em; text-transform: uppercase; font-size: 10px; }
+.hg i { height: 44px; border: 1.2px solid var(--tab); border-radius: 5px; background: #fff; }
+.hg-legend { color: var(--muted); font-size: 11px; }
+.wheel { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.wheel svg { width: 500px; }
+.ring { fill: none; stroke: var(--line); stroke-width: 1.2; }
+.ring:last-of-type { stroke: var(--accent); stroke-width: 2; }
+.spoke { stroke: var(--tab); stroke-width: 1.5; }
+.wheel-label { font-size: 15px; font-weight: 700; fill: var(--accent-dark); text-anchor: middle; dominant-baseline: middle; font-family: 'Nunito', sans-serif; }
+.wheel-side { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+.wheel-notes { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 24px; width: 100%; }
+.wheel-note { display: flex; align-items: flex-end; gap: 8px; height: 26px; }
+.wheel-note span { width: 130px; font-weight: 700; }
+.wheel-note i { flex: 1; border-bottom: 1px solid var(--line); }
+.wheel-note b { color: var(--muted); font-size: 11px; }
+.matrix { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.quad { border-radius: 16px; padding: 12px 14px; background: #fff; border: 1px solid var(--line); min-height: 380px; }
+.quad h4 { font-size: 12px; font-weight: 800; color: var(--accent-dark); margin-bottom: 6px; }
+.quad.q0 { background: var(--soft); }
+.quad.q1 { background: var(--softer); }
+
+.tab.nolink { opacity: .4; }
+.sample-tag { margin-left: auto; font-size: 11px; font-weight: 800; padding: 5px 12px; border-radius: 99px; background: var(--accent); color: #fff; }
+.month-body { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 14px; }
+
+/* Comece aqui */
+.start-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+.start-steps { display: flex; flex-direction: column; gap: 12px; }
+.step { display: flex; gap: 14px; background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 14px 16px; }
+.step > b { flex: none; width: 34px; height: 34px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+.step h3 { font-size: 18px; color: var(--accent-dark); margin-bottom: 3px; }
+.step p { line-height: 1.5; }
+.start-side { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.map-row { padding: 6px 0; border-bottom: 1px dashed var(--line); line-height: 1.4; }
+.map-row b { color: var(--accent-dark); }
+.mock-links { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 6px; }
+.mock-links a { padding: 9px 14px; border-radius: 12px; background: var(--soft); color: var(--accent-dark); font-weight: 800; }
+
+/* Convite da amostra */
+.cta-box { margin: auto 0; background: #fff; border: 2px solid var(--accent); border-radius: 26px; padding: 40px 44px; }
+.cta-box small { font-size: 12px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-dark); }
+.cta-box h1 { font-size: 40px; line-height: 1.1; margin: 8px 0 18px; }
+.cta-box ul { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 10px; }
+.cta-box li { font-size: 16px; padding-left: 28px; position: relative; }
+.cta-box li::before { content: '✓'; position: absolute; left: 0; top: -1px; width: 20px; height: 20px; border-radius: 50%; background: var(--soft); color: var(--accent-dark); font-weight: 800; font-size: 12px; display: flex; align-items: center; justify-content: center; }
+
+
+.cover { background: var(--paper); }
+.cover-year { font-family: 'Fraunces', Georgia, serif; font-size: 120px; line-height: 1; color: var(--accent); font-weight: 600; }
+.cover-title { font-size: 54px; line-height: 1.05; }
+.cover-tagline { font-family: 'Fraunces', Georgia, serif; font-style: italic; color: var(--muted); font-size: 18px; margin-top: 14px; }
+.cover-owner { margin-top: 80px; width: 70%; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-dark); font-weight: 700; }
+.owner-line { border-bottom: 1.5px solid var(--accent); height: 44px; }
+.owner-name { font-family: 'Fraunces', Georgia, serif; font-size: 30px; text-transform: none; letter-spacing: 0; color: var(--ink); margin-top: 10px; }
+.cover-cta { display: inline-block; margin-top: 60px; padding: 12px 26px; border-radius: 99px; background: var(--accent); color: #fff; font-weight: 800; font-size: 14px; }
+.cover-art { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+/* moldura */
+.cover-moldura { background: var(--soft); }
+.cover-frame { position: absolute; inset: 48px; border: 2px solid var(--accent); border-radius: 28px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px; background: var(--paper); }
+.cover-frame .cover-title { margin-top: 10px; }
+
+/* arcos */
+.arc { fill: none; stroke-width: 7; }
+.arc.a0 { stroke: var(--soft); } .arc.a1 { stroke: var(--tab); } .arc.a2 { stroke: var(--accent); }
+.arc.a3 { stroke: var(--accent-dark); } .arc.a4 { stroke: var(--soft); fill: var(--softer); }
+.cover-left { position: absolute; left: 64px; top: 90px; right: 64px; }
+.cover-arcos .cover-title { font-size: 60px; max-width: 70%; }
+.cover-arcos .cover-year { font-size: 96px; margin-top: 8px; }
+.cover-arcos .cover-owner { width: 52%; margin-top: 60px; }
+
+/* listras */
+.stripes { position: absolute; inset: 0; display: flex; }
+.stripes i { flex: 1; background: var(--soft); }
+.stripes i:nth-child(odd) { background: var(--softer); }
+.stripes i:nth-child(3n) { background: var(--tab); }
+.cover-card { position: absolute; left: 14%; right: 14%; top: 22%; bottom: 22%; background: var(--paper); border-radius: 6px; box-shadow: 0 0 0 10px rgba(255,255,255,.55); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 36px; }
+.cover-card .cover-year { font-size: 92px; }
+.cover-card .cover-title { font-size: 44px; margin-top: 6px; }
+.cover-card .cover-owner { margin-top: 48px; width: 80%; }
+.cover-card .cover-cta { margin-top: 36px; }
+
+/* minimal */
+.cover-minimal { background: var(--paper); }
+.cover-minimal::before { content: ''; position: absolute; left: 64px; right: 64px; top: 120px; border-top: 2px solid var(--accent); }
+.min-top { position: absolute; left: 64px; right: 64px; top: 70px; display: flex; justify-content: space-between; font-size: 13px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: var(--accent-dark); }
+.min-bottom { position: absolute; left: 64px; right: 64px; bottom: 70px; }
+.cover-minimal .cover-year { font-size: 220px; line-height: .85; letter-spacing: -.02em; }
+.cover-minimal .cover-owner { width: 60%; margin-top: 40px; }
+.cover-minimal .cover-cta { margin-top: 30px; }
+
+/* jardim */
+.cover-jardim { background: var(--softer); }
+.blobs .b0 { fill: var(--tab); } .blobs .b1 { fill: var(--soft); } .blobs .b2 { fill: var(--accent); opacity: .55; }
+.cover-card.round { border-radius: 40px; box-shadow: none; border: 2px solid var(--tab); top: 20%; bottom: 20%; }
+
+/* horizontal */
+.landscape .cover-year { font-size: 96px; }
+.landscape .cover-frame { inset: 36px; padding: 28px; }
+.landscape .cover-owner { margin-top: 44px; width: 50%; }
+.landscape .cover-cta { margin-top: 34px; }
+.landscape .cover-left { top: 70px; }
+.landscape .cover-arcos .cover-owner { width: 40%; margin-top: 36px; }
+.landscape .cover-card { left: 22%; right: 22%; top: 14%; bottom: 14%; }
+.landscape .cover-card .cover-year { font-size: 80px; }
+.landscape .cover-card .cover-owner { margin-top: 30px; }
+.landscape .cover-minimal .cover-year { font-size: 170px; }
+.landscape .cover-minimal .cover-owner { width: 45%; margin-top: 26px; }
+
+</style></head>
+<body class="portrait"><section class="page cover cover-moldura" id="cover">
+  <div class="cover-frame">
+    <div class="cover-year">2027</div>
+    <h1 class="cover-title">Meu Ano Leve</h1>
+    <p class="cover-tagline">Planejar é abrir espaço para o que importa.</p>
+    <div class="cover-owner"><span>Este planner pertence a</span><div class="owner-line"></div></div>
+    <a href="#index" class="cover-cta">Abrir o planner →</a>
+  </div></section>
+
+<section class="page" id="start">
+  <nav class="topbar"><a href="#index" class="top-link on">Início</a><a href="#year" class="top-link ">2027</a><a href="#area-financas" class="top-link ">Finanças</a><a href="#area-bem-estar" class="top-link ">Bem-estar</a><a href="#area-casa" class="top-link ">Casa &amp; Lifestyle</a><a href="#area-produtividade" class="top-link ">Produtividade</a><a href="#area-saude" class="top-link ">Saúde</a><a href="#cta" class="sample-tag">Amostra grátis · ver planner completo</a></nav>
+  <main class="content">
+    <header class="page-head"><div><small>Meu Ano Leve 2027</small><h1>Comece aqui</h1></div>
+      <a href="#index" class="chip">Ir para o índice →</a></header>
+    <div class="start-grid">
+      <div class="start-steps"><div class="step"><b>1</b><div><h3>Importe o PDF</h3><p>No seu app de notas (Goodnotes, Samsung Notes, StarNote, Noteshelf…) use a opção <b>Importar</b> ou <b>Abrir com…</b> e escolha este arquivo. Guarde o PDF original como backup.</p></div></div><div class="step"><b>2</b><div><h3>Navegue pelos links</h3><p>Toque nas abas, datas e títulos para ir direto à página. Se o toque estiver escrevendo em vez de navegar, <b>toque com o dedo</b> ou ative o <b>modo de leitura</b> do app.</p></div></div><div class="step"><b>3</b><div><h3>Escreva à vontade</h3><p>Use a caneta por cima das linhas e caixas, o marca-texto para destacar e a borracha sem medo: o planner por baixo nunca se apaga.</p></div></div><div class="step"><b>4</b><div><h3>Repita o que quiser</h3><p>Precisa de mais uma lista de compras ou planejador de projetos? Duplique a página no seu app.</p></div></div></div>
+      <div class="start-side">
+        <div class="box"><h4>Mapa da navegação</h4><p class="map-row"><b>Abas da direita</b> meses do ano e, abaixo, as áreas de ferramentas</p><p class="map-row"><b>Barra de cima</b> volta ao índice, ao ano e às áreas de qualquer página</p><p class="map-row"><b>‹ ›</b> página anterior e próxima (dia, semana ou mês)</p><p class="map-row"><b>Números do calendário</b> levam ao dia; <b>S01, S02…</b> levam à semana</p></div>
+        <div class="box start-mock"><h4>Toque para testar</h4>
+          <div class="mock-links"><a href="#year" class="">Ano</a><a href="#m-01" class="">Janeiro</a><a href="#d-2027-01-01" class="">Dia 1</a><a href="#area-financas" class="">Finanças</a></div>
+        </div>
+      </div>
+    </div>
+    <p class="howto">Planejar não precisa ser perfeito: comece pelo dia de hoje.</p></main>
+  <nav class="tabs"><a href="#m-01" class="tab ">JAN</a><span class="tab  nolink">FEV</span><span class="tab  nolink">MAR</span><span class="tab  nolink">ABR</span><span class="tab  nolink">MAI</span><span class="tab  nolink">JUN</span><span class="tab  nolink">JUL</span><span class="tab  nolink">AGO</span><span class="tab  nolink">SET</span><span class="tab  nolink">OUT</span><span class="tab  nolink">NOV</span><span class="tab  nolink">DEZ</span><i class="tab-gap"></i><a href="#area-financas" class="tab tab-area ">R$</a><a href="#area-bem-estar" class="tab tab-area ">♡</a><a href="#area-casa" class="tab tab-area ">⌂</a><a href="#area-produtividade" class="tab tab-area ">✓</a><a href="#area-saude" class="tab tab-area ">+</a></nav>
+</section>
+
+<section class="page" id="index">
+  <nav class="topbar"><a href="#index" class="top-link on">Início</a><a href="#year" class="top-link ">2027</a><a href="#area-financas" class="top-link ">Finanças</a><a href="#area-bem-estar" class="top-link ">Bem-estar</a><a href="#area-casa" class="top-link ">Casa &amp; Lifestyle</a><a href="#area-produtividade" class="top-link ">Produtividade</a><a href="#area-saude" class="top-link ">Saúde</a><a href="#cta" class="sample-tag">Amostra grátis · ver planner completo</a></nav>
+  <main class="content">
+    <header class="page-head"><div><small>2027</small><h1>Índice</h1></div><div><a href="#start" class="chip">Comece aqui</a><a href="#d-2027-01-01" class="chip">Primeiro dia →</a></div></header>
+    <h2 class="section-title">Calendário</h2>
+    <div class="idx-cal"><a href="#year" class="idx-year">Visão do ano 2027</a><a href="#m-01" class="idx-month"><b>01</b>Janeiro</a><span class="idx-month nolink"><b>02</b>Fevereiro</span><span class="idx-month nolink"><b>03</b>Março</span><span class="idx-month nolink"><b>04</b>Abril</span><span class="idx-month nolink"><b>05</b>Maio</span><span class="idx-month nolink"><b>06</b>Junho</span><span class="idx-month nolink"><b>07</b>Julho</span><span class="idx-month nolink"><b>08</b>Agosto</span><span class="idx-month nolink"><b>09</b>Setembro</span><span class="idx-month nolink"><b>10</b>Outubro</span><span class="idx-month nolink"><b>11</b>Novembro</span><span class="idx-month nolink"><b>12</b>Dezembro</span></div>
+    <h2 class="section-title">Ferramentas</h2>
+    <div class="idx-areas">
+    <div class="idx-area">
+      <h3><a href="#area-financas" class="">Finanças</a></h3>
+      <a href="#tool-entradas-saidas" class="idx-tool">Entradas e saídas</a><span class="idx-tool nolink">Calendário de pagamentos</span><span class="idx-tool nolink">Desafio sem gastos</span>
+    </div>
+    <div class="idx-area">
+      <h3><a href="#area-bem-estar" class="">Bem-estar</a></h3>
+      <a href="#tool-roda-da-vida" class="idx-tool">Roda da vida</a><span class="idx-tool nolink">Monitor de hábitos</span><span class="idx-tool nolink">Cardápio de autocuidado</span>
+    </div>
+    <div class="idx-area">
+      <h3><a href="#area-casa" class="">Casa &amp; Lifestyle</a></h3>
+      <a href="#tool-lista-compras" class="idx-tool">Lista de compras</a><span class="idx-tool nolink">Estante de leitura</span>
+    </div>
+    <div class="idx-area">
+      <h3><a href="#area-produtividade" class="">Produtividade</a></h3>
+      <a href="#tool-matriz-prioridades" class="idx-tool">Matriz de prioridades</a><span class="idx-tool nolink">Planejador de projetos</span>
+    </div>
+    <div class="idx-area">
+      <h3><a href="#area-saude" class="">Saúde</a></h3>
+      <a href="#tool-consultas-exames" class="idx-tool">Consultas e exames</a><span class="idx-tool nolink">Medicamentos</span>
+    </div></div>
+    <p class="howto">Toque em qualquer aba, data ou título para navegar. As abas da direita levam aos meses e às áreas;
+    a barra de cima volta para o índice e para o ano.</p></main>
+  <nav class="tabs"><a href="#m-01" class="tab ">JAN</a><span class="tab  nolink">FEV</span><span class="tab  nolink">MAR</span><span class="tab  nolink">ABR</span><span class="tab  nolink">MAI</span><span class="tab  nolink">JUN</span><span class="tab  nolink">JUL</span><span class="tab  nolink">AGO</span><span class="tab  nolink">SET</span><span class="tab  nolink">OUT</span><span class="tab  nolink">NOV</span><span class="tab  nolink">DEZ</span><i class="tab-gap"></i><a href="#area-financas" class="tab tab-area ">R$</a><a href="#area-bem-estar" class="tab tab-area ">♡</a><a href="#area-casa" class="tab tab-area ">⌂</a><a href="#area-produtividade" class="tab tab-area ">✓</a><a href="#area-saude" class="tab tab-area ">+</a></nav>
+</section>
+
+<section class="page" id="year">
+  <nav class="topbar"><a href="#index" class="top-link ">Início</a><a href="#year" class="top-link on">2027</a><a href="#area-financas" class="top-link ">Finanças</a><a href="#area-bem-estar" class="top-link ">Bem-estar</a><a href="#area-casa" class="top-link ">Casa &amp; Lifestyle</a><a href="#area-produtividade" class="top-link ">Produtividade</a><a href="#area-saude" class="top-link ">Saúde</a><a href="#cta" class="sample-tag">Amostra grátis · ver planner completo</a></nav>
+  <main class="content">
+    <header class="page-head"><div><small>Visão geral</small><h1>2027</h1></div></header>
+    <div class="year-grid"><div class="mini"><a href="#m-01" class="mini-title">Janeiro</a><div class="mini-grid"><i>S</i><i>T</i><i>Q</i><i>Q</i><i>S</i><i>S</i><i>D</i><span></span><span></span><span></span><span></span><a href="#d-2027-01-01" class="mini-day">1</a><a href="#d-2027-01-02" class="mini-day">2</a><a href="#d-2027-01-03" class="mini-day">3</a><a href="#d-2027-01-04" class="mini-day">4</a><a href="#d-2027-01-05" class="mini-day">5</a><a href="#d-2027-01-06" class="mini-day">6</a><a href="#d-2027-01-07" class="mini-day">7</a><a href="#d-2027-01-08" class="mini-day">8</a><a href="#d-2027-01-09" class="mini-day">9</a><a href="#d-2027-01-10" class="mini-day">10</a><span class="mini-day nolink">11</span><span class="mini-day nolink">12</span><span class="mini-day nolink">13</span><span class="mini-day nolink">14</span><span class="mini-day nolink">15</span><span class="mini-day nolink">16</span><span class="mini-day nolink">17</span><span class="mini-day nolink">18</span><span class="mini-day nolink">19</span><span class="mini-day nolink">20</span><span class="mini-day nolink">21</span><span class="mini-day nolink">22</span><span class="mini-day nolink">23</span><span class="mini-day nolink">24</span><span class="mini-day nolink">25</span><span class="mini-day nolink">26</span><span class="mini-day nolink">27</span><span class="mini-day nolink">28</span><span class="mini-day nolink">29</span><span class="mini-day nolink">30</span><span class="mini-day nolink">31</span></div></div><div class="mini"><span class="mini-title nolink">Fevereiro</span><div class="mini-grid"><i>S</i><i>T</i><i>Q</i><i>Q</i><i>S</i><i>S</i><i>D</i><span class="mini-day nolink">1</span><span class="mini-day nolink">2</span><span class="mini-day nolink">3</span><span class="mini-day nolink">4</span><span class="mini-day nolink">5</span><span class="mini-day nolink">6</span><span class="mini-day nolink">7</span><span class="mini-day nolink">8</span><span class="mini-day nolink">9</span><span class="mini-day nolink">10</span><span class="mini-day nolink">11</span><span class="mini-day nolink">12</span><span class="mini-day nolink">13</span><span class="mini-day nolink">14</span><span class="mini-day nolink">15</span><span class="mini-day nolink">16</span><span class="mini-day nolink">17</span><span class="mini-day nolink">18</span><span class="mini-day nolink">19</span><span class="mini-day nolink">20</span><span class="mini-day nolink">21</span><span class="mini-day nolink">22</span><span class="mini-day nolink">23</span><span class="mini-day nolink">24</span><span class="mini-day nolink">25</span><span class="mini-day nolink">26</span><span class="mini-day nolink">27</span><span class="mini-day nolink">28</span></div></div><div class="mini"><span class="mini-title nolink">Março</span><div class="mini-grid"><i>S</i><i>T</i><i>Q</i><i>Q</i><i>S</i><i>S</i><i>D</i><span class="mini-day nolink">1</span><span class="mini-day nolink">2</span><span class="mini-day nolink">3</span><span class="mini-day nolink">4</span><span class="mini-day nolink">5</span><span class="mini-day nolink">6</span><span class="mini-day nolink">7</span><span class="mini-day nolink">8</span><span class="mini-day nolink">9</span><span class="mini-day nolink">10</span><span class="mini-day nolink">11</span><span class="mini-day nolink">12</span><span class="mini-day nolink">13</span><span class="mini-day nolink">14</span><span class="mini-day nolink">15</span><span class="mini-day nolink">16</span><span class="mini-day nolink">17</span><span class="mini-day nolink">18</span><span class="mini-day nolink">19</span><span class="mini-day nolink">20</span><span class="mini-day nolink">21</span><span class="mini-day nolink">22</span><span class="mini-day nolink">23</span><span class="mini-day nolink">24</span><span class="mini-day nolink">25</span><span class="mini-day nolink">26</span><span class="mini-day nolink">27</span><span class="mini-day nolink">28</span><span class="mini-day nolink">29</span><span class="mini-day nolink">30</span><span class="mini-day nolink">31</span><span></span><span></span><span></span><span></span></div></div><div class="mini"><span class="mini-title nolink">Abril</span><div class="mini-grid"><i>S</i><i>T</i><i>Q</i><i>Q</i><i>S</i><i>S</i><i>D</i><span></span><span></span><span></span><span class="mini-day nolink">1</span><span class="mini-day nolink">2</span><span class="mini-day nolink">3</span><span class="mini-day nolink">4</span><span class="mini-day nolink">5</span><span class="mini-day nolink">6</span><span class="mini-day nolink">7</span><span class="mini-day nolink">8</span><span class="mini-day nolink">9</span><span class="mini-day nolink">10</span><span class="mini-day nolink">11</span><span class="mini-day nolink">12</span><span class="mini-day nolink">13</span><span class="mini-day nolink">14</span><span class="mini-day nolink">15</span><span class="mini-day nolink">16</span><span class="mini-day nolink">17</span><span class="mini-day nolink">18</span><span class="mini-day nolink">19</span><span class="mini-day nolink">20</span><span class="mini-day nolink">21</span><span class="mini-day nolink">22</span><span class="mini-day nolink">23</span><span class="mini-day nolink">24</span><span class="mini-day nolink">25</span><span class="mini-day nolink">26</span><span class="mini-day nolink">27</span><span class="mini-day nolink">28</span><span class="mini-day nolink">29</span><span class="mini-day nolink">30</span><span></span><span></span></div></div><div class="mini"><span class="mini-title nolink">Maio</span><div class="mini-grid"><i>S</i><i>T</i><i>Q</i><i>Q</i><i>S</i><i>S</i><i>D</i><span></span><span></span><span></span><span></span><span></span><span class="mini-day nolink">1</span><span class="mini-day nolink">2</span><span class="mini-day nolink">3</span><span class="mini-day nolink">4</span><span class="mini-day nolink">5</span><span class="mini-day nolink">6</span><span class="mini-day nolink">7</span><span class="mini-day nolink">8</span><span class="mini-day nolink">9</span><span class="mini-day nolink">10</span><span class="mini-day nolink">11</span><span class="mini-day nolink">12</span><span class="mini-day nolink">13</span><span class="mini-day nolink">14</span><span class="mini-day nolink">15</span><span class="mini-day nolink">16</span><span class="mini-day nolink">17</span><span class="mini-day nolink">18</span><span class="mini-day nolink">19</span><span class="mini-day nolink">20</span><span class="mini-day nolink">21</span><span class="mini-day nolink">22</span><span class="mini-day nolink">23</span><span class="mini-day nolink">24</span><span class="mini-day nolink">25</span><span class="mini-day nolink">26</span><span class="mini-day nolink">27</span><span class="mini-day nolink">28</span><span class="mini-day nolink">29</span><span class="mini-day nolink">30</span><span class="mini-day nolink">31</span><span></span><span></span><span></span><span></span><span></span><span></span></div></div><div class="mini"><span class="mini-title nolink">Junho</span><div class="mini-grid"><i>S</i><i>T</i><i>Q</i><i>Q</i><i>S</i><i>S</i><i>D</i><span></span><span class="mini-day nolink">1</span><span class="mini-day nolink">2</span><span class="mini-day nolink">3</span><span class="mini-day nolink">4</span><span class="mini-day nolink">5</span><span class="mini-day nolink">6</span><span class="mini-day nolink">7</span><span class="mini-day nolink">8</span><span class="mini-day nolink">9</span><span class="mini-day nolink">10</span><span class="mini-day nolink">11</span><span class="mini-day nolink">12</span><span class="mini-day nolink">13</span><span class="mini-day nolink">14</span><span class="mini-day nolink">15</span><span class="mini-day nolink">16</span><span class="mini-day nolink">17</span><span class="mini-day nolink">18</span><span class="mini-day nolink">19</span><span class="mini-day nolink">20</span><span class="mini-day nolink">21</span><span class="mini-day nolink">22</span><span class="mini-day nolink">23</span><span class="mini-day nolink">24</span><span class="mini-day nolink">25</span><span class="mini-day nolink">26</span><span class="mini-day nolink">27</span><span class="mini-day nolink">28</span><span class="mini-day nolink">29</span><span class="mini-day nolink">30</span><span></span><span></span><span></span><span></span></div></div><div class="mini"><span class="mini-title nolink">Julho</span><div class="mini-grid"><i>S</i><i>T</i><i>Q</i><i>Q</i><i>S</i><i>S</i><i>D</i><span></span><span></span><span></span><span class="mini-day nolink">1</span><span class="mini-day nolink">2</span><span class="mini-day nolink">3</span><span class="mini-day nolink">4</span><span class="mini-day nolink">5</span><span class="mini-day nolink">6</span><span class="mini-day nolink">7</span><span class="mini-day nolink">8</span><span class="mini-day nolink">9</span><span class="mini-day nolink">10</span><span class="mini-day nolink">11</span><span class="mini-day nolink">12</span><span class="mini-day nolink">13</span><span class="mini-day nolink">14</span><span class="mini-day nolink">15</span><span class="mini-day nolink">16</span><span class="mini-day nolink">17</span><span class="mini-day nolink">18</span><span class="mini-day nolink">19</span><span class="mini-day nolink">20</span><span class="mini-day nolink">21</span><span class="mini-day nolink">22</span><span class="mini-day nolink">23</span><span class="mini-day nolink">24</span><span class="mini-day nolink">25</span><span class="mini-day nolink">26</span><span class="mini-day nolink">27</span><span class="mini-day nolink">28</span><span class="mini-day nolink">29</span><span class="mini-day nolink">30</span><span class="mini-day nolink">31</span><span></span></div></div><div class="mini"><span class="mini-title nolink">Agosto</span><div class="mini-grid"><i>S</i><i>T</i><i>Q</i><i>Q</i><i>S</i><i>S</i><i>D</i><span></span><span></span><span></span><span></span><span></span><span></span><span class="mini-day nolink">1</span><span class="mini-day nolink">2</span><span class="mini-day nolink">3</span><span class="mini-day nolink">4</span><span class="mini-day nolink">5</span><span class="mini-day nolink">6</span><span class="mini-day nolink">7</span><span class="mini-day nolink">8</span><span class="mini-day nolink">9</span><span class="mini-day nolink">10</span><span class="mini-day nolink">11</span><span class="mini-day nolink">12</span><span class="mini-day nolink">13</span><span class="mini-day nolink">14</span><span class="mini-day nolink">15</span><span class="mini-day nolink">16</span><span class="mini-day nolink">17</span><span class="mini-day nolink">18</span><span class="mini-day nolink">19</span><span class="mini-day nolink">20</span><span class="mini-day nolink">21</span><span class="mini-day nolink">22</span><span class="mini-day nolink">23</span><span class="mini-day nolink">24</span><span class="mini-day nolink">25</span><span class="mini-day nolink">26</span><span class="mini-day nolink">27</span><span class="mini-day nolink">28</span><span class="mini-day nolink">29</span><span class="mini-day nolink">30</span><span class="mini-day nolink">31</span><span></span><span></span><span></span><span></span><span></span></div></div><div class="mini"><span class="mini-title nolink">Setembro</span><div class="mini-grid"><i>S</i><i>T</i><i>Q</i><i>Q</i><i>S</i><i>S</i><i>D</i><span></span><span></span><span class="mini-day nolink">1</span><span class="mini-day nolink">2</span><span class="mini-day nolink">3</span><span class="mini-day nolink">4</span><span class="mini-day nolink">5</span><span class="mini-day nolink">6</span><span class="mini-day nolink">7</span><span class="mini-day nolink">8</span><span class="mini-day nolink">9</span><span class="mini-day nolink">10</span><span class="mini-day nolink">11</span><span class="mini-day nolink">12</span><span class="mini-day nolink">13</span><span class="mini-day nolink">14</span><span class="mini-day nolink">15</span><span class="mini-day nolink">16</span><span class="mini-day nolink">17</span><span class="mini-day nolink">18</span><span class="mini-day nolink">19</span><span class="mini-day nolink">20</span><span class="mini-day nolink">21</span><span class="mini-day nolink">22</span><span class="mini-day nolink">23</span><span class="mini-day nolink">24</span><span class="mini-day nolink">25</span><span class="mini-day nolink">26</span><span class="mini-day nolink">27</span><span class="mini-day nolink">28</span><span class="mini-day nolink">29</span><span class="mini-day nolink">30</span><span></span><span></span><span></span></div></div><div class="mini"><span class="mini-title nolink">Outubro</span><div class="mini-grid"><i>S</i><i>T</i><i>Q</i><i>Q</i><i>S</i><i>S</i><i>D</i><span></span><span></span><span></span><span></span><span class="mini-day nolink">1</span><span class="mini-day nolink">2</span><span class="mini-day nolink">3</span><span class="mini-day nolink">4</span><span class="mini-day nolink">5</span><span class="mini-day nolink">6</span><span class="mini-day nolink">7</span><span class="mini-day nolink">8</span><span class="mini-day nolink">9</span><span class="mini-day nolink">10</span><span class="mini-day nolink">11</span><span class="mini-day nolink">12</span><span class="mini-day nolink">13</span><span class="mini-day nolink">14</span><span class="mini-day nolink">15</span><span class="mini-day nolink">16</span><span class="mini-day nolink">17</span><span class="mini-day nolink">18</span><span class="mini-day nolink">19</span><span class="mini-day nolink">20</span><span class="mini-day nolink">21</span><span class="mini-day nolink">22</span><span class="mini-day nolink">23</span><span class="mini-day nolink">24</span><span class="mini-day nolink">25</span><span class="mini-day nolink">26</span><span class="mini-day nolink">27</span><span class="mini-day nolink">28</span><span class="mini-day nolink">29</span><span class="mini-day nolink">30</span><span class="mini-day nolink">31</span></div></div><div class="mini"><span class="mini-title nolink">Novembro</span><div class="mini-grid"><i>S</i><i>T</i><i>Q</i><i>Q</i><i>S</i><i>S</i><i>D</i><span class="mini-day nolink">1</span><span class="mini-day nolink">2</span><span class="mini-day nolink">3</span><span class="mini-day nolink">4</span><span class="mini-day nolink">5</span><span class="mini-day nolink">6</span><span class="mini-day nolink">7</span><span class="mini-day nolink">8</span><span class="mini-day nolink">9</span><span class="mini-day nolink">10</span><span class="mini-day nolink">11</span><span class="mini-day nolink">12</span><span class="mini-day nolink">13</span><span class="mini-day nolink">14</span><span class="mini-day nolink">15</span><span class="mini-day nolink">16</span><span class="mini-day nolink">17</span><span class="mini-day nolink">18</span><span class="mini-day nolink">19</span><span class="mini-day nolink">20</span><span class="mini-day nolink">21</span><span class="mini-day nolink">22</span><span class="mini-day nolink">23</span><span class="mini-day nolink">24</span><span class="mini-day nolink">25</span><span class="mini-day nolink">26</span><span class="mini-day nolink">27</span><span class="mini-day nolink">28</span><span class="mini-day nolink">29</span><span class="mini-day nolink">30</span><span></span><span></span><span></span><span></span><span></span></div></div><div class="mini"><span class="mini-title nolink">Dezembro</span><div class="mini-grid"><i>S</i><i>T</i><i>Q</i><i>Q</i><i>S</i><i>S</i><i>D</i><span></span><span></span><span class="mini-day nolink">1</span><span class="mini-day nolink">2</span><span class="mini-day nolink">3</span><span class="mini-day nolink">4</span><span class="mini-day nolink">5</span><span class="mini-day nolink">6</span><span class="mini-day nolink">7</span><span class="mini-day nolink">8</span><span class="mini-day nolink">9</span><span class="mini-day nolink">10</span><span class="mini-day nolink">11</span><span class="mini-day nolink">12</span><span class="mini-day nolink">13</span><span class="mini-day nolink">14</span><span class="mini-day nolink">15</span><span class="mini-day nolink">16</span><span class="mini-day nolink">17</span><span class="mini-day nolink">18</span><span class="mini-day nolink">19</span><span class="mini-day nolink">20</span><span class="mini-day nolink">21</span><span class="mini-day nolink">22</span><span class="mini-day nolink">23</span><span class="mini-day nolink">24</span><span class="mini-day nolink">25</span><span class="mini-day nolink">26</span><span class="mini-day nolink">27</span><span class="mini-day nolink">28</span><span class="mini-day nolink">29</span><span class="mini-day nolink">30</span><span class="mini-day nolink">31</span><span></span><span></span></div></div></div>
+    <div class="row2 fill"><div class="box "><h4>Metas do ano</h4><div class="lines "><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class="box "><h4>Palavra do ano</h4><div class="word-box"></div></div></div></main>
+  <nav class="tabs"><a href="#m-01" class="tab ">JAN</a><span class="tab  nolink">FEV</span><span class="tab  nolink">MAR</span><span class="tab  nolink">ABR</span><span class="tab  nolink">MAI</span><span class="tab  nolink">JUN</span><span class="tab  nolink">JUL</span><span class="tab  nolink">AGO</span><span class="tab  nolink">SET</span><span class="tab  nolink">OUT</span><span class="tab  nolink">NOV</span><span class="tab  nolink">DEZ</span><i class="tab-gap"></i><a href="#area-financas" class="tab tab-area ">R$</a><a href="#area-bem-estar" class="tab tab-area ">♡</a><a href="#area-casa" class="tab tab-area ">⌂</a><a href="#area-produtividade" class="tab tab-area ">✓</a><a href="#area-saude" class="tab tab-area ">+</a></nav>
+</section>
+
+<section class="page" id="m-01">
+  <nav class="topbar"><a href="#index" class="top-link ">Início</a><a href="#year" class="top-link ">2027</a><a href="#area-financas" class="top-link ">Finanças</a><a href="#area-bem-estar" class="top-link ">Bem-estar</a><a href="#area-casa" class="top-link ">Casa &amp; Lifestyle</a><a href="#area-produtividade" class="top-link ">Produtividade</a><a href="#area-saude" class="top-link ">Saúde</a><a href="#cta" class="sample-tag">Amostra grátis · ver planner completo</a></nav>
+  <main class="content">
+    <header class="page-head">
+      <div><small>2027</small><h1>Janeiro</h1></div>
+      
+  <div class="pager">
+    <a href="#year" class="pager-btn">‹</a>
+    <span class="pager-label">mês</span>
+    <span class="pager-btn nolink">›</span>
+  </div>
+    </header>
+    <p class="quote">“Comece onde você está.”</p>
+    <div class="month-body">
+      <div class="cal-grid"><i></i><i>SEG</i><i>TER</i><i>QUA</i><i>QUI</i><i>SEX</i><i>SÁB</i><i>DOM</i><a href="#w-01" class="cal-week">S01</a><span class="cal-day empty"></span><span class="cal-day empty"></span><span class="cal-day empty"></span><span class="cal-day empty"></span><a href="#d-2027-01-01" class="cal-day"><b>1</b></a><a href="#d-2027-01-02" class="cal-day"><b>2</b></a><a href="#d-2027-01-03" class="cal-day"><b>3</b></a><a href="#w-02" class="cal-week">S02</a><a href="#d-2027-01-04" class="cal-day"><b>4</b></a><a href="#d-2027-01-05" class="cal-day"><b>5</b></a><a href="#d-2027-01-06" class="cal-day"><b>6</b></a><a href="#d-2027-01-07" class="cal-day"><b>7</b></a><a href="#d-2027-01-08" class="cal-day"><b>8</b></a><a href="#d-2027-01-09" class="cal-day"><b>9</b></a><a href="#d-2027-01-10" class="cal-day"><b>10</b></a><span class="cal-week"></span><span class="cal-day nolink"><b>11</b></span><span class="cal-day nolink"><b>12</b></span><span class="cal-day nolink"><b>13</b></span><span class="cal-day nolink"><b>14</b></span><span class="cal-day nolink"><b>15</b></span><span class="cal-day nolink"><b>16</b></span><span class="cal-day nolink"><b>17</b></span><span class="cal-week"></span><span class="cal-day nolink"><b>18</b></span><span class="cal-day nolink"><b>19</b></span><span class="cal-day nolink"><b>20</b></span><span class="cal-day nolink"><b>21</b></span><span class="cal-day nolink"><b>22</b></span><span class="cal-day nolink"><b>23</b></span><span class="cal-day nolink"><b>24</b></span><span class="cal-week"></span><span class="cal-day nolink"><b>25</b></span><span class="cal-day nolink"><b>26</b></span><span class="cal-day nolink"><b>27</b></span><span class="cal-day nolink"><b>28</b></span><span class="cal-day nolink"><b>29</b></span><span class="cal-day nolink"><b>30</b></span><span class="cal-day nolink"><b>31</b></span></div>
+      <div class="row3">
+        <div class="box "><h4>Metas do mês</h4><div class="lines "><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+        <div class="box "><h4>Prioridades</h4><div class="lines checks"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div></div>
+        <div class="box "><h4>Datas importantes</h4><div class="lines "><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+      </div>
+    </div>
+    <div class="quick"><a href="#tool-entradas-saidas" class="chip">Entradas e saídas</a><span class="chip nolink">Calendário de pagamentos</span><span class="chip nolink">Desafio sem gastos</span></div></main>
+  <nav class="tabs"><a href="#m-01" class="tab on">JAN</a><span class="tab  nolink">FEV</span><span class="tab  nolink">MAR</span><span class="tab  nolink">ABR</span><span class="tab  nolink">MAI</span><span class="tab  nolink">JUN</span><span class="tab  nolink">JUL</span><span class="tab  nolink">AGO</span><span class="tab  nolink">SET</span><span class="tab  nolink">OUT</span><span class="tab  nolink">NOV</span><span class="tab  nolink">DEZ</span><i class="tab-gap"></i><a href="#area-financas" class="tab tab-area ">R$</a><a href="#area-bem-estar" class="tab tab-area ">♡</a><a href="#area-casa" class="tab tab-area ">⌂</a><a href="#area-produtividade" class="tab tab-area ">✓</a><a href="#area-saude" class="tab tab-area ">+</a></nav>
+</section>
+
+<section class="page" id="w-01">
+  <nav class="topbar"><a href="#index" class="top-link ">Início</a><a href="#year" class="top-link ">2027</a><a href="#area-financas" class="top-link ">Finanças</a><a href="#area-bem-estar" class="top-link ">Bem-estar</a><a href="#area-casa" class="top-link ">Casa &amp; Lifestyle</a><a href="#area-produtividade" class="top-link ">Produtividade</a><a href="#area-saude" class="top-link ">Saúde</a><a href="#cta" class="sample-tag">Amostra grátis · ver planner completo</a></nav>
+  <main class="content">
+    <header class="page-head">
+      <div><small><a href="#m-01" class="">Janeiro</a> · 2027</small><h1>Semana 01</h1></div>
+      
+  <div class="pager">
+    <a href="#year" class="pager-btn">‹</a>
+    <span class="pager-label">28 dez – 3 jan</span>
+    <a href="#w-02" class="pager-btn">›</a>
+  </div>
+    </header>
+    <div class="wk-grid"><div class="wk-day"><span class="wk-day-title nolink muted"><b>28</b> Segunda</span><div class="lines "><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class="wk-day"><span class="wk-day-title nolink muted"><b>29</b> Terça</span><div class="lines "><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class="wk-day"><span class="wk-day-title nolink muted"><b>30</b> Quarta</span><div class="lines "><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class="wk-day"><span class="wk-day-title nolink muted"><b>31</b> Quinta</span><div class="lines "><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class="wk-day"><a href="#d-2027-01-01" class="wk-day-title"><b>1</b> Sexta</a><div class="lines "><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class="wk-day"><a href="#d-2027-01-02" class="wk-day-title"><b>2</b> Sábado</a><div class="lines "><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class="wk-day"><a href="#d-2027-01-03" class="wk-day-title"><b>3</b> Domingo</a><div class="lines "><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class="wk-day wk-focus"><span class="wk-day-title">Foco da semana</span><div class="lines checks"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div></div></div>
+    <div class="row2"><div class="box habits-week"><h4></h4><div class="hb-row hb-head"><span class="hb-name">Hábitos</span><span class="hb-dot">S</span><span class="hb-dot">T</span><span class="hb-dot">Q</span><span class="hb-dot">Q</span><span class="hb-dot">S</span><span class="hb-dot">S</span><span class="hb-dot">D</span></div><div class="hb-row"><i class="hb-name"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i></div><div class="hb-row"><i class="hb-name"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i></div><div class="hb-row"><i class="hb-name"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i></div><div class="hb-row"><i class="hb-name"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i></div></div><div class="box "><h4>Notas</h4><div class="lines "><i></i><i></i><i></i><i></i><i></i></div></div></div></main>
+  <nav class="tabs"><a href="#m-01" class="tab on">JAN</a><span class="tab  nolink">FEV</span><span class="tab  nolink">MAR</span><span class="tab  nolink">ABR</span><span class="tab  nolink">MAI</span><span class="tab  nolink">JUN</span><span class="tab  nolink">JUL</span><span class="tab  nolink">AGO</span><span class="tab  nolink">SET</span><span class="tab  nolink">OUT</span><span class="tab  nolink">NOV</span><span class="tab  nolink">DEZ</span><i class="tab-gap"></i><a href="#area-financas" class="tab tab-area ">R$</a><a href="#area-bem-estar" class="tab tab-area ">♡</a><a href="#area-casa" class="tab tab-area ">⌂</a><a href="#area-produtividade" class="tab tab-area ">✓</a><a href="#area-saude" class="tab tab-area ">+</a></nav>
+</section>
+
+<section class="page" id="d-2027-01-01">
+  <nav class="topbar"><a href="#index" class="top-link ">Início</a><a href="#year" class="top-link ">2027</a><a href="#area-financas" class="top-link ">Finanças</a><a href="#area-bem-estar" class="top-link ">Bem-estar</a><a href="#area-casa" class="top-link ">Casa &amp; Lifestyle</a><a href="#area-produtividade" class="top-link ">Produtividade</a><a href="#area-saude" class="top-link ">Saúde</a><a href="#cta" class="sample-tag">Amostra grátis · ver planner completo</a></nav>
+  <main class="content">
+    <header class="page-head day-head">
+      <div class="day-num">1</div>
+      <div class="day-meta">
+        <h1>Sexta-feira</h1>
+        <small><a href="#m-01" class="">Janeiro</a> · <a href="#w-01" class="">Semana 01</a></small>
+      </div>
+      
+  <div class="pager">
+    <span class="pager-btn nolink">‹</span>
+    <span class="pager-label">dia</span>
+    <a href="#d-2027-01-02" class="pager-btn">›</a>
+  </div>
+    </header>
+    
+    <div class="day-grid">
+      <div class="box schedule"><h4>Agenda</h4><div class="hour"><span>06h</span><i></i></div><div class="hour"><span>07h</span><i></i></div><div class="hour"><span>08h</span><i></i></div><div class="hour"><span>09h</span><i></i></div><div class="hour"><span>10h</span><i></i></div><div class="hour"><span>11h</span><i></i></div><div class="hour"><span>12h</span><i></i></div><div class="hour"><span>13h</span><i></i></div><div class="hour"><span>14h</span><i></i></div><div class="hour"><span>15h</span><i></i></div><div class="hour"><span>16h</span><i></i></div><div class="hour"><span>17h</span><i></i></div><div class="hour"><span>18h</span><i></i></div><div class="hour"><span>19h</span><i></i></div><div class="hour"><span>20h</span><i></i></div><div class="hour"><span>21h</span><i></i></div><div class="hour"><span>22h</span><i></i></div></div>
+      <div class="day-side">
+        <div class="box "><h4>3 prioridades</h4><div class="prio"><i>1</i><i>2</i><i>3</i></div></div>
+        <div class="box grow"><h4>Tarefas</h4><div class="lines checks"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div></div>
+        <div class="box "><h4>Água</h4><div class="water"><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i></div></div>
+        <div class="box "><h4>Como me sinto</h4><div class="moods"><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 16.666666666666668 Q15 26 21 16.666666666666668"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 17.666666666666668 Q15 23 21 17.666666666666668"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 19 Q15 19 21 19"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 20 Q15 16 21 20"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 21 Q15 13 21 21"/></svg></div></div>
+        <div class="box "><h4>Refeições</h4><div class="meal"><span>Café da manhã</span><i></i></div><div class="meal"><span>Almoço</span><i></i></div><div class="meal"><span>Lanche</span><i></i></div><div class="meal"><span>Jantar</span><i></i></div></div>
+      </div>
+    </div>
+    <div class="row2"><div class="box "><h4>Gratidão</h4><div class="lines "><i></i><i></i><i></i></div></div><div class="box "><h4>Notas</h4><div class="lines dotted"><i></i><i></i><i></i></div></div></div></main>
+  <nav class="tabs"><a href="#m-01" class="tab on">JAN</a><span class="tab  nolink">FEV</span><span class="tab  nolink">MAR</span><span class="tab  nolink">ABR</span><span class="tab  nolink">MAI</span><span class="tab  nolink">JUN</span><span class="tab  nolink">JUL</span><span class="tab  nolink">AGO</span><span class="tab  nolink">SET</span><span class="tab  nolink">OUT</span><span class="tab  nolink">NOV</span><span class="tab  nolink">DEZ</span><i class="tab-gap"></i><a href="#area-financas" class="tab tab-area ">R$</a><a href="#area-bem-estar" class="tab tab-area ">♡</a><a href="#area-casa" class="tab tab-area ">⌂</a><a href="#area-produtividade" class="tab tab-area ">✓</a><a href="#area-saude" class="tab tab-area ">+</a></nav>
+</section>
+
+<section class="page" id="d-2027-01-02">
+  <nav class="topbar"><a href="#index" class="top-link ">Início</a><a href="#year" class="top-link ">2027</a><a href="#area-financas" class="top-link ">Finanças</a><a href="#area-bem-estar" class="top-link ">Bem-estar</a><a href="#area-casa" class="top-link ">Casa &amp; Lifestyle</a><a href="#area-produtividade" class="top-link ">Produtividade</a><a href="#area-saude" class="top-link ">Saúde</a><a href="#cta" class="sample-tag">Amostra grátis · ver planner completo</a></nav>
+  <main class="content">
+    <header class="page-head day-head">
+      <div class="day-num">2</div>
+      <div class="day-meta">
+        <h1>Sábado</h1>
+        <small><a href="#m-01" class="">Janeiro</a> · <a href="#w-01" class="">Semana 01</a></small>
+      </div>
+      
+  <div class="pager">
+    <a href="#d-2027-01-01" class="pager-btn">‹</a>
+    <span class="pager-label">dia</span>
+    <a href="#d-2027-01-03" class="pager-btn">›</a>
+  </div>
+    </header>
+    
+    <div class="day-grid">
+      <div class="box schedule"><h4>Agenda</h4><div class="hour"><span>06h</span><i></i></div><div class="hour"><span>07h</span><i></i></div><div class="hour"><span>08h</span><i></i></div><div class="hour"><span>09h</span><i></i></div><div class="hour"><span>10h</span><i></i></div><div class="hour"><span>11h</span><i></i></div><div class="hour"><span>12h</span><i></i></div><div class="hour"><span>13h</span><i></i></div><div class="hour"><span>14h</span><i></i></div><div class="hour"><span>15h</span><i></i></div><div class="hour"><span>16h</span><i></i></div><div class="hour"><span>17h</span><i></i></div><div class="hour"><span>18h</span><i></i></div><div class="hour"><span>19h</span><i></i></div><div class="hour"><span>20h</span><i></i></div><div class="hour"><span>21h</span><i></i></div><div class="hour"><span>22h</span><i></i></div></div>
+      <div class="day-side">
+        <div class="box "><h4>3 prioridades</h4><div class="prio"><i>1</i><i>2</i><i>3</i></div></div>
+        <div class="box grow"><h4>Tarefas</h4><div class="lines checks"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div></div>
+        <div class="box "><h4>Água</h4><div class="water"><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i></div></div>
+        <div class="box "><h4>Como me sinto</h4><div class="moods"><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 16.666666666666668 Q15 26 21 16.666666666666668"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 17.666666666666668 Q15 23 21 17.666666666666668"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 19 Q15 19 21 19"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 20 Q15 16 21 20"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 21 Q15 13 21 21"/></svg></div></div>
+        <div class="box "><h4>Refeições</h4><div class="meal"><span>Café da manhã</span><i></i></div><div class="meal"><span>Almoço</span><i></i></div><div class="meal"><span>Lanche</span><i></i></div><div class="meal"><span>Jantar</span><i></i></div></div>
+      </div>
+    </div>
+    <div class="row2"><div class="box "><h4>Gratidão</h4><div class="lines "><i></i><i></i><i></i></div></div><div class="box "><h4>Notas</h4><div class="lines dotted"><i></i><i></i><i></i></div></div></div></main>
+  <nav class="tabs"><a href="#m-01" class="tab on">JAN</a><span class="tab  nolink">FEV</span><span class="tab  nolink">MAR</span><span class="tab  nolink">ABR</span><span class="tab  nolink">MAI</span><span class="tab  nolink">JUN</span><span class="tab  nolink">JUL</span><span class="tab  nolink">AGO</span><span class="tab  nolink">SET</span><span class="tab  nolink">OUT</span><span class="tab  nolink">NOV</span><span class="tab  nolink">DEZ</span><i class="tab-gap"></i><a href="#area-financas" class="tab tab-area ">R$</a><a href="#area-bem-estar" class="tab tab-area ">♡</a><a href="#area-casa" class="tab tab-area ">⌂</a><a href="#area-produtividade" class="tab tab-area ">✓</a><a href="#area-saude" class="tab tab-area ">+</a></nav>
+</section>
+
+<section class="page" id="d-2027-01-03">
+  <nav class="topbar"><a href="#index" class="top-link ">Início</a><a href="#year" class="top-link ">2027</a><a href="#area-financas" class="top-link ">Finanças</a><a href="#area-bem-estar" class="top-link ">Bem-estar</a><a href="#area-casa" class="top-link ">Casa &amp; Lifestyle</a><a href="#area-produtividade" class="top-link ">Produtividade</a><a href="#area-saude" class="top-link ">Saúde</a><a href="#cta" class="sample-tag">Amostra grátis · ver planner completo</a></nav>
+  <main class="content">
+    <header class="page-head day-head">
+      <div class="day-num">3</div>
+      <div class="day-meta">
+        <h1>Domingo</h1>
+        <small><a href="#m-01" class="">Janeiro</a> · <a href="#w-01" class="">Semana 01</a></small>
+      </div>
+      
+  <div class="pager">
+    <a href="#d-2027-01-02" class="pager-btn">‹</a>
+    <span class="pager-label">dia</span>
+    <a href="#d-2027-01-04" class="pager-btn">›</a>
+  </div>
+    </header>
+    
+    <div class="day-grid">
+      <div class="box schedule"><h4>Agenda</h4><div class="hour"><span>06h</span><i></i></div><div class="hour"><span>07h</span><i></i></div><div class="hour"><span>08h</span><i></i></div><div class="hour"><span>09h</span><i></i></div><div class="hour"><span>10h</span><i></i></div><div class="hour"><span>11h</span><i></i></div><div class="hour"><span>12h</span><i></i></div><div class="hour"><span>13h</span><i></i></div><div class="hour"><span>14h</span><i></i></div><div class="hour"><span>15h</span><i></i></div><div class="hour"><span>16h</span><i></i></div><div class="hour"><span>17h</span><i></i></div><div class="hour"><span>18h</span><i></i></div><div class="hour"><span>19h</span><i></i></div><div class="hour"><span>20h</span><i></i></div><div class="hour"><span>21h</span><i></i></div><div class="hour"><span>22h</span><i></i></div></div>
+      <div class="day-side">
+        <div class="box "><h4>3 prioridades</h4><div class="prio"><i>1</i><i>2</i><i>3</i></div></div>
+        <div class="box grow"><h4>Tarefas</h4><div class="lines checks"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div></div>
+        <div class="box "><h4>Água</h4><div class="water"><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i></div></div>
+        <div class="box "><h4>Como me sinto</h4><div class="moods"><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 16.666666666666668 Q15 26 21 16.666666666666668"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 17.666666666666668 Q15 23 21 17.666666666666668"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 19 Q15 19 21 19"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 20 Q15 16 21 20"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 21 Q15 13 21 21"/></svg></div></div>
+        <div class="box "><h4>Refeições</h4><div class="meal"><span>Café da manhã</span><i></i></div><div class="meal"><span>Almoço</span><i></i></div><div class="meal"><span>Lanche</span><i></i></div><div class="meal"><span>Jantar</span><i></i></div></div>
+      </div>
+    </div>
+    <div class="row2"><div class="box "><h4>Gratidão</h4><div class="lines "><i></i><i></i><i></i></div></div><div class="box "><h4>Notas</h4><div class="lines dotted"><i></i><i></i><i></i></div></div></div></main>
+  <nav class="tabs"><a href="#m-01" class="tab on">JAN</a><span class="tab  nolink">FEV</span><span class="tab  nolink">MAR</span><span class="tab  nolink">ABR</span><span class="tab  nolink">MAI</span><span class="tab  nolink">JUN</span><span class="tab  nolink">JUL</span><span class="tab  nolink">AGO</span><span class="tab  nolink">SET</span><span class="tab  nolink">OUT</span><span class="tab  nolink">NOV</span><span class="tab  nolink">DEZ</span><i class="tab-gap"></i><a href="#area-financas" class="tab tab-area ">R$</a><a href="#area-bem-estar" class="tab tab-area ">♡</a><a href="#area-casa" class="tab tab-area ">⌂</a><a href="#area-produtividade" class="tab tab-area ">✓</a><a href="#area-saude" class="tab tab-area ">+</a></nav>
+</section>
+
+<section class="page" id="w-02">
+  <nav class="topbar"><a href="#index" class="top-link ">Início</a><a href="#year" class="top-link ">2027</a><a href="#area-financas" class="top-link ">Finanças</a><a href="#area-bem-estar" class="top-link ">Bem-estar</a><a href="#area-casa" class="top-link ">Casa &amp; Lifestyle</a><a href="#area-produtividade" class="top-link ">Produtividade</a><a href="#area-saude" class="top-link ">Saúde</a><a href="#cta" class="sample-tag">Amostra grátis · ver planner completo</a></nav>
+  <main class="content">
+    <header class="page-head">
+      <div><small><a href="#m-01" class="">Janeiro</a> · 2027</small><h1>Semana 02</h1></div>
+      
+  <div class="pager">
+    <a href="#w-01" class="pager-btn">‹</a>
+    <span class="pager-label">4 jan – 10 jan</span>
+    <a href="#year" class="pager-btn">›</a>
+  </div>
+    </header>
+    <div class="wk-grid"><div class="wk-day"><a href="#d-2027-01-04" class="wk-day-title"><b>4</b> Segunda</a><div class="lines "><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class="wk-day"><a href="#d-2027-01-05" class="wk-day-title"><b>5</b> Terça</a><div class="lines "><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class="wk-day"><a href="#d-2027-01-06" class="wk-day-title"><b>6</b> Quarta</a><div class="lines "><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class="wk-day"><a href="#d-2027-01-07" class="wk-day-title"><b>7</b> Quinta</a><div class="lines "><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class="wk-day"><a href="#d-2027-01-08" class="wk-day-title"><b>8</b> Sexta</a><div class="lines "><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class="wk-day"><a href="#d-2027-01-09" class="wk-day-title"><b>9</b> Sábado</a><div class="lines "><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class="wk-day"><a href="#d-2027-01-10" class="wk-day-title"><b>10</b> Domingo</a><div class="lines "><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class="wk-day wk-focus"><span class="wk-day-title">Foco da semana</span><div class="lines checks"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div></div></div>
+    <div class="row2"><div class="box habits-week"><h4></h4><div class="hb-row hb-head"><span class="hb-name">Hábitos</span><span class="hb-dot">S</span><span class="hb-dot">T</span><span class="hb-dot">Q</span><span class="hb-dot">Q</span><span class="hb-dot">S</span><span class="hb-dot">S</span><span class="hb-dot">D</span></div><div class="hb-row"><i class="hb-name"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i></div><div class="hb-row"><i class="hb-name"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i></div><div class="hb-row"><i class="hb-name"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i></div><div class="hb-row"><i class="hb-name"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i><i class="hb-dot"></i></div></div><div class="box "><h4>Notas</h4><div class="lines "><i></i><i></i><i></i><i></i><i></i></div></div></div></main>
+  <nav class="tabs"><a href="#m-01" class="tab on">JAN</a><span class="tab  nolink">FEV</span><span class="tab  nolink">MAR</span><span class="tab  nolink">ABR</span><span class="tab  nolink">MAI</span><span class="tab  nolink">JUN</span><span class="tab  nolink">JUL</span><span class="tab  nolink">AGO</span><span class="tab  nolink">SET</span><span class="tab  nolink">OUT</span><span class="tab  nolink">NOV</span><span class="tab  nolink">DEZ</span><i class="tab-gap"></i><a href="#area-financas" class="tab tab-area ">R$</a><a href="#area-bem-estar" class="tab tab-area ">♡</a><a href="#area-casa" class="tab tab-area ">⌂</a><a href="#area-produtividade" class="tab tab-area ">✓</a><a href="#area-saude" class="tab tab-area ">+</a></nav>
+</section>
+
+<section class="page" id="d-2027-01-04">
+  <nav class="topbar"><a href="#index" class="top-link ">Início</a><a href="#year" class="top-link ">2027</a><a href="#area-financas" class="top-link ">Finanças</a><a href="#area-bem-estar" class="top-link ">Bem-estar</a><a href="#area-casa" class="top-link ">Casa &amp; Lifestyle</a><a href="#area-produtividade" class="top-link ">Produtividade</a><a href="#area-saude" class="top-link ">Saúde</a><a href="#cta" class="sample-tag">Amostra grátis · ver planner completo</a></nav>
+  <main class="content">
+    <header class="page-head day-head">
+      <div class="day-num">4</div>
+      <div class="day-meta">
+        <h1>Segunda-feira</h1>
+        <small><a href="#m-01" class="">Janeiro</a> · <a href="#w-02" class="">Semana 02</a></small>
+      </div>
+      
+  <div class="pager">
+    <a href="#d-2027-01-03" class="pager-btn">‹</a>
+    <span class="pager-label">dia</span>
+    <a href="#d-2027-01-05" class="pager-btn">›</a>
+  </div>
+    </header>
+    
+    <div class="day-grid">
+      <div class="box schedule"><h4>Agenda</h4><div class="hour"><span>06h</span><i></i></div><div class="hour"><span>07h</span><i></i></div><div class="hour"><span>08h</span><i></i></div><div class="hour"><span>09h</span><i></i></div><div class="hour"><span>10h</span><i></i></div><div class="hour"><span>11h</span><i></i></div><div class="hour"><span>12h</span><i></i></div><div class="hour"><span>13h</span><i></i></div><div class="hour"><span>14h</span><i></i></div><div class="hour"><span>15h</span><i></i></div><div class="hour"><span>16h</span><i></i></div><div class="hour"><span>17h</span><i></i></div><div class="hour"><span>18h</span><i></i></div><div class="hour"><span>19h</span><i></i></div><div class="hour"><span>20h</span><i></i></div><div class="hour"><span>21h</span><i></i></div><div class="hour"><span>22h</span><i></i></div></div>
+      <div class="day-side">
+        <div class="box "><h4>3 prioridades</h4><div class="prio"><i>1</i><i>2</i><i>3</i></div></div>
+        <div class="box grow"><h4>Tarefas</h4><div class="lines checks"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div></div>
+        <div class="box "><h4>Água</h4><div class="water"><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i></div></div>
+        <div class="box "><h4>Como me sinto</h4><div class="moods"><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 16.666666666666668 Q15 26 21 16.666666666666668"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 17.666666666666668 Q15 23 21 17.666666666666668"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 19 Q15 19 21 19"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 20 Q15 16 21 20"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 21 Q15 13 21 21"/></svg></div></div>
+        <div class="box "><h4>Refeições</h4><div class="meal"><span>Café da manhã</span><i></i></div><div class="meal"><span>Almoço</span><i></i></div><div class="meal"><span>Lanche</span><i></i></div><div class="meal"><span>Jantar</span><i></i></div></div>
+      </div>
+    </div>
+    <div class="row2"><div class="box "><h4>Gratidão</h4><div class="lines "><i></i><i></i><i></i></div></div><div class="box "><h4>Notas</h4><div class="lines dotted"><i></i><i></i><i></i></div></div></div></main>
+  <nav class="tabs"><a href="#m-01" class="tab on">JAN</a><span class="tab  nolink">FEV</span><span class="tab  nolink">MAR</span><span class="tab  nolink">ABR</span><span class="tab  nolink">MAI</span><span class="tab  nolink">JUN</span><span class="tab  nolink">JUL</span><span class="tab  nolink">AGO</span><span class="tab  nolink">SET</span><span class="tab  nolink">OUT</span><span class="tab  nolink">NOV</span><span class="tab  nolink">DEZ</span><i class="tab-gap"></i><a href="#area-financas" class="tab tab-area ">R$</a><a href="#area-bem-estar" class="tab tab-area ">♡</a><a href="#area-casa" class="tab tab-area ">⌂</a><a href="#area-produtividade" class="tab tab-area ">✓</a><a href="#area-saude" class="tab tab-area ">+</a></nav>
+</section>
+
+<section class="page" id="d-2027-01-05">
+  <nav class="topbar"><a href="#index" class="top-link ">Início</a><a href="#year" class="top-link ">2027</a><a href="#area-financas" class="top-link ">Finanças</a><a href="#area-bem-estar" class="top-link ">Bem-estar</a><a href="#area-casa" class="top-link ">Casa &amp; Lifestyle</a><a href="#area-produtividade" class="top-link ">Produtividade</a><a href="#area-saude" class="top-link ">Saúde</a><a href="#cta" class="sample-tag">Amostra grátis · ver planner completo</a></nav>
+  <main class="content">
+    <header class="page-head day-head">
+      <div class="day-num">5</div>
+      <div class="day-meta">
+        <h1>Terça-feira</h1>
+        <small><a href="#m-01" class="">Janeiro</a> · <a href="#w-02" class="">Semana 02</a></small>
+      </div>
+      
+  <div class="pager">
+    <a href="#d-2027-01-04" class="pager-btn">‹</a>
+    <span class="pager-label">dia</span>
+    <a href="#d-2027-01-06" class="pager-btn">›</a>
+  </div>
+    </header>
+    
+    <div class="day-grid">
+      <div class="box schedule"><h4>Agenda</h4><div class="hour"><span>06h</span><i></i></div><div class="hour"><span>07h</span><i></i></div><div class="hour"><span>08h</span><i></i></div><div class="hour"><span>09h</span><i></i></div><div class="hour"><span>10h</span><i></i></div><div class="hour"><span>11h</span><i></i></div><div class="hour"><span>12h</span><i></i></div><div class="hour"><span>13h</span><i></i></div><div class="hour"><span>14h</span><i></i></div><div class="hour"><span>15h</span><i></i></div><div class="hour"><span>16h</span><i></i></div><div class="hour"><span>17h</span><i></i></div><div class="hour"><span>18h</span><i></i></div><div class="hour"><span>19h</span><i></i></div><div class="hour"><span>20h</span><i></i></div><div class="hour"><span>21h</span><i></i></div><div class="hour"><span>22h</span><i></i></div></div>
+      <div class="day-side">
+        <div class="box "><h4>3 prioridades</h4><div class="prio"><i>1</i><i>2</i><i>3</i></div></div>
+        <div class="box grow"><h4>Tarefas</h4><div class="lines checks"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div></div>
+        <div class="box "><h4>Água</h4><div class="water"><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i></div></div>
+        <div class="box "><h4>Como me sinto</h4><div class="moods"><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 16.666666666666668 Q15 26 21 16.666666666666668"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 17.666666666666668 Q15 23 21 17.666666666666668"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 19 Q15 19 21 19"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 20 Q15 16 21 20"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 21 Q15 13 21 21"/></svg></div></div>
+        <div class="box "><h4>Refeições</h4><div class="meal"><span>Café da manhã</span><i></i></div><div class="meal"><span>Almoço</span><i></i></div><div class="meal"><span>Lanche</span><i></i></div><div class="meal"><span>Jantar</span><i></i></div></div>
+      </div>
+    </div>
+    <div class="row2"><div class="box "><h4>Gratidão</h4><div class="lines "><i></i><i></i><i></i></div></div><div class="box "><h4>Notas</h4><div class="lines dotted"><i></i><i></i><i></i></div></div></div></main>
+  <nav class="tabs"><a href="#m-01" class="tab on">JAN</a><span class="tab  nolink">FEV</span><span class="tab  nolink">MAR</span><span class="tab  nolink">ABR</span><span class="tab  nolink">MAI</span><span class="tab  nolink">JUN</span><span class="tab  nolink">JUL</span><span class="tab  nolink">AGO</span><span class="tab  nolink">SET</span><span class="tab  nolink">OUT</span><span class="tab  nolink">NOV</span><span class="tab  nolink">DEZ</span><i class="tab-gap"></i><a href="#area-financas" class="tab tab-area ">R$</a><a href="#area-bem-estar" class="tab tab-area ">♡</a><a href="#area-casa" class="tab tab-area ">⌂</a><a href="#area-produtividade" class="tab tab-area ">✓</a><a href="#area-saude" class="tab tab-area ">+</a></nav>
+</section>
+
+<section class="page" id="d-2027-01-06">
+  <nav class="topbar"><a href="#index" class="top-link ">Início</a><a href="#year" class="top-link ">2027</a><a href="#area-financas" class="top-link ">Finanças</a><a href="#area-bem-estar" class="top-link ">Bem-estar</a><a href="#area-casa" class="top-link ">Casa &amp; Lifestyle</a><a href="#area-produtividade" class="top-link ">Produtividade</a><a href="#area-saude" class="top-link ">Saúde</a><a href="#cta" class="sample-tag">Amostra grátis · ver planner completo</a></nav>
+  <main class="content">
+    <header class="page-head day-head">
+      <div class="day-num">6</div>
+      <div class="day-meta">
+        <h1>Quarta-feira</h1>
+        <small><a href="#m-01" class="">Janeiro</a> · <a href="#w-02" class="">Semana 02</a></small>
+      </div>
+      
+  <div class="pager">
+    <a href="#d-2027-01-05" class="pager-btn">‹</a>
+    <span class="pager-label">dia</span>
+    <a href="#d-2027-01-07" class="pager-btn">›</a>
+  </div>
+    </header>
+    
+    <div class="day-grid">
+      <div class="box schedule"><h4>Agenda</h4><div class="hour"><span>06h</span><i></i></div><div class="hour"><span>07h</span><i></i></div><div class="hour"><span>08h</span><i></i></div><div class="hour"><span>09h</span><i></i></div><div class="hour"><span>10h</span><i></i></div><div class="hour"><span>11h</span><i></i></div><div class="hour"><span>12h</span><i></i></div><div class="hour"><span>13h</span><i></i></div><div class="hour"><span>14h</span><i></i></div><div class="hour"><span>15h</span><i></i></div><div class="hour"><span>16h</span><i></i></div><div class="hour"><span>17h</span><i></i></div><div class="hour"><span>18h</span><i></i></div><div class="hour"><span>19h</span><i></i></div><div class="hour"><span>20h</span><i></i></div><div class="hour"><span>21h</span><i></i></div><div class="hour"><span>22h</span><i></i></div></div>
+      <div class="day-side">
+        <div class="box "><h4>3 prioridades</h4><div class="prio"><i>1</i><i>2</i><i>3</i></div></div>
+        <div class="box grow"><h4>Tarefas</h4><div class="lines checks"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div></div>
+        <div class="box "><h4>Água</h4><div class="water"><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i></div></div>
+        <div class="box "><h4>Como me sinto</h4><div class="moods"><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 16.666666666666668 Q15 26 21 16.666666666666668"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 17.666666666666668 Q15 23 21 17.666666666666668"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 19 Q15 19 21 19"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 20 Q15 16 21 20"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 21 Q15 13 21 21"/></svg></div></div>
+        <div class="box "><h4>Refeições</h4><div class="meal"><span>Café da manhã</span><i></i></div><div class="meal"><span>Almoço</span><i></i></div><div class="meal"><span>Lanche</span><i></i></div><div class="meal"><span>Jantar</span><i></i></div></div>
+      </div>
+    </div>
+    <div class="row2"><div class="box "><h4>Gratidão</h4><div class="lines "><i></i><i></i><i></i></div></div><div class="box "><h4>Notas</h4><div class="lines dotted"><i></i><i></i><i></i></div></div></div></main>
+  <nav class="tabs"><a href="#m-01" class="tab on">JAN</a><span class="tab  nolink">FEV</span><span class="tab  nolink">MAR</span><span class="tab  nolink">ABR</span><span class="tab  nolink">MAI</span><span class="tab  nolink">JUN</span><span class="tab  nolink">JUL</span><span class="tab  nolink">AGO</span><span class="tab  nolink">SET</span><span class="tab  nolink">OUT</span><span class="tab  nolink">NOV</span><span class="tab  nolink">DEZ</span><i class="tab-gap"></i><a href="#area-financas" class="tab tab-area ">R$</a><a href="#area-bem-estar" class="tab tab-area ">♡</a><a href="#area-casa" class="tab tab-area ">⌂</a><a href="#area-produtividade" class="tab tab-area ">✓</a><a href="#area-saude" class="tab tab-area ">+</a></nav>
+</section>
+
+<section class="page" id="d-2027-01-07">
+  <nav class="topbar"><a href="#index" class="top-link ">Início</a><a href="#year" class="top-link ">2027</a><a href="#area-financas" class="top-link ">Finanças</a><a href="#area-bem-estar" class="top-link ">Bem-estar</a><a href="#area-casa" class="top-link ">Casa &amp; Lifestyle</a><a href="#area-produtividade" class="top-link ">Produtividade</a><a href="#area-saude" class="top-link ">Saúde</a><a href="#cta" class="sample-tag">Amostra grátis · ver planner completo</a></nav>
+  <main class="content">
+    <header class="page-head day-head">
+      <div class="day-num">7</div>
+      <div class="day-meta">
+        <h1>Quinta-feira</h1>
+        <small><a href="#m-01" class="">Janeiro</a> · <a href="#w-02" class="">Semana 02</a></small>
+      </div>
+      
+  <div class="pager">
+    <a href="#d-2027-01-06" class="pager-btn">‹</a>
+    <span class="pager-label">dia</span>
+    <a href="#d-2027-01-08" class="pager-btn">›</a>
+  </div>
+    </header>
+    
+    <div class="day-grid">
+      <div class="box schedule"><h4>Agenda</h4><div class="hour"><span>06h</span><i></i></div><div class="hour"><span>07h</span><i></i></div><div class="hour"><span>08h</span><i></i></div><div class="hour"><span>09h</span><i></i></div><div class="hour"><span>10h</span><i></i></div><div class="hour"><span>11h</span><i></i></div><div class="hour"><span>12h</span><i></i></div><div class="hour"><span>13h</span><i></i></div><div class="hour"><span>14h</span><i></i></div><div class="hour"><span>15h</span><i></i></div><div class="hour"><span>16h</span><i></i></div><div class="hour"><span>17h</span><i></i></div><div class="hour"><span>18h</span><i></i></div><div class="hour"><span>19h</span><i></i></div><div class="hour"><span>20h</span><i></i></div><div class="hour"><span>21h</span><i></i></div><div class="hour"><span>22h</span><i></i></div></div>
+      <div class="day-side">
+        <div class="box "><h4>3 prioridades</h4><div class="prio"><i>1</i><i>2</i><i>3</i></div></div>
+        <div class="box grow"><h4>Tarefas</h4><div class="lines checks"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div></div>
+        <div class="box "><h4>Água</h4><div class="water"><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i></div></div>
+        <div class="box "><h4>Como me sinto</h4><div class="moods"><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 16.666666666666668 Q15 26 21 16.666666666666668"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 17.666666666666668 Q15 23 21 17.666666666666668"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 19 Q15 19 21 19"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 20 Q15 16 21 20"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 21 Q15 13 21 21"/></svg></div></div>
+        <div class="box "><h4>Refeições</h4><div class="meal"><span>Café da manhã</span><i></i></div><div class="meal"><span>Almoço</span><i></i></div><div class="meal"><span>Lanche</span><i></i></div><div class="meal"><span>Jantar</span><i></i></div></div>
+      </div>
+    </div>
+    <div class="row2"><div class="box "><h4>Gratidão</h4><div class="lines "><i></i><i></i><i></i></div></div><div class="box "><h4>Notas</h4><div class="lines dotted"><i></i><i></i><i></i></div></div></div></main>
+  <nav class="tabs"><a href="#m-01" class="tab on">JAN</a><span class="tab  nolink">FEV</span><span class="tab  nolink">MAR</span><span class="tab  nolink">ABR</span><span class="tab  nolink">MAI</span><span class="tab  nolink">JUN</span><span class="tab  nolink">JUL</span><span class="tab  nolink">AGO</span><span class="tab  nolink">SET</span><span class="tab  nolink">OUT</span><span class="tab  nolink">NOV</span><span class="tab  nolink">DEZ</span><i class="tab-gap"></i><a href="#area-financas" class="tab tab-area ">R$</a><a href="#area-bem-estar" class="tab tab-area ">♡</a><a href="#area-casa" class="tab tab-area ">⌂</a><a href="#area-produtividade" class="tab tab-area ">✓</a><a href="#area-saude" class="tab tab-area ">+</a></nav>
+</section>
+
+<section class="page" id="d-2027-01-08">
+  <nav class="topbar"><a href="#index" class="top-link ">Início</a><a href="#year" class="top-link ">2027</a><a href="#area-financas" class="top-link ">Finanças</a><a href="#area-bem-estar" class="top-link ">Bem-estar</a><a href="#area-casa" class="top-link ">Casa &amp; Lifestyle</a><a href="#area-produtividade" class="top-link ">Produtividade</a><a href="#area-saude" class="top-link ">Saúde</a><a href="#cta" class="sample-tag">Amostra grátis · ver planner completo</a></nav>
+  <main class="content">
+    <header class="page-head day-head">
+      <div class="day-num">8</div>
+      <div class="day-meta">
+        <h1>Sexta-feira</h1>
+        <small><a href="#m-01" class="">Janeiro</a> · <a href="#w-02" class="">Semana 02</a></small>
+      </div>
+      
+  <div class="pager">
+    <a href="#d-2027-01-07" class="pager-btn">‹</a>
+    <span class="pager-label">dia</span>
+    <a href="#d-2027-01-09" class="pager-btn">›</a>
+  </div>
+    </header>
+    
+    <div class="day-grid">
+      <div class="box schedule"><h4>Agenda</h4><div class="hour"><span>06h</span><i></i></div><div class="hour"><span>07h</span><i></i></div><div class="hour"><span>08h</span><i></i></div><div class="hour"><span>09h</span><i></i></div><div class="hour"><span>10h</span><i></i></div><div class="hour"><span>11h</span><i></i></div><div class="hour"><span>12h</span><i></i></div><div class="hour"><span>13h</span><i></i></div><div class="hour"><span>14h</span><i></i></div><div class="hour"><span>15h</span><i></i></div><div class="hour"><span>16h</span><i></i></div><div class="hour"><span>17h</span><i></i></div><div class="hour"><span>18h</span><i></i></div><div class="hour"><span>19h</span><i></i></div><div class="hour"><span>20h</span><i></i></div><div class="hour"><span>21h</span><i></i></div><div class="hour"><span>22h</span><i></i></div></div>
+      <div class="day-side">
+        <div class="box "><h4>3 prioridades</h4><div class="prio"><i>1</i><i>2</i><i>3</i></div></div>
+        <div class="box grow"><h4>Tarefas</h4><div class="lines checks"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div></div>
+        <div class="box "><h4>Água</h4><div class="water"><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i></div></div>
+        <div class="box "><h4>Como me sinto</h4><div class="moods"><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 16.666666666666668 Q15 26 21 16.666666666666668"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 17.666666666666668 Q15 23 21 17.666666666666668"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 19 Q15 19 21 19"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 20 Q15 16 21 20"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 21 Q15 13 21 21"/></svg></div></div>
+        <div class="box "><h4>Refeições</h4><div class="meal"><span>Café da manhã</span><i></i></div><div class="meal"><span>Almoço</span><i></i></div><div class="meal"><span>Lanche</span><i></i></div><div class="meal"><span>Jantar</span><i></i></div></div>
+      </div>
+    </div>
+    <div class="row2"><div class="box "><h4>Gratidão</h4><div class="lines "><i></i><i></i><i></i></div></div><div class="box "><h4>Notas</h4><div class="lines dotted"><i></i><i></i><i></i></div></div></div></main>
+  <nav class="tabs"><a href="#m-01" class="tab on">JAN</a><span class="tab  nolink">FEV</span><span class="tab  nolink">MAR</span><span class="tab  nolink">ABR</span><span class="tab  nolink">MAI</span><span class="tab  nolink">JUN</span><span class="tab  nolink">JUL</span><span class="tab  nolink">AGO</span><span class="tab  nolink">SET</span><span class="tab  nolink">OUT</span><span class="tab  nolink">NOV</span><span class="tab  nolink">DEZ</span><i class="tab-gap"></i><a href="#area-financas" class="tab tab-area ">R$</a><a href="#area-bem-estar" class="tab tab-area ">♡</a><a href="#area-casa" class="tab tab-area ">⌂</a><a href="#area-produtividade" class="tab tab-area ">✓</a><a href="#area-saude" class="tab tab-area ">+</a></nav>
+</section>
+
+<section class="page" id="d-2027-01-09">
+  <nav class="topbar"><a href="#index" class="top-link ">Início</a><a href="#year" class="top-link ">2027</a><a href="#area-financas" class="top-link ">Finanças</a><a href="#area-bem-estar" class="top-link ">Bem-estar</a><a href="#area-casa" class="top-link ">Casa &amp; Lifestyle</a><a href="#area-produtividade" class="top-link ">Produtividade</a><a href="#area-saude" class="top-link ">Saúde</a><a href="#cta" class="sample-tag">Amostra grátis · ver planner completo</a></nav>
+  <main class="content">
+    <header class="page-head day-head">
+      <div class="day-num">9</div>
+      <div class="day-meta">
+        <h1>Sábado</h1>
+        <small><a href="#m-01" class="">Janeiro</a> · <a href="#w-02" class="">Semana 02</a></small>
+      </div>
+      
+  <div class="pager">
+    <a href="#d-2027-01-08" class="pager-btn">‹</a>
+    <span class="pager-label">dia</span>
+    <a href="#d-2027-01-10" class="pager-btn">›</a>
+  </div>
+    </header>
+    
+    <div class="day-grid">
+      <div class="box schedule"><h4>Agenda</h4><div class="hour"><span>06h</span><i></i></div><div class="hour"><span>07h</span><i></i></div><div class="hour"><span>08h</span><i></i></div><div class="hour"><span>09h</span><i></i></div><div class="hour"><span>10h</span><i></i></div><div class="hour"><span>11h</span><i></i></div><div class="hour"><span>12h</span><i></i></div><div class="hour"><span>13h</span><i></i></div><div class="hour"><span>14h</span><i></i></div><div class="hour"><span>15h</span><i></i></div><div class="hour"><span>16h</span><i></i></div><div class="hour"><span>17h</span><i></i></div><div class="hour"><span>18h</span><i></i></div><div class="hour"><span>19h</span><i></i></div><div class="hour"><span>20h</span><i></i></div><div class="hour"><span>21h</span><i></i></div><div class="hour"><span>22h</span><i></i></div></div>
+      <div class="day-side">
+        <div class="box "><h4>3 prioridades</h4><div class="prio"><i>1</i><i>2</i><i>3</i></div></div>
+        <div class="box grow"><h4>Tarefas</h4><div class="lines checks"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div></div>
+        <div class="box "><h4>Água</h4><div class="water"><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i></div></div>
+        <div class="box "><h4>Como me sinto</h4><div class="moods"><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 16.666666666666668 Q15 26 21 16.666666666666668"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 17.666666666666668 Q15 23 21 17.666666666666668"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 19 Q15 19 21 19"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 20 Q15 16 21 20"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 21 Q15 13 21 21"/></svg></div></div>
+        <div class="box "><h4>Refeições</h4><div class="meal"><span>Café da manhã</span><i></i></div><div class="meal"><span>Almoço</span><i></i></div><div class="meal"><span>Lanche</span><i></i></div><div class="meal"><span>Jantar</span><i></i></div></div>
+      </div>
+    </div>
+    <div class="row2"><div class="box "><h4>Gratidão</h4><div class="lines "><i></i><i></i><i></i></div></div><div class="box "><h4>Notas</h4><div class="lines dotted"><i></i><i></i><i></i></div></div></div></main>
+  <nav class="tabs"><a href="#m-01" class="tab on">JAN</a><span class="tab  nolink">FEV</span><span class="tab  nolink">MAR</span><span class="tab  nolink">ABR</span><span class="tab  nolink">MAI</span><span class="tab  nolink">JUN</span><span class="tab  nolink">JUL</span><span class="tab  nolink">AGO</span><span class="tab  nolink">SET</span><span class="tab  nolink">OUT</span><span class="tab  nolink">NOV</span><span class="tab  nolink">DEZ</span><i class="tab-gap"></i><a href="#area-financas" class="tab tab-area ">R$</a><a href="#area-bem-estar" class="tab tab-area ">♡</a><a href="#area-casa" class="tab tab-area ">⌂</a><a href="#area-produtividade" class="tab tab-area ">✓</a><a href="#area-saude" class="tab tab-area ">+</a></nav>
+</section>
+
+<section class="page" id="d-2027-01-10">
+  <nav class="topbar"><a href="#index" class="top-link ">Início</a><a href="#year" class="top-link ">2027</a><a href="#area-financas" class="top-link ">Finanças</a><a href="#area-bem-estar" class="top-link ">Bem-estar</a><a href="#area-casa" class="top-link ">Casa &amp; Lifestyle</a><a href="#area-produtividade" class="top-link ">Produtividade</a><a href="#area-saude" class="top-link ">Saúde</a><a href="#cta" class="sample-tag">Amostra grátis · ver planner completo</a></nav>
+  <main class="content">
+    <header class="page-head day-head">
+      <div class="day-num">10</div>
+      <div class="day-meta">
+        <h1>Domingo</h1>
+        <small><a href="#m-01" class="">Janeiro</a> · <a href="#w-02" class="">Semana 02</a></small>
+      </div>
+      
+  <div class="pager">
+    <a href="#d-2027-01-09" class="pager-btn">‹</a>
+    <span class="pager-label">dia</span>
+    <span class="pager-btn nolink">›</span>
+  </div>
+    </header>
+    
+    <div class="day-grid">
+      <div class="box schedule"><h4>Agenda</h4><div class="hour"><span>06h</span><i></i></div><div class="hour"><span>07h</span><i></i></div><div class="hour"><span>08h</span><i></i></div><div class="hour"><span>09h</span><i></i></div><div class="hour"><span>10h</span><i></i></div><div class="hour"><span>11h</span><i></i></div><div class="hour"><span>12h</span><i></i></div><div class="hour"><span>13h</span><i></i></div><div class="hour"><span>14h</span><i></i></div><div class="hour"><span>15h</span><i></i></div><div class="hour"><span>16h</span><i></i></div><div class="hour"><span>17h</span><i></i></div><div class="hour"><span>18h</span><i></i></div><div class="hour"><span>19h</span><i></i></div><div class="hour"><span>20h</span><i></i></div><div class="hour"><span>21h</span><i></i></div><div class="hour"><span>22h</span><i></i></div></div>
+      <div class="day-side">
+        <div class="box "><h4>3 prioridades</h4><div class="prio"><i>1</i><i>2</i><i>3</i></div></div>
+        <div class="box grow"><h4>Tarefas</h4><div class="lines checks"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div></div>
+        <div class="box "><h4>Água</h4><div class="water"><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i><i class="drop"></i></div></div>
+        <div class="box "><h4>Como me sinto</h4><div class="moods"><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 16.666666666666668 Q15 26 21 16.666666666666668"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 17.666666666666668 Q15 23 21 17.666666666666668"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 19 Q15 19 21 19"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 20 Q15 16 21 20"/></svg><svg class="mood" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13"/>
+    <circle cx="10.5" cy="12" r="1.6" class="eye"/><circle cx="19.5" cy="12" r="1.6" class="eye"/>
+    <path d="M9 21 Q15 13 21 21"/></svg></div></div>
+        <div class="box "><h4>Refeições</h4><div class="meal"><span>Café da manhã</span><i></i></div><div class="meal"><span>Almoço</span><i></i></div><div class="meal"><span>Lanche</span><i></i></div><div class="meal"><span>Jantar</span><i></i></div></div>
+      </div>
+    </div>
+    <div class="row2"><div class="box "><h4>Gratidão</h4><div class="lines "><i></i><i></i><i></i></div></div><div class="box "><h4>Notas</h4><div class="lines dotted"><i></i><i></i><i></i></div></div></div></main>
+  <nav class="tabs"><a href="#m-01" class="tab on">JAN</a><span class="tab  nolink">FEV</span><span class="tab  nolink">MAR</span><span class="tab  nolink">ABR</span><span class="tab  nolink">MAI</span><span class="tab  nolink">JUN</span><span class="tab  nolink">JUL</span><span class="tab  nolink">AGO</span><span class="tab  nolink">SET</span><span class="tab  nolink">OUT</span><span class="tab  nolink">NOV</span><span class="tab  nolink">DEZ</span><i class="tab-gap"></i><a href="#area-financas" class="tab tab-area ">R$</a><a href="#area-bem-estar" class="tab tab-area ">♡</a><a href="#area-casa" class="tab tab-area ">⌂</a><a href="#area-produtividade" class="tab tab-area ">✓</a><a href="#area-saude" class="tab tab-area ">+</a></nav>
+</section>
+
+<section class="page" id="area-financas">
+  <nav class="topbar"><a href="#index" class="top-link ">Início</a><a href="#year" class="top-link ">2027</a><a href="#area-financas" class="top-link on">Finanças</a><a href="#area-bem-estar" class="top-link ">Bem-estar</a><a href="#area-casa" class="top-link ">Casa &amp; Lifestyle</a><a href="#area-produtividade" class="top-link ">Produtividade</a><a href="#area-saude" class="top-link ">Saúde</a><a href="#cta" class="sample-tag">Amostra grátis · ver planner completo</a></nav>
+  <main class="content">
+    <header class="page-head"><div><small>Área</small><h1>Finanças</h1></div></header>
+    <div class="area-cards"><a href="#tool-entradas-saidas" class="area-card"><b>Entradas e saídas</b><span>Anote tudo o que entra e sai. No fim do mês, compare com o planejado.</span></a></div>
+    <p class="howto">+ 2 ferramenta(s) desta área no planner completo.</p></main>
+  <nav class="tabs"><a href="#m-01" class="tab ">JAN</a><span class="tab  nolink">FEV</span><span class="tab  nolink">MAR</span><span class="tab  nolink">ABR</span><span class="tab  nolink">MAI</span><span class="tab  nolink">JUN</span><span class="tab  nolink">JUL</span><span class="tab  nolink">AGO</span><span class="tab  nolink">SET</span><span class="tab  nolink">OUT</span><span class="tab  nolink">NOV</span><span class="tab  nolink">DEZ</span><i class="tab-gap"></i><a href="#area-financas" class="tab tab-area on">R$</a><a href="#area-bem-estar" class="tab tab-area ">♡</a><a href="#area-casa" class="tab tab-area ">⌂</a><a href="#area-produtividade" class="tab tab-area ">✓</a><a href="#area-saude" class="tab tab-area ">+</a></nav>
+</section>
+
+<section class="page" id="tool-entradas-saidas">
+  <nav class="topbar"><a href="#index" class="top-link ">Início</a><a href="#year" class="top-link ">2027</a><a href="#area-financas" class="top-link on">Finanças</a><a href="#area-bem-estar" class="top-link ">Bem-estar</a><a href="#area-casa" class="top-link ">Casa &amp; Lifestyle</a><a href="#area-produtividade" class="top-link ">Produtividade</a><a href="#area-saude" class="top-link ">Saúde</a><a href="#cta" class="sample-tag">Amostra grátis · ver planner completo</a></nav>
+  <main class="content">
+    <header class="page-head">
+      <div><small><a href="#area-financas" class="">Finanças</a></small><h1>Entradas e saídas</h1></div>
+    </header>
+    <p class="intro">Anote tudo o que entra e sai. No fim do mês, compare com o planejado.</p>
+    <div class="tool tool-table"><div class="tbl" style="grid-template-columns:1fr 3fr 2fr 1.3fr 1.3fr"><span>Data</span><span>Descrição</span><span>Categoria</span><span>Entrada</span><span>Saída</span><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div></main>
+  <nav class="tabs"><a href="#m-01" class="tab ">JAN</a><span class="tab  nolink">FEV</span><span class="tab  nolink">MAR</span><span class="tab  nolink">ABR</span><span class="tab  nolink">MAI</span><span class="tab  nolink">JUN</span><span class="tab  nolink">JUL</span><span class="tab  nolink">AGO</span><span class="tab  nolink">SET</span><span class="tab  nolink">OUT</span><span class="tab  nolink">NOV</span><span class="tab  nolink">DEZ</span><i class="tab-gap"></i><a href="#area-financas" class="tab tab-area on">R$</a><a href="#area-bem-estar" class="tab tab-area ">♡</a><a href="#area-casa" class="tab tab-area ">⌂</a><a href="#area-produtividade" class="tab tab-area ">✓</a><a href="#area-saude" class="tab tab-area ">+</a></nav>
+</section>
+
+<section class="page" id="area-bem-estar">
+  <nav class="topbar"><a href="#index" class="top-link ">Início</a><a href="#year" class="top-link ">2027</a><a href="#area-financas" class="top-link ">Finanças</a><a href="#area-bem-estar" class="top-link on">Bem-estar</a><a href="#area-casa" class="top-link ">Casa &amp; Lifestyle</a><a href="#area-produtividade" class="top-link ">Produtividade</a><a href="#area-saude" class="top-link ">Saúde</a><a href="#cta" class="sample-tag">Amostra grátis · ver planner completo</a></nav>
+  <main class="content">
+    <header class="page-head"><div><small>Área</small><h1>Bem-estar</h1></div></header>
+    <div class="area-cards"><a href="#tool-roda-da-vida" class="area-card"><b>Roda da vida</b><span>Dê uma nota de 1 a 10 para cada área e pinte até a nota. Refaça a cada trimestre.</span></a></div>
+    <p class="howto">+ 2 ferramenta(s) desta área no planner completo.</p></main>
+  <nav class="tabs"><a href="#m-01" class="tab ">JAN</a><span class="tab  nolink">FEV</span><span class="tab  nolink">MAR</span><span class="tab  nolink">ABR</span><span class="tab  nolink">MAI</span><span class="tab  nolink">JUN</span><span class="tab  nolink">JUL</span><span class="tab  nolink">AGO</span><span class="tab  nolink">SET</span><span class="tab  nolink">OUT</span><span class="tab  nolink">NOV</span><span class="tab  nolink">DEZ</span><i class="tab-gap"></i><a href="#area-financas" class="tab tab-area ">R$</a><a href="#area-bem-estar" class="tab tab-area on">♡</a><a href="#area-casa" class="tab tab-area ">⌂</a><a href="#area-produtividade" class="tab tab-area ">✓</a><a href="#area-saude" class="tab tab-area ">+</a></nav>
+</section>
+
+<section class="page" id="tool-roda-da-vida">
+  <nav class="topbar"><a href="#index" class="top-link ">Início</a><a href="#year" class="top-link ">2027</a><a href="#area-financas" class="top-link ">Finanças</a><a href="#area-bem-estar" class="top-link on">Bem-estar</a><a href="#area-casa" class="top-link ">Casa &amp; Lifestyle</a><a href="#area-produtividade" class="top-link ">Produtividade</a><a href="#area-saude" class="top-link ">Saúde</a><a href="#cta" class="sample-tag">Amostra grátis · ver planner completo</a></nav>
+  <main class="content">
+    <header class="page-head">
+      <div><small><a href="#area-bem-estar" class="">Bem-estar</a></small><h1>Roda da vida</h1></div>
+    </header>
+    <p class="intro">Dê uma nota de 1 a 10 para cada área e pinte até a nota. Refaça a cada trimestre.</p>
+    <div class="tool tool-wheel"><div class="wheel"><svg viewBox="-60 -20 640 560"><circle cx="260" cy="260" r="21" class="ring" /><circle cx="260" cy="260" r="42" class="ring" /><circle cx="260" cy="260" r="63" class="ring" /><circle cx="260" cy="260" r="84" class="ring" /><circle cx="260" cy="260" r="105" class="ring" /><circle cx="260" cy="260" r="126" class="ring" /><circle cx="260" cy="260" r="147" class="ring" /><circle cx="260" cy="260" r="168" class="ring" /><circle cx="260" cy="260" r="189" class="ring" /><circle cx="260" cy="260" r="210" class="ring" /><line x1="260" y1="260" x2="260.0" y2="50.0" class="spoke" />
+        <text x="360.3" y="38.3" class="wheel-label">Saúde</text><line x1="260" y1="260" x2="408.5" y2="111.5" class="spoke" />
+        <text x="502.1" y="168.2" class="wheel-label">Carreira</text><line x1="260" y1="260" x2="470.0" y2="260.0" class="spoke" />
+        <text x="502.1" y="351.8" class="wheel-label">Finanças</text><line x1="260" y1="260" x2="408.5" y2="408.5" class="spoke" />
+        <text x="360.3" y="481.7" class="wheel-label">Relacionamentos</text><line x1="260" y1="260" x2="260.0" y2="470.0" class="spoke" />
+        <text x="159.7" y="481.7" class="wheel-label">Família</text><line x1="260" y1="260" x2="111.5" y2="408.5" class="spoke" />
+        <text x="17.9" y="351.8" class="wheel-label">Lazer</text><line x1="260" y1="260" x2="50.0" y2="260.0" class="spoke" />
+        <text x="17.9" y="168.2" class="wheel-label">Espiritualidade</text><line x1="260" y1="260" x2="111.5" y2="111.5" class="spoke" />
+        <text x="159.7" y="38.3" class="wheel-label">Desenvolvimento</text></svg>
+      <div class="wheel-side"><div class="wheel-notes"><div class="wheel-note"><span>Saúde</span><i></i><b>/10</b></div><div class="wheel-note"><span>Carreira</span><i></i><b>/10</b></div><div class="wheel-note"><span>Finanças</span><i></i><b>/10</b></div><div class="wheel-note"><span>Relacionamentos</span><i></i><b>/10</b></div><div class="wheel-note"><span>Família</span><i></i><b>/10</b></div><div class="wheel-note"><span>Lazer</span><i></i><b>/10</b></div><div class="wheel-note"><span>Espiritualidade</span><i></i><b>/10</b></div><div class="wheel-note"><span>Desenvolvimento</span><i></i><b>/10</b></div></div>
+      <div class="box"><h4>O que vou fazer para melhorar</h4><div class="lines "><i></i><i></i><i></i><i></i><i></i></div></div></div></div></div></main>
+  <nav class="tabs"><a href="#m-01" class="tab ">JAN</a><span class="tab  nolink">FEV</span><span class="tab  nolink">MAR</span><span class="tab  nolink">ABR</span><span class="tab  nolink">MAI</span><span class="tab  nolink">JUN</span><span class="tab  nolink">JUL</span><span class="tab  nolink">AGO</span><span class="tab  nolink">SET</span><span class="tab  nolink">OUT</span><span class="tab  nolink">NOV</span><span class="tab  nolink">DEZ</span><i class="tab-gap"></i><a href="#area-financas" class="tab tab-area ">R$</a><a href="#area-bem-estar" class="tab tab-area on">♡</a><a href="#area-casa" class="tab tab-area ">⌂</a><a href="#area-produtividade" class="tab tab-area ">✓</a><a href="#area-saude" class="tab tab-area ">+</a></nav>
+</section>
+
+<section class="page" id="area-casa">
+  <nav class="topbar"><a href="#index" class="top-link ">Início</a><a href="#year" class="top-link ">2027</a><a href="#area-financas" class="top-link ">Finanças</a><a href="#area-bem-estar" class="top-link ">Bem-estar</a><a href="#area-casa" class="top-link on">Casa &amp; Lifestyle</a><a href="#area-produtividade" class="top-link ">Produtividade</a><a href="#area-saude" class="top-link ">Saúde</a><a href="#cta" class="sample-tag">Amostra grátis · ver planner completo</a></nav>
+  <main class="content">
+    <header class="page-head"><div><small>Área</small><h1>Casa &amp; Lifestyle</h1></div></header>
+    <div class="area-cards"><a href="#tool-lista-compras" class="area-card"><b>Lista de compras</b><span>Organize por seção do mercado para comprar mais rápido.</span></a></div>
+    <p class="howto">+ 1 ferramenta(s) desta área no planner completo.</p></main>
+  <nav class="tabs"><a href="#m-01" class="tab ">JAN</a><span class="tab  nolink">FEV</span><span class="tab  nolink">MAR</span><span class="tab  nolink">ABR</span><span class="tab  nolink">MAI</span><span class="tab  nolink">JUN</span><span class="tab  nolink">JUL</span><span class="tab  nolink">AGO</span><span class="tab  nolink">SET</span><span class="tab  nolink">OUT</span><span class="tab  nolink">NOV</span><span class="tab  nolink">DEZ</span><i class="tab-gap"></i><a href="#area-financas" class="tab tab-area ">R$</a><a href="#area-bem-estar" class="tab tab-area ">♡</a><a href="#area-casa" class="tab tab-area on">⌂</a><a href="#area-produtividade" class="tab tab-area ">✓</a><a href="#area-saude" class="tab tab-area ">+</a></nav>
+</section>
+
+<section class="page" id="tool-lista-compras">
+  <nav class="topbar"><a href="#index" class="top-link ">Início</a><a href="#year" class="top-link ">2027</a><a href="#area-financas" class="top-link ">Finanças</a><a href="#area-bem-estar" class="top-link ">Bem-estar</a><a href="#area-casa" class="top-link on">Casa &amp; Lifestyle</a><a href="#area-produtividade" class="top-link ">Produtividade</a><a href="#area-saude" class="top-link ">Saúde</a><a href="#cta" class="sample-tag">Amostra grátis · ver planner completo</a></nav>
+  <main class="content">
+    <header class="page-head">
+      <div><small><a href="#area-casa" class="">Casa &amp; Lifestyle</a></small><h1>Lista de compras</h1></div>
+    </header>
+    <p class="intro">Organize por seção do mercado para comprar mais rápido.</p>
+    <div class="tool tool-checklist"><div class="groups">
+      <div class="box"><h4>Hortifruti</h4><div class="lines checks"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div></div>
+      <div class="box"><h4>Açougue &amp; frios</h4><div class="lines checks"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div></div>
+      <div class="box"><h4>Mercearia</h4><div class="lines checks"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div></div>
+      <div class="box"><h4>Limpeza</h4><div class="lines checks"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div></div>
+      <div class="box"><h4>Higiene</h4><div class="lines checks"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div></div>
+      <div class="box"><h4>Outros</h4><div class="lines checks"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div></div></div></div></main>
+  <nav class="tabs"><a href="#m-01" class="tab ">JAN</a><span class="tab  nolink">FEV</span><span class="tab  nolink">MAR</span><span class="tab  nolink">ABR</span><span class="tab  nolink">MAI</span><span class="tab  nolink">JUN</span><span class="tab  nolink">JUL</span><span class="tab  nolink">AGO</span><span class="tab  nolink">SET</span><span class="tab  nolink">OUT</span><span class="tab  nolink">NOV</span><span class="tab  nolink">DEZ</span><i class="tab-gap"></i><a href="#area-financas" class="tab tab-area ">R$</a><a href="#area-bem-estar" class="tab tab-area ">♡</a><a href="#area-casa" class="tab tab-area on">⌂</a><a href="#area-produtividade" class="tab tab-area ">✓</a><a href="#area-saude" class="tab tab-area ">+</a></nav>
+</section>
+
+<section class="page" id="area-produtividade">
+  <nav class="topbar"><a href="#index" class="top-link ">Início</a><a href="#year" class="top-link ">2027</a><a href="#area-financas" class="top-link ">Finanças</a><a href="#area-bem-estar" class="top-link ">Bem-estar</a><a href="#area-casa" class="top-link ">Casa &amp; Lifestyle</a><a href="#area-produtividade" class="top-link on">Produtividade</a><a href="#area-saude" class="top-link ">Saúde</a><a href="#cta" class="sample-tag">Amostra grátis · ver planner completo</a></nav>
+  <main class="content">
+    <header class="page-head"><div><small>Área</small><h1>Produtividade</h1></div></header>
+    <div class="area-cards"><a href="#tool-matriz-prioridades" class="area-card"><b>Matriz de prioridades</b><span>Separe o que é urgente do que é importante — e o que pode simplesmente sair da lista.</span></a></div>
+    <p class="howto">+ 1 ferramenta(s) desta área no planner completo.</p></main>
+  <nav class="tabs"><a href="#m-01" class="tab ">JAN</a><span class="tab  nolink">FEV</span><span class="tab  nolink">MAR</span><span class="tab  nolink">ABR</span><span class="tab  nolink">MAI</span><span class="tab  nolink">JUN</span><span class="tab  nolink">JUL</span><span class="tab  nolink">AGO</span><span class="tab  nolink">SET</span><span class="tab  nolink">OUT</span><span class="tab  nolink">NOV</span><span class="tab  nolink">DEZ</span><i class="tab-gap"></i><a href="#area-financas" class="tab tab-area ">R$</a><a href="#area-bem-estar" class="tab tab-area ">♡</a><a href="#area-casa" class="tab tab-area ">⌂</a><a href="#area-produtividade" class="tab tab-area on">✓</a><a href="#area-saude" class="tab tab-area ">+</a></nav>
+</section>
+
+<section class="page" id="tool-matriz-prioridades">
+  <nav class="topbar"><a href="#index" class="top-link ">Início</a><a href="#year" class="top-link ">2027</a><a href="#area-financas" class="top-link ">Finanças</a><a href="#area-bem-estar" class="top-link ">Bem-estar</a><a href="#area-casa" class="top-link ">Casa &amp; Lifestyle</a><a href="#area-produtividade" class="top-link on">Produtividade</a><a href="#area-saude" class="top-link ">Saúde</a><a href="#cta" class="sample-tag">Amostra grátis · ver planner completo</a></nav>
+  <main class="content">
+    <header class="page-head">
+      <div><small><a href="#area-produtividade" class="">Produtividade</a></small><h1>Matriz de prioridades</h1></div>
+    </header>
+    <p class="intro">Separe o que é urgente do que é importante — e o que pode simplesmente sair da lista.</p>
+    <div class="tool tool-matrix"><div class="matrix">
+      <div class="quad q0"><h4>Urgente e importante · Faça agora</h4><div class="lines checks"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div></div>
+      <div class="quad q1"><h4>Importante, não urgente · Agende</h4><div class="lines checks"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div></div>
+      <div class="quad q2"><h4>Urgente, não importante · Delegue</h4><div class="lines checks"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div></div>
+      <div class="quad q3"><h4>Nem urgente nem importante · Elimine</h4><div class="lines checks"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div></div></div></div></main>
+  <nav class="tabs"><a href="#m-01" class="tab ">JAN</a><span class="tab  nolink">FEV</span><span class="tab  nolink">MAR</span><span class="tab  nolink">ABR</span><span class="tab  nolink">MAI</span><span class="tab  nolink">JUN</span><span class="tab  nolink">JUL</span><span class="tab  nolink">AGO</span><span class="tab  nolink">SET</span><span class="tab  nolink">OUT</span><span class="tab  nolink">NOV</span><span class="tab  nolink">DEZ</span><i class="tab-gap"></i><a href="#area-financas" class="tab tab-area ">R$</a><a href="#area-bem-estar" class="tab tab-area ">♡</a><a href="#area-casa" class="tab tab-area ">⌂</a><a href="#area-produtividade" class="tab tab-area on">✓</a><a href="#area-saude" class="tab tab-area ">+</a></nav>
+</section>
+
+<section class="page" id="area-saude">
+  <nav class="topbar"><a href="#index" class="top-link ">Início</a><a href="#year" class="top-link ">2027</a><a href="#area-financas" class="top-link ">Finanças</a><a href="#area-bem-estar" class="top-link ">Bem-estar</a><a href="#area-casa" class="top-link ">Casa &amp; Lifestyle</a><a href="#area-produtividade" class="top-link ">Produtividade</a><a href="#area-saude" class="top-link on">Saúde</a><a href="#cta" class="sample-tag">Amostra grátis · ver planner completo</a></nav>
+  <main class="content">
+    <header class="page-head"><div><small>Área</small><h1>Saúde</h1></div></header>
+    <div class="area-cards"><a href="#tool-consultas-exames" class="area-card"><b>Consultas e exames</b><span>Histórico de consultas, exames e retornos.</span></a></div>
+    <p class="howto">+ 1 ferramenta(s) desta área no planner completo.</p></main>
+  <nav class="tabs"><a href="#m-01" class="tab ">JAN</a><span class="tab  nolink">FEV</span><span class="tab  nolink">MAR</span><span class="tab  nolink">ABR</span><span class="tab  nolink">MAI</span><span class="tab  nolink">JUN</span><span class="tab  nolink">JUL</span><span class="tab  nolink">AGO</span><span class="tab  nolink">SET</span><span class="tab  nolink">OUT</span><span class="tab  nolink">NOV</span><span class="tab  nolink">DEZ</span><i class="tab-gap"></i><a href="#area-financas" class="tab tab-area ">R$</a><a href="#area-bem-estar" class="tab tab-area ">♡</a><a href="#area-casa" class="tab tab-area ">⌂</a><a href="#area-produtividade" class="tab tab-area ">✓</a><a href="#area-saude" class="tab tab-area on">+</a></nav>
+</section>
+
+<section class="page" id="tool-consultas-exames">
+  <nav class="topbar"><a href="#index" class="top-link ">Início</a><a href="#year" class="top-link ">2027</a><a href="#area-financas" class="top-link ">Finanças</a><a href="#area-bem-estar" class="top-link ">Bem-estar</a><a href="#area-casa" class="top-link ">Casa &amp; Lifestyle</a><a href="#area-produtividade" class="top-link ">Produtividade</a><a href="#area-saude" class="top-link on">Saúde</a><a href="#cta" class="sample-tag">Amostra grátis · ver planner completo</a></nav>
+  <main class="content">
+    <header class="page-head">
+      <div><small><a href="#area-saude" class="">Saúde</a></small><h1>Consultas e exames</h1></div>
+    </header>
+    <p class="intro">Histórico de consultas, exames e retornos.</p>
+    <div class="tool tool-table"><div class="tbl" style="grid-template-columns:1fr 3fr 2.2fr 1.2fr"><span>Data</span><span>Especialidade / exame</span><span>Profissional</span><span>Retorno</span><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div></main>
+  <nav class="tabs"><a href="#m-01" class="tab ">JAN</a><span class="tab  nolink">FEV</span><span class="tab  nolink">MAR</span><span class="tab  nolink">ABR</span><span class="tab  nolink">MAI</span><span class="tab  nolink">JUN</span><span class="tab  nolink">JUL</span><span class="tab  nolink">AGO</span><span class="tab  nolink">SET</span><span class="tab  nolink">OUT</span><span class="tab  nolink">NOV</span><span class="tab  nolink">DEZ</span><i class="tab-gap"></i><a href="#area-financas" class="tab tab-area ">R$</a><a href="#area-bem-estar" class="tab tab-area ">♡</a><a href="#area-casa" class="tab tab-area ">⌂</a><a href="#area-produtividade" class="tab tab-area ">✓</a><a href="#area-saude" class="tab tab-area on">+</a></nav>
+</section>
+
+<section class="page" id="cta">
+  <nav class="topbar"><a href="#index" class="top-link on">Início</a><a href="#year" class="top-link ">2027</a><a href="#area-financas" class="top-link ">Finanças</a><a href="#area-bem-estar" class="top-link ">Bem-estar</a><a href="#area-casa" class="top-link ">Casa &amp; Lifestyle</a><a href="#area-produtividade" class="top-link ">Produtividade</a><a href="#area-saude" class="top-link ">Saúde</a><a href="#cta" class="sample-tag">Amostra grátis · ver planner completo</a></nav>
+  <main class="content">
+    <div class="cta-box">
+      <small>Gostou da amostra?</small>
+      <h1>O ano inteiro está te esperando.</h1>
+      <ul><li>451 páginas e mais de 13 mil links</li><li>365 dias, 53 semanas e 12 meses de 2027</li><li>5 áreas e 12 ferramentas</li><li>3 paletas de cor, vertical e horizontal</li><li>Capas extras para trocar quando quiser</li></ul>
+      <a class="cover-cta" href="/#oferta" target="_top">Quero o Meu Ano Leve 2027 →</a>
+    </div></main>
+  <nav class="tabs"><a href="#m-01" class="tab ">JAN</a><span class="tab  nolink">FEV</span><span class="tab  nolink">MAR</span><span class="tab  nolink">ABR</span><span class="tab  nolink">MAI</span><span class="tab  nolink">JUN</span><span class="tab  nolink">JUL</span><span class="tab  nolink">AGO</span><span class="tab  nolink">SET</span><span class="tab  nolink">OUT</span><span class="tab  nolink">NOV</span><span class="tab  nolink">DEZ</span><i class="tab-gap"></i><a href="#area-financas" class="tab tab-area ">R$</a><a href="#area-bem-estar" class="tab tab-area ">♡</a><a href="#area-casa" class="tab tab-area ">⌂</a><a href="#area-produtividade" class="tab tab-area ">✓</a><a href="#area-saude" class="tab tab-area ">+</a></nav>
+</section>
+<style>
+  html, body { overflow: hidden; }
+  body.show-links a { outline: 2.5px solid rgba(217,155,184,.95); outline-offset: -1px; border-radius: 8px; animation: blink 1.2s ease-in-out infinite; }
+  @keyframes blink { 50% { outline-color: rgba(138,128,184,.55); } }
+</style>
+<script>
+  document.querySelectorAll('a[href^="http"]').forEach((a) => { a.target = '_top'; });
+  addEventListener('message', (e) => {
+    if (e.data === 'links:on') document.body.classList.add('show-links');
+    if (e.data === 'links:off') document.body.classList.remove('show-links');
+    if (typeof e.data === 'string' && e.data.startsWith('go:')) location.hash = e.data.slice(3);
+  });
+  addEventListener('hashchange', () => parent.postMessage('page:' + location.hash.slice(1), '*'));
+  if (!location.hash) location.hash = 'cover';
+</script></body></html>

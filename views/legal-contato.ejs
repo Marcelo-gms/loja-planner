@@ -1,0 +1,12 @@
+<%- include('partials/top') %>
+<div class="wrap narrow"><section class="card center">
+  <span class="hand">fala com a gente ✿</span>
+  <h1>Contato</h1>
+  <% if (supportEmail) { %>
+    <p class="mt">Escreva para <a href="mailto:<%= supportEmail %>"><b><%= supportEmail %></b></a>. Respondemos em até 1 dia útil.</p>
+  <% } else { %>
+    <p class="mt muted">Defina SUPPORT_EMAIL no .env para mostrar o e-mail de atendimento aqui.</p>
+  <% } %>
+  <p class="muted mt">Já comprou? <a href="/entrar">Entre na área de membros</a> ou <a href="/esqueci-senha">recupere sua senha</a>.</p>
+</section></div>
+<%- include('partials/bottom') %>

@@ -1,0 +1,69 @@
+<%- include('../partials/top') %>
+<%
+  const statusLabel = { pending: 'aguardando', paid: 'pago', refunded: 'reembolsado', chargeback: 'chargeback', canceled: 'cancelado', expired: 'vencido' };
+  const methodLabel = { PIX: 'PIX', CREDIT_CARD: 'Cartão', MANUAL: 'Manual' };
+  const fmt = (d) => d ? new Date(d).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }) : '';
+%>
+<div class="wrap">
+  <% if (flash) { %><div class="notice ok"><%= flash %></div><% } %>
+  <section class="card">
+    <h2>Vendas</h2>
+    <div class="stats mt">
+      <div class="stat"><b><%= Number(stats.paid || 0) %></b><span>vendas pagas</span></div>
+      <div class="stat"><b>R$ <%= money(Number(stats.revenue || 0), { always: true }) %></b><span>faturamento bruto</span></div>
+      <div class="stat"><b><%= Number(stats.paid24h || 0) %></b><span>vendas nas últimas 24 h</span></div>
+      <div class="stat"><b><%= Number(stats.pending || 0) %></b><span>aguardando pagamento</span></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Pedidos</h2>
+    <form method="get" action="/admin" class="filters mt">
+      <input type="search" name="q" value="<%= search %>" placeholder="Buscar por e-mail, nome ou id do pagamento">
+      <select name="status" onchange="this.form.submit()">
+        <option value="">Todos</option>
+        <% Object.entries(statusLabel).forEach(([k, l]) => { %><option value="<%= k %>" <%= status === k ? 'selected' : '' %>><%= l %></option><% }) %>
+      </select>
+    </form>
+    <div style="overflow-x:auto" class="mt">
+      <table>
+        <thead><tr><th>#</th><th>Cliente</th><th>Pagamento</th><th>Status</th><th>Área</th><th>Ações</th></tr></thead>
+        <tbody>
+        <% if (!orders.length) { %><tr><td colspan="6" class="muted">Nenhum pedido.</td></tr><% } %>
+        <% orders.forEach((o) => { %>
+          <tr>
+            <td><%= o.id %><br><small class="muted"><%= fmt(o.created_at) %></small></td>
+            <td><b><%= o.name %></b><br><%= o.email %><% if (o.owner_name) { %><br><small>capa: <%= o.owner_name %></small><% } %></td>
+            <td><%= methodLabel[o.method] || o.method %><%= o.installments > 1 ? ` ${o.installments}x` : '' %> · R$ <%= money(o.amount_cents, { always: true }) %>
+              <% if (o.asaas_payment_id) { %><br><small class="muted"><%= o.asaas_payment_id %></small><% } %></td>
+            <td><span class="tag <%= o.status %>"><%= statusLabel[o.status] || o.status %></span>
+              <% if (o.gateway_status) { %><br><small class="muted">Asaas: <%= o.gateway_status %></small><% } %></td>
+            <td><small><%= o.has_password ? 'senha criada' : 'sem senha' %><br><%= o.downloads %>/<%= maxDownloads %> downloads</small></td>
+            <td><div class="actions">
+              <% const acts = [['reenviar', 'reenviar acesso'], ['zerar', 'zerar downloads']];
+                 if (o.asaas_payment_id) acts.push(['consultar', 'consultar Asaas']);
+                 acts.push(o.status === 'paid' ? ['bloquear', 'bloquear'] : ['liberar', 'marcar pago']); %>
+              <% acts.forEach(([a, l]) => { %>
+                <form method="post" action="/admin/pedidos/<%= o.id %>/<%= a %>" <%- a === 'bloquear' || a === 'liberar' ? 'onsubmit="return confirm(\'Tem certeza?\')"' : '' %>>
+                  <input type="hidden" name="_csrf" value="<%= csrfToken() %>"><button class="btn soft small" type="submit"><%= l %></button></form>
+              <% }) %>
+            </div></td>
+          </tr>
+        <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Liberar acesso manualmente</h2>
+    <p class="muted">Para brinde, parceria ou venda fora do site. A pessoa recebe o e-mail para criar a senha.</p>
+    <form method="post" action="/admin/liberar" class="row">
+      <input type="hidden" name="_csrf" value="<%= csrfToken() %>">
+      <div><label for="n">Nome</label><input type="text" id="n" name="name"></div>
+      <div><label for="e">E-mail</label><input type="email" id="e" name="email" required></div>
+      <p class="mt"><button class="btn" type="submit">Liberar e enviar</button></p>
+    </form>
+  </section>
+</div>
+<%- include('../partials/bottom') %>

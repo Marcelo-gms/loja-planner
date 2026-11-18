@@ -1,0 +1,21 @@
+<%- include('../partials/top') %>
+<div class="wrap narrow">
+  <section class="card">
+    <span class="hand">que bom te ver ✿</span>
+    <h1>Área de membros</h1>
+    <% if (notice) { %><div class="notice ok"><%= notice %></div><% } %>
+    <% if (error) { %><div class="notice err"><%= error %></div><% } %>
+    <form method="post" action="/entrar">
+      <input type="hidden" name="_csrf" value="<%= csrfToken() %>">
+      <input type="hidden" name="next" value="<%= next %>">
+      <label for="email">E-mail da compra</label>
+      <input type="email" id="email" name="email" autocomplete="email" required value="<%= email %>">
+      <label for="password">Senha</label>
+      <input type="password" id="password" name="password" autocomplete="current-password" required>
+      <p class="mt"><button class="btn block" type="submit">Entrar</button></p>
+    </form>
+    <p class="center mt"><a href="/esqueci-senha<%= email ? `?email=${encodeURIComponent(email)}` : '' %>">Esqueci minha senha / primeiro acesso</a></p>
+    <p class="center muted small mt">Ainda não tem o planner? <a href="/">Conheça o <%= productName %></a></p>
+  </section>
+</div>
+<%- include('../partials/bottom') %>

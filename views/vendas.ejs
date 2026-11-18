@@ -1,0 +1,817 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meu Ano Leve 2027 · Planner digital interativo para iPad e tablet Android</title>
+<meta name="description" content="Planner digital 2027 com tudo ligado por links: ano, mês, semana, dia e ferramentas para finanças, casa, saúde e autocuidado. Para Goodnotes, Samsung Notes e outros apps.">
+<meta property="og:title" content="Meu Ano Leve 2027 · Planner digital interativo">
+<meta property="og:description" content="Seu ano inteiro organizado — e lindo — na palma da mão.">
+<meta property="og:image" content="/assets/shots/lavanda-vertical-cover.webp">
+<meta name="theme-color" content="#8a80b8">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<script>
+  /* Oferta vinda do servidor (.env: PRODUCT_PRICE, MAX_INSTALLMENTS, GUARANTEE_DAYS) */
+  window.OFFER = {
+    price: '<%= offer.price %>',
+    installments: '<%= offer.installmentsLabel %>',
+    checkoutUrl: '/checkout',
+    guaranteeDays: <%= Number(offer.guaranteeDays) %>,
+  };
+</script>
+<script src="/assets/data.js"></script>
+<style>
+:root {
+  --creme: #fffdf9;
+  --papel: #fbf7ef;
+  --lilas: #8a80b8;
+  --lilas-2: #aa99bd;
+  --lavanda: #d9cdea;
+  --lilas-bg: #f1ecf8;
+  --ameixa: #5a4869;
+  --ameixa-2: #716585;
+  --rosa: #e9c9d8;
+  --rosa-forte: #d99bb8;
+  --ceu: #cfe0ef;
+  --manteiga: #f3e3b8;
+  --menta: #d6e6cf;
+  --tinta: #46404c;
+  --sombra: 0 24px 60px -20px rgba(90, 72, 105, .35);
+  --sombra-suave: 0 10px 30px -12px rgba(110, 90, 140, .28);
+  --raio: 22px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; overflow-x: clip; }
+body { font-family: 'Nunito', system-ui, sans-serif; color: var(--tinta); background: var(--creme); line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+h1, h2, h3 { font-family: 'Fraunces', Georgia, serif; font-weight: 600; color: var(--ameixa); line-height: 1.12; letter-spacing: -.01em; }
+em { font-style: italic; color: var(--lilas); }
+.hand { font-family: 'Caveat', cursive; font-weight: 600; color: var(--rosa-forte); }
+.wrap { width: min(1160px, 100% - 32px); margin-inline: auto; }
+section { position: relative; padding: 96px 0; }
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--lilas); }
+.eyebrow::before { content: ''; width: 22px; height: 2px; background: var(--rosa-forte); border-radius: 2px; }
+.section-head { text-align: center; max-width: 760px; margin: 0 auto 56px; }
+.section-head h2 { font-size: clamp(30px, 4.6vw, 50px); margin: 12px 0 14px; }
+.section-head p { font-size: 18px; color: var(--ameixa-2); }
+
+/* ---------- Botões ---------- */
+.btn { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 18px 34px; border-radius: 999px; font-weight: 900; font-size: 17px; text-decoration: none; border: 0; cursor: pointer; transition: transform .25s cubic-bezier(.3,1.6,.5,1), box-shadow .25s; isolation: isolate; overflow: hidden; }
+.btn-main { color: #fff; background: linear-gradient(120deg, var(--lilas) 0%, var(--rosa-forte) 55%, var(--lilas) 100%); background-size: 220% 100%; animation: gradShift 6s ease-in-out infinite; box-shadow: 0 14px 34px -12px rgba(138, 128, 184, .9), inset 0 -3px 0 rgba(0,0,0,.08); }
+.btn-main::after { content: ''; position: absolute; inset: 0; background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.55) 48%, transparent 66%); transform: translateX(-120%); animation: shine 3.2s ease-in-out infinite; z-index: -1; }
+.btn-main:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 20px 44px -12px rgba(138, 128, 184, 1); }
+.btn-ghost { color: var(--ameixa); background: rgba(255,255,255,.7); box-shadow: inset 0 0 0 2px var(--lavanda); backdrop-filter: blur(6px); }
+.btn-ghost:hover { transform: translateY(-2px); box-shadow: inset 0 0 0 2px var(--lilas); }
+.btn .arrow { transition: transform .25s; }
+.btn:hover .arrow { transform: translateX(4px); }
+.pulse { animation: gradShift 6s ease-in-out infinite, pulse 2.6s ease-out infinite; }
+@keyframes gradShift { 50% { background-position: 100% 0; } }
+@keyframes shine { 0%, 55% { transform: translateX(-120%); } 85%, 100% { transform: translateX(120%); } }
+@keyframes pulse { 0% { box-shadow: 0 14px 34px -12px rgba(138,128,184,.9), 0 0 0 0 rgba(217,155,184,.55); } 70% { box-shadow: 0 14px 34px -12px rgba(138,128,184,.9), 0 0 0 18px rgba(217,155,184,0); } 100% { box-shadow: 0 14px 34px -12px rgba(138,128,184,.9), 0 0 0 0 rgba(217,155,184,0); } }
+
+/* ---------- Topo ---------- */
+.announce { background: var(--ameixa); color: #fff; text-align: center; font-size: 13.5px; font-weight: 700; padding: 9px 16px; letter-spacing: .02em; }
+.announce b { color: var(--manteiga); }
+.nav { position: sticky; top: 0; z-index: 50; background: rgba(255,253,249,.78); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(217,205,234,.6); transition: box-shadow .3s; }
+.nav.scrolled { box-shadow: 0 8px 30px -18px rgba(90,72,105,.4); }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 66px; gap: 16px; }
+.logo { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600; color: var(--ameixa); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+.logo i { width: 30px; height: 30px; border-radius: 10px; background: linear-gradient(135deg, var(--lilas), var(--rosa-forte)); display: grid; place-items: center; color: #fff; font-style: normal; font-size: 15px; }
+.nav-links { display: flex; gap: 26px; font-weight: 700; font-size: 15px; }
+.nav-links a { text-decoration: none; color: var(--ameixa-2); position: relative; }
+.nav-links a::after { content: ''; position: absolute; left: 0; right: 100%; bottom: -4px; height: 2px; background: var(--rosa-forte); transition: right .3s; }
+.nav-links a:hover::after { right: 0; }
+.nav .btn { padding: 11px 20px; font-size: 14.5px; }
+
+/* ---------- Hero ---------- */
+.hero { padding: 70px 0 110px; background: radial-gradient(1200px 600px at 85% -10%, var(--lilas-bg), transparent 60%), linear-gradient(180deg, var(--creme), var(--lilas-bg)); overflow: hidden; }
+.blob { position: absolute; border-radius: 50%; filter: blur(50px); opacity: .55; animation: float 14s ease-in-out infinite; pointer-events: none; }
+.blob.b1 { width: 420px; height: 420px; background: var(--rosa); top: -120px; left: -120px; }
+.blob.b2 { width: 360px; height: 360px; background: var(--ceu); bottom: -100px; left: 30%; animation-delay: -5s; }
+.blob.b3 { width: 300px; height: 300px; background: var(--manteiga); top: 20%; right: -80px; animation-delay: -9s; opacity: .45; }
+@keyframes float { 33% { transform: translate(30px, -40px) scale(1.06); } 66% { transform: translate(-25px, 25px) scale(.95); } }
+.sparkles { position: absolute; inset: 0; pointer-events: none; }
+.sparkles i { position: absolute; width: 10px; height: 10px; background: radial-gradient(circle, #fff 0 30%, transparent 32%), conic-gradient(from 45deg, transparent 0 25%, var(--rosa-forte) 0 27%, transparent 0 50%, var(--lilas) 0 52%, transparent 0 75%, var(--rosa-forte) 0 77%, transparent 0); clip-path: polygon(50% 0, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0 50%, 40% 40%); background: var(--lilas-2); animation: twinkle 3.4s ease-in-out infinite; opacity: 0; }
+@keyframes twinkle { 0%, 100% { opacity: 0; transform: scale(.3) rotate(0); } 50% { opacity: .9; transform: scale(1) rotate(45deg); } }
+.hero-grid { position: relative; display: grid; grid-template-columns: 1.05fr 1fr; gap: 48px; align-items: center; }
+.hero h1 { font-size: clamp(40px, 6vw, 70px); margin: 18px 0 20px; }
+.hero h1 .underline { position: relative; white-space: nowrap; }
+.hero h1 .underline svg { position: absolute; left: -2%; bottom: -10px; width: 104%; height: 18px; }
+.hero h1 .underline path { stroke: var(--rosa-forte); stroke-width: 5; fill: none; stroke-linecap: round; stroke-dasharray: 400; stroke-dashoffset: 400; animation: draw 1.4s .9s ease-out forwards; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+.hero .lead { font-size: 19.5px; color: var(--ameixa-2); max-width: 560px; }
+.hero-ctas { display: flex; flex-wrap: wrap; gap: 14px; margin: 34px 0 26px; }
+.trust { display: flex; flex-wrap: wrap; gap: 10px 22px; font-size: 14.5px; font-weight: 700; color: var(--ameixa-2); }
+.trust span { display: inline-flex; align-items: center; gap: 7px; }
+.trust span::before { content: '✓'; width: 20px; height: 20px; border-radius: 50%; background: var(--menta); color: #4f6b46; display: grid; place-items: center; font-size: 11px; font-weight: 900; }
+.hero-note { position: absolute; font-size: 28px; transform: rotate(-6deg); white-space: nowrap; }
+
+/* ---------- Tablet ---------- */
+.stage { position: relative; perspective: 1400px; display: flex; justify-content: center; }
+.tablet { position: relative; width: min(420px, 82vw); aspect-ratio: 3 / 4; border-radius: 34px; padding: 16px; background: linear-gradient(145deg, #4a3f52, #2e2734); box-shadow: var(--sombra), 0 0 0 1.5px rgba(255,255,255,.08) inset; transform-style: preserve-3d; transition: transform .35s ease-out; }
+.tablet::before { content: ''; position: absolute; top: 50%; right: 6px; width: 4px; height: 4px; border-radius: 50%; background: #1d1820; transform: translateY(-50%); }
+.screen { position: relative; width: 100%; height: 100%; border-radius: 20px; overflow: hidden; background: var(--papel); }
+.screen img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: rotateY(-25deg) translateX(30px) scale(.96); transform-origin: left center; transition: opacity .8s ease, transform .9s cubic-bezier(.2,.8,.2,1); }
+.screen img.on { opacity: 1; transform: none; }
+.screen::after { content: ''; position: absolute; inset: 0; background: linear-gradient(120deg, rgba(255,255,255,.28), transparent 38%); pointer-events: none; }
+.pen { position: absolute; width: 14px; height: 300px; right: -34px; top: 60px; border-radius: 8px; background: linear-gradient(90deg, #f4f1f8, #d9d3e3); box-shadow: var(--sombra-suave); transform: rotate(8deg) translateZ(40px); }
+.pen::after { content: ''; position: absolute; bottom: -14px; left: 3px; border: 4px solid transparent; border-top: 16px solid #cfc8db; }
+.chip { position: absolute; display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-radius: 16px; background: rgba(255,255,255,.92); box-shadow: var(--sombra-suave); font-weight: 800; color: var(--ameixa); font-size: 14px; white-space: nowrap; animation: bob 5s ease-in-out infinite; transform: translateZ(60px); backdrop-filter: blur(6px); }
+.chip b { font-family: 'Fraunces', serif; font-size: 22px; color: var(--lilas); }
+.chip.c1 { top: 8%; left: -12%; }
+.chip.c2 { top: 46%; right: -16%; animation-delay: -1.6s; }
+.chip.c3 { bottom: 6%; left: -6%; animation-delay: -3.2s; }
+@keyframes bob { 50% { transform: translateZ(60px) translateY(-10px); } }
+
+/* ---------- Faixa ---------- */
+.marquee { background: var(--ameixa); color: #fff; padding: 16px 0; overflow: hidden; transform: rotate(-1.2deg); margin: -26px -10px 0; position: relative; z-index: 2; box-shadow: var(--sombra-suave); }
+.marquee-track { display: flex; gap: 46px; width: max-content; animation: marquee 38s linear infinite; font-weight: 800; font-size: 16px; letter-spacing: .02em; }
+.marquee-track span { display: inline-flex; align-items: center; gap: 46px; white-space: nowrap; }
+.marquee-track span::after { content: '✿'; color: var(--rosa); }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+/* ---------- Dor ---------- */
+.pain { background: var(--creme); }
+.pain-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.pain-card { position: relative; background: #fff; border-radius: var(--raio); padding: 30px 26px; box-shadow: var(--sombra-suave); border: 1px solid rgba(217,205,234,.7); transition: transform .35s, box-shadow .35s; }
+.pain-card:hover { transform: translateY(-6px) rotate(-.5deg); box-shadow: var(--sombra); }
+.pain-card .ico { width: 56px; height: 56px; border-radius: 18px; display: grid; place-items: center; font-size: 26px; margin-bottom: 16px; }
+.pain-card h3 { font-size: 22px; margin-bottom: 8px; }
+.pain-card p { color: var(--ameixa-2); }
+.pain-card .fix { margin-top: 16px; padding-top: 14px; border-top: 1.5px dashed var(--lavanda); font-weight: 700; color: var(--ameixa); }
+.pain-card .fix::before { content: '→ '; color: var(--rosa-forte); }
+.quote-big { margin: 64px auto 0; max-width: 820px; text-align: center; font-family: 'Fraunces', serif; font-style: italic; font-size: clamp(24px, 3.2vw, 34px); color: var(--ameixa); line-height: 1.35; }
+
+/* ---------- Mecanismo ---------- */
+.flow { background: linear-gradient(180deg, var(--creme), var(--lilas-bg) 30%, var(--lilas-bg) 70%, var(--creme)); }
+.flow-row { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+.flow-line { position: absolute; top: 44%; left: 8%; right: 8%; height: 4px; z-index: 0; }
+.flow-line path { stroke: var(--rosa-forte); stroke-width: 3; stroke-dasharray: 8 10; fill: none; animation: dash 1.2s linear infinite; }
+@keyframes dash { to { stroke-dashoffset: -36; } }
+.flow-step { position: relative; z-index: 1; background: #fff; border-radius: var(--raio); padding: 14px 14px 18px; box-shadow: var(--sombra-suave); text-align: center; transition: transform .4s; }
+.flow-step img { border-radius: 14px; border: 1px solid var(--lavanda); aspect-ratio: 3/4; object-fit: cover; width: 100%; }
+.flow-step h3 { font-size: 20px; margin-top: 12px; }
+.flow-step p { font-size: 14.5px; color: var(--ameixa-2); }
+.flow-step .tap { position: absolute; top: 34%; left: 50%; width: 46px; height: 46px; margin: -23px; border-radius: 50%; background: rgba(217,155,184,.45); box-shadow: 0 0 0 0 rgba(217,155,184,.6); animation: tap 2.4s ease-out infinite; }
+.flow-step:nth-child(3) .tap { animation-delay: .6s; } .flow-step:nth-child(4) .tap { animation-delay: 1.2s; } .flow-step:nth-child(5) .tap { animation-delay: 1.8s; }
+@keyframes tap { 0% { transform: scale(.6); box-shadow: 0 0 0 0 rgba(217,155,184,.6); } 50% { transform: scale(1); box-shadow: 0 0 0 22px rgba(217,155,184,0); } 100% { transform: scale(.6); } }
+
+/* ---------- Números ---------- */
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 64px; }
+.stat { text-align: center; background: rgba(255,255,255,.75); border-radius: var(--raio); padding: 26px 12px; border: 1px solid rgba(217,205,234,.7); }
+.stat b { display: block; font-family: 'Fraunces', serif; font-size: clamp(38px, 5vw, 56px); color: var(--lilas); line-height: 1; }
+.stat span { font-weight: 800; color: var(--ameixa-2); font-size: 15px; }
+
+/* ---------- Test-drive ---------- */
+.drive { background: var(--ameixa); color: #fff; overflow: hidden; }
+.drive h2 { color: #fff; }
+.drive .section-head p { color: rgba(255,255,255,.78); }
+.drive .eyebrow { color: var(--rosa); }
+.drive-grid { display: grid; grid-template-columns: 1fr 300px; gap: 40px; align-items: center; }
+.drive-stage { display: flex; justify-content: center; }
+.drive-tablet { position: relative; border-radius: 34px; padding: 16px; background: linear-gradient(145deg, #4a3f52, #231d28); box-shadow: 0 40px 80px -30px rgba(0,0,0,.6), 0 0 0 1.5px rgba(255,255,255,.1) inset; transition: width .6s cubic-bezier(.2,.8,.2,1), height .6s cubic-bezier(.2,.8,.2,1); }
+.drive-screen { position: relative; overflow: hidden; border-radius: 20px; background: var(--papel); width: 100%; height: 100%; }
+.drive-screen iframe { position: absolute; top: 0; left: 0; border: 0; transform-origin: 0 0; }
+.drive-panel h3 { color: #fff; font-size: 24px; margin-bottom: 8px; }
+.drive-panel p { color: rgba(255,255,255,.75); margin-bottom: 18px; }
+.seg { display: inline-flex; padding: 5px; border-radius: 999px; background: rgba(255,255,255,.12); margin-bottom: 18px; }
+.seg button { border: 0; background: none; color: #fff; font: 800 14px 'Nunito'; padding: 9px 16px; border-radius: 999px; cursor: pointer; transition: background .25s, color .25s; }
+.seg button.on { background: #fff; color: var(--ameixa); }
+.go-list { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+.go-list button { border: 1.5px solid rgba(255,255,255,.3); background: none; color: #fff; font: 700 14px 'Nunito'; padding: 8px 14px; border-radius: 12px; cursor: pointer; transition: all .2s; }
+.go-list button:hover, .go-list button.on { background: var(--rosa); border-color: var(--rosa); color: var(--ameixa); }
+.toggle { display: flex; align-items: center; gap: 12px; font-weight: 800; cursor: pointer; user-select: none; }
+.toggle i { width: 48px; height: 28px; border-radius: 99px; background: rgba(255,255,255,.2); position: relative; transition: background .25s; }
+.toggle i::after { content: ''; position: absolute; top: 4px; left: 4px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: transform .25s; }
+.toggle.on i { background: var(--rosa-forte); }
+.toggle.on i::after { transform: translateX(20px); }
+.drive .hand { color: var(--rosa); font-size: 26px; display: block; margin-top: 18px; }
+
+/* ---------- Por dentro ---------- */
+.inside { background: var(--creme); overflow: hidden; }
+.rail { display: flex; gap: 22px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 10px 16px 30px; scrollbar-width: none; cursor: grab; }
+.rail::-webkit-scrollbar { display: none; }
+.rail figure { flex: none; width: 280px; scroll-snap-align: center; }
+.rail img { border-radius: 18px; box-shadow: var(--sombra-suave); border: 1px solid var(--lavanda); aspect-ratio: 3/4; object-fit: cover; transition: transform .4s cubic-bezier(.2,.8,.2,1), box-shadow .4s; cursor: zoom-in; }
+.rail figure:hover img { transform: translateY(-8px) rotate(-1deg) scale(1.02); box-shadow: var(--sombra); }
+.rail figcaption { margin-top: 14px; font-weight: 800; color: var(--ameixa); }
+.rail figcaption span { display: block; font-weight: 600; color: var(--ameixa-2); font-size: 14.5px; }
+.rail-nav { display: flex; justify-content: center; gap: 12px; }
+.rail-nav button { width: 52px; height: 52px; border-radius: 50%; border: 2px solid var(--lavanda); background: #fff; color: var(--ameixa); font-size: 22px; cursor: pointer; transition: all .2s; }
+.rail-nav button:hover { background: var(--lilas); border-color: var(--lilas); color: #fff; }
+
+/* ---------- Áreas ---------- */
+.areas { background: linear-gradient(180deg, var(--creme), var(--lilas-bg)); }
+.areas-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 18px; }
+.area { background: #fff; border-radius: var(--raio); padding: 24px 22px; box-shadow: var(--sombra-suave); border-top: 5px solid var(--c, var(--lilas)); transition: transform .35s; }
+.area:hover { transform: translateY(-6px); }
+.area .badge { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; font-weight: 900; font-size: 18px; background: var(--c, var(--lilas)); color: var(--ameixa); margin-bottom: 14px; }
+.area h3 { font-size: 21px; margin-bottom: 10px; }
+.area li { list-style: none; padding: 7px 0; border-bottom: 1px dashed var(--lavanda); font-weight: 600; font-size: 15px; }
+.area li::before { content: '✓ '; color: var(--rosa-forte); font-weight: 900; }
+.daily { margin-top: 36px; display: grid; grid-template-columns: 1fr 1fr; gap: 26px; align-items: center; background: #fff; border-radius: 28px; padding: 28px; box-shadow: var(--sombra-suave); }
+.daily img { border-radius: 16px; border: 1px solid var(--lavanda); }
+.daily h3 { font-size: 28px; margin-bottom: 12px; }
+.daily ul { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 18px; margin-top: 16px; }
+.daily li { font-weight: 700; display: flex; gap: 8px; align-items: center; }
+.daily li i { width: 10px; height: 10px; border-radius: 50%; background: var(--rosa-forte); flex: none; }
+
+/* ---------- Cores ---------- */
+.colors { background: var(--lilas-bg); transition: background .8s; }
+.colors-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+.duo { position: relative; height: 560px; }
+.duo img { position: absolute; width: 58%; border-radius: 18px; box-shadow: var(--sombra); border: 6px solid #fff; transition: opacity .5s, transform .7s cubic-bezier(.2,.8,.2,1); }
+.duo .d1 { left: 2%; top: 4%; transform: rotate(-5deg); z-index: 2; }
+.duo .d2 { right: 2%; bottom: 0; transform: rotate(4deg); }
+.duo.swap img { opacity: 0; transform: rotate(0) scale(.92); }
+.swatches { display: flex; gap: 14px; margin: 22px 0 26px; }
+.swatch { width: 62px; height: 62px; border-radius: 50%; border: 4px solid #fff; cursor: pointer; box-shadow: var(--sombra-suave); position: relative; transition: transform .3s cubic-bezier(.3,1.6,.5,1); }
+.swatch:hover { transform: scale(1.1); }
+.swatch.on { transform: scale(1.12); box-shadow: 0 0 0 3px var(--ameixa), var(--sombra-suave); }
+.swatch span { position: absolute; top: 72px; left: 50%; transform: translateX(-50%); font-size: 13px; font-weight: 800; white-space: nowrap; color: var(--ameixa); }
+.cover-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 46px; }
+.cover-row img { border-radius: 10px; box-shadow: var(--sombra-suave); aspect-ratio: 3/4; object-fit: cover; transition: transform .3s; }
+.cover-row img:hover { transform: translateY(-6px) scale(1.04); }
+.cover-row small { display: block; text-align: center; font-weight: 700; font-size: 12.5px; margin-top: 6px; color: var(--ameixa-2); text-transform: capitalize; }
+
+/* ---------- Passos ---------- */
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; counter-reset: s; }
+.step { position: relative; padding: 30px 26px 26px; background: #fff; border-radius: var(--raio); box-shadow: var(--sombra-suave); }
+.step::before { counter-increment: s; content: counter(s); position: absolute; top: -22px; left: 26px; width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(135deg, var(--lilas), var(--rosa-forte)); color: #fff; font: 600 22px 'Fraunces'; box-shadow: var(--sombra-suave); }
+.step h3 { font-size: 21px; margin: 10px 0 6px; }
+.step p { color: var(--ameixa-2); }
+
+/* ---------- Amostra ---------- */
+.gift { margin-top: 70px; display: grid; grid-template-columns: auto 1fr auto; gap: 30px; align-items: center; padding: 30px 36px; border-radius: 30px; background: linear-gradient(120deg, var(--manteiga), var(--rosa)); box-shadow: var(--sombra-suave); overflow: hidden; position: relative; }
+.gift .box { font-size: 56px; animation: wiggle 3s ease-in-out infinite; }
+@keyframes wiggle { 0%, 100% { transform: rotate(0); } 10% { transform: rotate(-12deg); } 20% { transform: rotate(10deg); } 30% { transform: rotate(0); } }
+.gift h3 { font-size: 26px; }
+.gift p { color: var(--ameixa); font-weight: 600; }
+
+/* ---------- Oferta ---------- */
+.offer { background: radial-gradient(900px 500px at 50% 0, var(--lavanda), transparent 70%), var(--creme); }
+.offer-card { position: relative; max-width: 620px; margin: 0 auto; background: #fff; border-radius: 34px; padding: 46px 42px 38px; box-shadow: 0 40px 90px -30px rgba(90,72,105,.5); border: 2px solid var(--lavanda); text-align: center; overflow: hidden; }
+.offer-card::before { content: ''; position: absolute; inset: -2px; border-radius: 34px; padding: 2px; background: conic-gradient(from var(--ang, 0deg), var(--lilas), var(--rosa-forte), var(--manteiga), var(--ceu), var(--lilas)); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; animation: spin 6s linear infinite; }
+@property --ang { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+@keyframes spin { to { --ang: 360deg; } }
+.ribbon { display: inline-block; padding: 7px 18px; border-radius: 99px; background: var(--rosa); color: var(--ameixa); font-weight: 900; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
+.offer-card h2 { font-size: 36px; margin: 16px 0 6px; }
+.offer-list { list-style: none; text-align: left; margin: 26px 0; display: grid; gap: 12px; }
+.offer-list li { display: flex; gap: 12px; align-items: flex-start; font-weight: 700; }
+.offer-list li::before { content: '✓'; flex: none; width: 24px; height: 24px; border-radius: 50%; background: var(--menta); color: #4f6b46; display: grid; place-items: center; font-size: 12px; font-weight: 900; margin-top: 1px; }
+.price { font-family: 'Fraunces', serif; color: var(--ameixa); line-height: 1; margin: 6px 0; }
+.price small { font-size: 26px; vertical-align: top; position: relative; top: 14px; }
+.price b { font: 900 92px/1 'Nunito', sans-serif; letter-spacing: -.03em; background: linear-gradient(120deg, var(--ameixa), var(--lilas)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.price-sub { color: var(--ameixa-2); font-weight: 700; margin-bottom: 24px; }
+.offer-card .btn { width: 100%; font-size: 19px; padding: 22px; }
+.pay { margin-top: 16px; font-size: 13.5px; color: var(--ameixa-2); font-weight: 700; }
+.guarantee { display: flex; gap: 24px; align-items: center; max-width: 760px; margin: 60px auto 0; background: #fff; border-radius: 26px; padding: 26px 30px; box-shadow: var(--sombra-suave); }
+.seal { position: relative; flex: none; width: 110px; height: 110px; border-radius: 50%; display: grid; place-items: center; text-align: center; font: 600 30px/1 'Fraunces'; color: var(--ameixa); }
+.seal::before { content: ''; position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle, #fff 55%, transparent 56%), conic-gradient(var(--lilas), var(--rosa-forte), var(--manteiga), var(--lilas)); animation: spinSlow 12s linear infinite; z-index: 0; }
+.seal > div { position: relative; }
+.seal span { display: block; font: 800 11px 'Nunito'; letter-spacing: .1em; text-transform: uppercase; margin-top: 4px; }
+@keyframes spinSlow { to { transform: rotate(360deg); } }
+.guarantee h3 { font-size: 23px; margin-bottom: 6px; }
+
+/* ---------- FAQ ---------- */
+.faq { max-width: 820px; margin: 0 auto; }
+.faq details { background: #fff; border-radius: 18px; margin-bottom: 12px; box-shadow: 0 6px 20px -14px rgba(90,72,105,.35); border: 1px solid rgba(217,205,234,.7); overflow: hidden; }
+.faq summary { cursor: pointer; list-style: none; padding: 20px 24px; font-weight: 800; font-size: 17px; color: var(--ameixa); display: flex; justify-content: space-between; gap: 16px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: '+'; flex: none; width: 30px; height: 30px; border-radius: 50%; background: var(--lilas-bg); display: grid; place-items: center; font-size: 20px; transition: transform .3s, background .3s; }
+.faq details[open] summary::after { transform: rotate(45deg); background: var(--rosa); }
+.faq .ans { padding: 0 24px 20px; color: var(--ameixa-2); }
+
+/* ---------- Final ---------- */
+.final { text-align: center; color: #fff; background: linear-gradient(130deg, var(--ameixa), var(--lilas) 55%, var(--rosa-forte)); background-size: 200% 200%; animation: gradShift 10s ease-in-out infinite; overflow: hidden; }
+.final h2 { color: #fff; font-size: clamp(34px, 5vw, 58px); max-width: 860px; margin: 0 auto 18px; }
+.final p { font-size: 19px; opacity: .9; max-width: 640px; margin: 0 auto 34px; }
+.final .btn-main { background: #fff; color: var(--ameixa); animation: pulse 2.6s ease-out infinite; }
+footer { background: #2f2834; color: rgba(255,255,255,.65); font-size: 14px; padding: 40px 0 110px; }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; }
+footer a { color: rgba(255,255,255,.8); margin-right: 18px; }
+footer .legal { width: 100%; font-size: 12.5px; opacity: .7; }
+
+/* ---------- Barra fixa (mobile) ---------- */
+.sticky-cta { position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 60; display: none; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 10px 10px 20px; border-radius: 20px; background: rgba(255,255,255,.94); backdrop-filter: blur(12px); box-shadow: 0 16px 40px -12px rgba(90,72,105,.55); transform: translateY(140%); transition: transform .45s cubic-bezier(.2,.8,.2,1); }
+.sticky-cta.show { transform: none; }
+.sticky-cta b { font-family: 'Fraunces', serif; font-size: 22px; color: var(--ameixa); }
+.sticky-cta small { display: block; font-size: 12px; font-weight: 700; color: var(--ameixa-2); }
+.sticky-cta .btn { padding: 14px 22px; font-size: 15px; }
+
+/* ---------- Lightbox / corações ---------- */
+.lightbox { position: fixed; inset: 0; z-index: 90; background: rgba(47,40,52,.82); backdrop-filter: blur(6px); display: grid; place-items: center; padding: 24px; opacity: 0; pointer-events: none; transition: opacity .3s; }
+.lightbox.on { opacity: 1; pointer-events: auto; }
+.lightbox img { max-height: 90vh; border-radius: 18px; box-shadow: 0 30px 80px rgba(0,0,0,.5); transform: scale(.9); transition: transform .35s cubic-bezier(.2,.8,.2,1); }
+.lightbox.on img { transform: none; }
+.heart { position: fixed; z-index: 100; pointer-events: none; font-size: 20px; animation: heart 1s ease-out forwards; }
+@keyframes heart { to { transform: translate(var(--x), var(--y)) scale(.4) rotate(var(--r)); opacity: 0; } }
+
+/* ---------- Revelar ao rolar ---------- */
+.reveal { opacity: 0; transform: translateY(36px); filter: blur(6px); transition: opacity .9s ease, transform .9s cubic-bezier(.2,.8,.2,1), filter .9s ease; transition-delay: var(--d, 0s); }
+.reveal.in { opacity: 1; transform: none; filter: none; }
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 960px) {
+  section { padding: 76px 0; }
+  .nav-links { display: none; }
+  .hero { padding: 40px 0 90px; }
+  .hero-grid, .drive-grid, .colors-grid, .daily { grid-template-columns: 1fr; }
+  .hero-copy { text-align: center; }
+  .eyebrow { justify-content: center; flex-wrap: wrap; }
+  .eyebrow::before { display: none; }
+  .hero .lead { margin: 0 auto; }
+  .hero-ctas, .trust { justify-content: center; }
+  .stage { margin-top: 30px; }
+  .chip.c1 { left: -4%; } .chip.c2 { right: -4%; } .chip.c3 { left: 0; }
+  .pen { display: none; }
+  .pain-grid, .steps { grid-template-columns: 1fr; }
+  .flow-row { grid-template-columns: 1fr 1fr; }
+  .flow-line { display: none; }
+  .stats { grid-template-columns: 1fr 1fr; }
+  .drive-panel { text-align: center; }
+  .go-list { justify-content: center; }
+  .toggle { justify-content: center; }
+  .duo { height: 460px; }
+  .colors-copy { text-align: center; }
+  .swatches { justify-content: center; }
+  .gift { grid-template-columns: 1fr; text-align: center; }
+  .sticky-cta { display: flex; }
+  .guarantee { flex-direction: column; text-align: center; }
+}
+@media (max-width: 520px) {
+  .hero h1 { font-size: 38px; }
+  .hero .lead { font-size: 17.5px; }
+  .btn { width: 100%; }
+  .nav .btn { width: auto; }
+  .chip { font-size: 12px; padding: 8px 12px; } .chip b { font-size: 18px; }
+  .daily ul { grid-template-columns: 1fr; }
+  .duo { height: 380px; }
+  .cover-row { grid-template-columns: repeat(3, 1fr); }
+  .offer-card { padding: 36px 22px 30px; }
+  .price b { font-size: 76px; }
+  .rail figure { width: 230px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .reveal { opacity: 1; transform: none; filter: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="announce">✿ Lançamento <b>Planner 2027</b> · acesso imediato depois da compra · garantia de <%= offer.guaranteeDays %> dias</div>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="logo" href="#top"><i>✿</i>Meu Ano Leve</a>
+    <nav class="nav-links">
+      <a href="#testdrive">Experimente</a>
+      <a href="#por-dentro">Por dentro</a>
+      <a href="#cores">Cores e capas</a>
+      <a href="#faq">Dúvidas</a>
+      <a href="/entrar">Entrar</a>
+    </nav>
+    <a class="btn btn-main js-buy" href="#oferta">Quero o meu</a>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="top">
+  <i class="blob b1"></i><i class="blob b2"></i><i class="blob b3"></i>
+  <div class="sparkles" id="sparkles"></div>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow reveal">Planner digital 2027 · iPad e tablet Android</span>
+      <h1 class="reveal" style="--d:.1s">Seu ano inteiro, <span class="underline"><em>leve</em><svg viewBox="0 0 200 18" preserveAspectRatio="none"><path d="M3 12 C 50 2, 120 2, 197 9"/></svg></span> e lindo, na palma da mão.</h1>
+      <p class="lead reveal" style="--d:.2s">Agenda, metas, contas, casa, saúde e autocuidado num lugar só, com tudo ligado por links. Um toque em <b>março</b> e você está em março. Um toque no <b>dia 14</b> e ele está aberto, esperando por você.</p>
+      <div class="hero-ctas reveal" style="--d:.3s">
+        <a class="btn btn-main pulse js-buy" href="#oferta">Quero meu planner 2027 <span class="arrow">→</span></a>
+        <a class="btn btn-ghost" href="#testdrive">Testar agora, grátis</a>
+      </div>
+      <div class="trust reveal" style="--d:.4s"><span>Acesso imediato</span><span>Pagamento único</span><span>Garantia de 7 dias</span></div>
+    </div>
+    <div class="stage reveal" style="--d:.2s" id="stage">
+      <div class="tablet" id="heroTablet">
+        <div class="screen" id="heroScreen"></div>
+        <div class="pen"></div>
+        <div class="chip c1"><b data-count="pages">450</b> páginas</div>
+        <div class="chip c2"><b data-count="links" data-k>13</b> mil links</div>
+        <div class="chip c3"><b>365</b> dias para viver</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true"><div class="marquee-track" id="marquee"></div></div>
+
+<!-- ================= DOR ================= -->
+<section class="pain">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Para quem é</span>
+      <h2>Para a mulher que dá conta de tudo — <em>e cansou de guardar tudo na cabeça.</em></h2>
+      <p>Contas, consultas, metas, a casa, o trabalho e aqueles sonhos guardados “para depois”. Já reconheceu alguma destas?</p>
+    </div>
+    <div class="pain-grid">
+      <article class="pain-card reveal" style="--d:0s">
+        <div class="ico" style="background:var(--rosa)">🌀</div>
+        <h3>A cabeça não desliga</h3>
+        <p>Você deita e lembra da conta que vence, do exame que não marcou, do aniversário de amanhã.</p>
+        <p class="fix">Tudo anotado no dia certo, a um toque de distância.</p>
+      </article>
+      <article class="pain-card reveal" style="--d:.12s">
+        <div class="ico" style="background:var(--ceu)">📒</div>
+        <h3>Os planners de papel ficam pela metade</h3>
+        <p>Pesados para carregar, sem espaço quando você precisa, abandonados em março.</p>
+        <p class="fix">No tablet ele vai com você, e você duplica a página que quiser.</p>
+      </article>
+      <article class="pain-card reveal" style="--d:.24s">
+        <div class="ico" style="background:var(--manteiga)">📱</div>
+        <h3>Os apps são frios e confusos</h3>
+        <p>Notificações, menus, assinaturas… e nenhuma vontade de abrir no dia seguinte.</p>
+        <p class="fix">Um planner bonito, escrito à mão, que dá vontade de abrir.</p>
+      </article>
+    </div>
+    <p class="quote-big reveal">“Planejar não é sobre controlar a vida.<br>É sobre <em>abrir espaço</em> para o que importa.”</p>
+  </div>
+</section>
+
+<!-- ================= MECANISMO ================= -->
+<section class="flow">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Como ele funciona</span>
+      <h2>Tudo conectado. <em>Um toque e você está lá.</em></h2>
+      <p>É um PDF interativo que você abre no seu app de notas favorito. Abas, datas e títulos são links, e você navega como num app, mas escreve como no papel.</p>
+    </div>
+    <div class="flow-row">
+      <svg class="flow-line" viewBox="0 0 100 4" preserveAspectRatio="none"><path d="M0 2 H100"/></svg>
+      <div class="flow-step reveal" style="--d:0s"><img loading="lazy" src="/assets/shots/lavanda-vertical-year.webp" alt="Página do ano"><i class="tap"></i><h3>O ano</h3><p>12 meses numa página só</p></div>
+      <div class="flow-step reveal" style="--d:.15s"><img loading="lazy" src="/assets/shots/lavanda-vertical-m-01.webp" alt="Página do mês"><i class="tap"></i><h3>O mês</h3><p>Metas, prioridades e datas</p></div>
+      <div class="flow-step reveal" style="--d:.3s"><img loading="lazy" src="/assets/shots/lavanda-vertical-w-02.webp" alt="Página da semana"><i class="tap"></i><h3>A semana</h3><p>Foco e hábitos da semana</p></div>
+      <div class="flow-step reveal" style="--d:.45s"><img loading="lazy" src="/assets/shots/lavanda-vertical-d-2027-01-06.webp" alt="Página do dia"><i class="tap"></i><h3>O dia</h3><p>Agenda, tarefas, água e humor</p></div>
+    </div>
+    <div class="stats">
+      <div class="stat reveal"><b data-count="pages">450</b><span>páginas</span></div>
+      <div class="stat reveal" style="--d:.1s"><b data-count="links">13677</b><span>links interativos</span></div>
+      <div class="stat reveal" style="--d:.2s"><b data-count="tools">12</b><span>ferramentas</span></div>
+      <div class="stat reveal" style="--d:.3s"><b data-count="palettes">3</b><span>paletas · 2 formatos</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TEST-DRIVE ================= -->
+<section class="drive" id="testdrive">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Test-drive</span>
+      <h2>Toque e navegue <em style="color:var(--rosa)">antes de comprar.</em></h2>
+      <p>Estas são páginas de verdade do planner, com os links funcionando como no seu tablet. Toque nas abas, nos dias e nos botões.</p>
+    </div>
+    <div class="drive-grid">
+      <div class="drive-stage reveal">
+        <div class="drive-tablet" id="driveTablet"><div class="drive-screen" id="driveScreen"><iframe id="driveFrame" title="Test-drive do planner" loading="lazy"></iframe></div></div>
+      </div>
+      <div class="drive-panel reveal" style="--d:.15s">
+        <h3>Do jeito que você segura o tablet</h3>
+        <p>Vertical, como um caderno, ou horizontal, com teclado. As duas versões vêm na compra.</p>
+        <div class="seg" id="orientSeg"><button class="on" data-o="vertical">Vertical</button><button data-o="horizontal">Horizontal</button></div>
+        <div class="go-list" id="goList">
+          <button data-go="cover">Capa</button><button data-go="start">Comece aqui</button><button data-go="index">Índice</button>
+          <button data-go="m-01">Janeiro</button><button data-go="w-02">Semana</button><button data-go="d-2027-01-06">Dia</button>
+          <button data-go="tool-entradas-saidas">Finanças</button>
+        </div>
+        <label class="toggle" id="linksToggle"><i></i>Mostrar onde estão os links</label>
+        <span class="hand">psiu: toque em qualquer data no tablet ✿</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= POR DENTRO ================= -->
+<section class="inside" id="por-dentro">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Por dentro</span>
+      <h2>Cada página pensada para <em>a sua rotina real.</em></h2>
+      <p>Espaço de verdade para escrever com a caneta, papel em tom pólen que descansa os olhos e um visual delicado do começo ao fim.</p>
+    </div>
+  </div>
+  <div class="rail reveal" id="rail"></div>
+  <div class="rail-nav"><button aria-label="Anterior" data-dir="-1">‹</button><button aria-label="Próximo" data-dir="1">›</button></div>
+</section>
+
+<!-- ================= ÁREAS ================= -->
+<section class="areas">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Ferramentas</span>
+      <h2><span data-count="areas">5</span> áreas da vida, <em>um planner só.</em></h2>
+      <p>Além do calendário completo de 2027, você tem ferramentas prontas para cuidar do dinheiro, da casa, da saúde e de você.</p>
+    </div>
+    <div class="areas-grid" id="areasGrid"></div>
+    <div class="daily reveal">
+      <img loading="lazy" src="/assets/shots/lavanda-horizontal-d-2027-01-06.webp" alt="Página do dia na versão horizontal">
+      <div>
+        <span class="eyebrow">365 páginas assim</span>
+        <h3>Um dia inteiro em uma página</h3>
+        <p>Abra o dia de hoje em um toque e veja compromissos, tarefas, hábitos e refeições juntos.</p>
+        <ul><li><i></i>Agenda das 6h às 22h</li><li><i></i>3 prioridades do dia</li><li><i></i>Lista de tarefas</li><li><i></i>Monitor de água</li><li><i></i>Como me sinto</li><li><i></i>Refeições e gratidão</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CORES ================= -->
+<section class="colors" id="cores">
+  <div class="wrap">
+    <div class="colors-grid">
+      <div class="duo reveal" id="duo">
+        <img class="d1" id="duoCover" alt="Capa do planner">
+        <img class="d2" id="duoPage" alt="Página do dia">
+      </div>
+      <div class="colors-copy reveal" style="--d:.15s">
+        <span class="eyebrow">Cores e capas</span>
+        <h2 style="font-size:clamp(30px,4.4vw,46px);margin:12px 0 14px">Escolha a sua cor. <em>Ou use todas.</em></h2>
+        <p style="font-size:18px;color:var(--ameixa-2)">O miolo é o mesmo em todas as versões: muda a cor das abas e a capa. Mudou de ideia no meio do ano? É só trocar o arquivo, porque todas as cores estão incluídas.</p>
+        <div class="swatches" id="swatches"></div>
+      </div>
+    </div>
+    <div class="cover-row reveal" id="coverRow"></div>
+    <p style="text-align:center;margin-top:18px;font-weight:700;color:var(--ameixa-2)">+ <span data-count="coversTotal">30</span> capas extras (5 estilos × 3 cores × 2 formatos) para trocar quando quiser mudar de clima.</p>
+  </div>
+</section>
+
+<!-- ================= COMO RECEBE ================= -->
+<section>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Simples assim</span>
+      <h2>Em poucos minutos <em>você já está planejando.</em></h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal"><h3>Garanta o seu</h3><p>Pagamento único e seguro. Sem assinatura, sem mensalidade.</p></div>
+      <div class="step reveal" style="--d:.12s"><h3>Receba na hora</h3><p>Pagou, entrou: a área de membros abre na hora, com o planner nas 3 cores, vertical e horizontal, e as capas extras.</p></div>
+      <div class="step reveal" style="--d:.24s"><h3>Importe e comece</h3><p>Abra no Goodnotes, Samsung Notes, StarNote ou no seu app de notas preferido. A primeira página ensina tudo.</p></div>
+    </div>
+    <div class="gift reveal">
+      <div class="box">🎁</div>
+      <div><h3>Ainda na dúvida? Leve um pedacinho grátis.</h3><p>Baixe 28 páginas reais (capa, índice, janeiro, os primeiros dias e algumas ferramentas) e teste no seu app.</p></div>
+      <a class="btn btn-ghost" id="sampleBtn" href="#" download>Baixar amostra grátis</a>
+    </div>
+  </div>
+</section>
+
+<!-- Depoimentos: adicione aqui depoimentos REAIS de clientes (com autorização). Não use depoimentos inventados. -->
+
+<!-- ================= OFERTA ================= -->
+<section class="offer" id="oferta">
+  <div class="wrap">
+    <div class="offer-card reveal">
+      <span class="ribbon">Preço de lançamento</span>
+      <h2>Meu Ano Leve <span data-year>2027</span></h2>
+      <p style="color:var(--ameixa-2);font-weight:700">Tudo o que você recebe hoje:</p>
+      <ul class="offer-list" id="offerList"></ul>
+      <div class="price"><small>R$</small><b id="price"><%= offer.price %></b></div>
+      <p class="price-sub" id="installments"><%= offer.installmentsLabel %></p>
+      <a class="btn btn-main pulse js-buy" id="buyBtn" href="#">Quero meu planner agora <span class="arrow">→</span></a>
+      <p class="pay">🔒 PIX ou cartão · acesso imediato na área de membros · pagamento único</p>
+    </div>
+    <div class="guarantee reveal">
+      <div class="seal"><div><span id="gDays">7</span><span>dias de garantia</span></div></div>
+      <div>
+        <h3>Experimente sem medo</h3>
+        <p style="color:var(--ameixa-2)">Se em até <b id="gDays2">7</b> dias você sentir que o planner não é para você, é só pedir o reembolso. Você recebe 100% do valor de volta, sem perguntas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section id="faq" style="background:var(--lilas-bg)">
+  <div class="wrap">
+    <div class="section-head reveal"><span class="eyebrow">Dúvidas</span><h2>Perguntas <em>frequentes</em></h2></div>
+    <div class="faq reveal">
+      <details><summary>Preciso de algum aplicativo?</summary><div class="ans">Sim, de um app de notas que abra PDF e permita escrever por cima, como Goodnotes, Notability, Noteshelf, StarNote, Samsung Notes, Kilonotes e outros. Existem opções gratuitas e pagas na loja do seu tablet.</div></details>
+      <details><summary>Funciona no iPad e no Android?</summary><div class="ans">Sim. O planner foi feito para tablets (iPad e tablets Android), onde a experiência com caneta é a melhor. Ele também abre no celular e no computador, mas a tela pequena atrapalha a escrita.</div></details>
+      <details><summary>Como eu recebo?</summary><div class="ans">Logo depois da confirmação do pagamento (no PIX é na hora) você entra na área de membros, coloca seu nome na capa e baixa os arquivos: o planner nas 3 cores, nas versões vertical e horizontal, mais as capas extras e um guia rápido.</div></details>
+      <details><summary>É uma assinatura?</summary><div class="ans">Não. O pagamento é único e os arquivos são seus. Guarde o PDF original e importe de novo quando quiser.</div></details>
+      <details><summary>Os links funcionam mesmo?</summary><div class="ans">Sim, são mais de 13 mil links internos. Experimente no <a href="#testdrive">test-drive</a> acima ou baixe a amostra grátis. Se o toque estiver escrevendo em vez de navegar, toque com o dedo ou ative o modo de leitura do seu app.</div></details>
+      <details><summary>Posso imprimir?</summary><div class="ans">Pode, para uso pessoal. Mas ele foi desenhado para o digital: no papel você perde os links, que são a parte mais gostosa.</div></details>
+      <details><summary>E se eu não gostar?</summary><div class="ans">Você tem 7 dias de garantia. Se não for para você, peça o reembolso e devolvemos 100% do valor.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FINAL ================= -->
+<section class="final">
+  <div class="sparkles" id="sparkles2"></div>
+  <div class="wrap">
+    <h2 class="reveal">2027 vai chegar de qualquer jeito. <span style="font-style:italic">Que tal chegar leve?</span></h2>
+    <p class="reveal" style="--d:.1s">Comece o ano com tudo no lugar: o dinheiro, a casa, a saúde e você.</p>
+    <a class="btn btn-main js-buy reveal" style="--d:.2s" href="#oferta">Quero meu planner 2027 <span class="arrow">→</span></a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div><b style="color:#fff">Meu Ano Leve</b> · planner digital</div>
+    <div><a href="/termos">Termos de uso</a><a href="/privacidade">Privacidade</a><a href="/contato">Contato</a><a href="/entrar">Área de membros</a></div>
+    <p class="legal">Goodnotes, Samsung Notes, iPad e demais nomes citados pertencem aos seus respectivos donos. Este produto não tem vínculo com eles. Produto digital: nenhum item físico será enviado.</p>
+  </div>
+</footer>
+
+<div class="sticky-cta" id="sticky"><div><b>R$ <span class="js-price"><%= offer.price %></span></b><small>Planner 2027 completo</small></div><a class="btn btn-main js-buy" href="#oferta">Quero o meu</a></div>
+<div class="lightbox" id="lightbox"><img alt=""></div>
+
+<script>
+(() => {
+  const P = window.PLANNER || {};
+  const O = window.OFFER;
+  const $ = (s, el = document) => el.querySelector(s);
+  const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+  const main = P.mainPalette || 'lavanda';
+  const shot = (pal, orient, id) => `/assets/shots/${pal}-${orient}-${id}.webp`;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- Oferta ---- */
+  $$('.js-price').forEach((e) => { e.textContent = O.price; });
+  $('#price').textContent = O.price;
+  $('#installments').textContent = O.installments;
+  $('#gDays').textContent = $('#gDays2').textContent = O.guaranteeDays;
+  $('#buyBtn').href = O.checkoutUrl;
+  if (P.year) $$('[data-year]').forEach((e) => { e.textContent = P.year; });
+  if (P.sample) $('#sampleBtn').href = P.sample.vertical;
+  const offerItems = [
+    `Planner digital ${P.year || 2027} completo, com ${P.pages || 450} páginas e ${(P.links || 13000).toLocaleString('pt-BR')} links`,
+    'Versão vertical e versão horizontal',
+    `${(P.palettes || []).length || 3} paletas de cor: ${(P.palettes || []).map((p) => p.label).join(', ')}`,
+    `${P.tools || 12} ferramentas em ${(P.areas || []).length || 5} áreas: finanças, bem-estar, casa, produtividade e saúde`,
+    `${(P.covers || []).length * ((P.palettes || []).length || 3) * 2 || 30} capas extras para trocar quando quiser`,
+    'Guia "Comece aqui" para importar e navegar',
+  ];
+  $('#offerList').innerHTML = offerItems.map((i) => `<li>${i}</li>`).join('');
+
+  /* ---- Corações no clique de compra ---- */
+  $$('.js-buy').forEach((b) => b.addEventListener('click', (e) => {
+    if (reduce) return;
+    for (let i = 0; i < 14; i++) {
+      const h = document.createElement('span');
+      h.className = 'heart';
+      h.textContent = ['💜', '🩷', '✿', '✨'][i % 4];
+      h.style.left = `${e.clientX}px`; h.style.top = `${e.clientY}px`;
+      h.style.setProperty('--x', `${(Math.random() - .5) * 220}px`);
+      h.style.setProperty('--y', `${-60 - Math.random() * 160}px`);
+      h.style.setProperty('--r', `${(Math.random() - .5) * 120}deg`);
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 1000);
+    }
+  }));
+
+  /* ---- Brilhos ---- */
+  const sparkle = (el, n) => {
+    if (!el) return;
+    for (let i = 0; i < n; i++) {
+      const s = document.createElement('i');
+      s.style.left = `${Math.random() * 100}%`; s.style.top = `${Math.random() * 100}%`;
+      s.style.animationDelay = `${Math.random() * 3.4}s`;
+      const z = 6 + Math.random() * 12; s.style.width = s.style.height = `${z}px`;
+      el.appendChild(s);
+    }
+  };
+  sparkle($('#sparkles'), 22); sparkle($('#sparkles2'), 18);
+
+  /* ---- Hero: páginas virando no tablet ---- */
+  const heroIds = ['cover', 'index', 'year', 'm-01', 'w-02', 'd-2027-01-06', 'tool-roda-da-vida', 'tool-monitor-habitos'];
+  const screen = $('#heroScreen');
+  screen.innerHTML = heroIds.map((id, i) => `<img ${i ? 'loading="lazy"' : ''} src="${shot(main, 'vertical', id)}" alt="">`).join('');
+  const imgs = $$('img', screen); let cur = 0; imgs[0].classList.add('on');
+  if (!reduce) setInterval(() => { imgs[cur].classList.remove('on'); cur = (cur + 1) % imgs.length; imgs[cur].classList.add('on'); }, 2600);
+
+  /* ---- Tablet 3D segue o mouse ---- */
+  const tilt = (stage, el) => {
+    if (reduce || !stage) return;
+    stage.addEventListener('pointermove', (e) => {
+      const r = stage.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - .5; const y = (e.clientY - r.top) / r.height - .5;
+      el.style.transform = `rotateY(${x * 16}deg) rotateX(${-y * 12}deg)`;
+    });
+    stage.addEventListener('pointerleave', () => { el.style.transform = ''; });
+  };
+  tilt($('#stage'), $('#heroTablet'));
+  if (!reduce) $('#heroTablet').animate([{ transform: 'rotateY(-14deg) rotateX(6deg)' }, { transform: 'rotateY(0) rotateX(0)' }], { duration: 1600, easing: 'cubic-bezier(.2,.8,.2,1)' });
+
+  /* ---- Faixa ---- */
+  const feats = ['Tudo ligado por links', '365 páginas diárias', 'Vertical e horizontal', 'Papel tom pólen', 'Finanças do mês', 'Monitor de hábitos', 'Roda da vida', 'Lista de compras', 'Consultas e exames', 'Capas extras', 'Goodnotes e Samsung Notes'];
+  const row = feats.map((f) => `<span>${f}</span>`).join('');
+  $('#marquee').innerHTML = row + row;
+
+  /* ---- Galeria ---- */
+  const gallery = [
+    ['cover', 'Capa', 'com espaço para o seu nome'], ['start', 'Comece aqui', 'o guia rápido de navegação'],
+    ['index', 'Índice', 'tudo a um toque'], ['year', 'Visão do ano', 'os 12 meses e as metas do ano'],
+    ['m-01', 'Mês', 'calendário, metas e datas importantes'], ['w-02', 'Semana', 'foco e hábitos da semana'],
+    ['d-2027-01-06', 'Dia', 'agenda, tarefas, água e humor'], ['tool-entradas-saidas', 'Entradas e saídas', 'o dinheiro do mês sob controle'],
+    ['tool-roda-da-vida', 'Roda da vida', 'equilíbrio em 8 áreas'], ['tool-monitor-habitos', 'Monitor de hábitos', 'constância visível, dia a dia'],
+    ['tool-matriz-prioridades', 'Matriz de prioridades', 'o que fazer, agendar, delegar'], ['tool-lista-compras', 'Lista de compras', 'por seção do mercado'],
+  ];
+  const rail = $('#rail');
+  rail.innerHTML = gallery.map(([id, t, d]) => `<figure><img loading="lazy" src="${shot(main, 'vertical', id)}" alt="${t}"><figcaption>${t}<span>${d}</span></figcaption></figure>`).join('');
+  $$('.rail-nav button').forEach((b) => b.addEventListener('click', () => rail.scrollBy({ left: Number(b.dataset.dir) * 302, behavior: 'smooth' })));
+  let drag = null;
+  rail.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'mouse') return; drag = { x: e.clientX, s: rail.scrollLeft, moved: false }; rail.style.scrollSnapType = 'none'; });
+  addEventListener('pointermove', (e) => { if (!drag) return; const dx = e.clientX - drag.x; if (Math.abs(dx) > 4) drag.moved = true; rail.scrollLeft = drag.s - dx; });
+  addEventListener('pointerup', () => { if (drag) { rail.style.scrollSnapType = ''; setTimeout(() => { drag = null; }, 0); } });
+  const lb = $('#lightbox');
+  rail.addEventListener('click', (e) => { if (e.target.tagName !== 'IMG' || (drag && drag.moved)) return; $('img', lb).src = e.target.src; lb.classList.add('on'); });
+  lb.addEventListener('click', () => lb.classList.remove('on'));
+
+  /* ---- Áreas ---- */
+  const areaColors = ['var(--manteiga)', 'var(--rosa)', 'var(--menta)', 'var(--ceu)', 'var(--lavanda)'];
+  $('#areasGrid').innerHTML = (P.areas || []).map((a, i) => `<div class="area reveal" style="--c:${areaColors[i % 5]};--d:${i * .08}s">
+    <div class="badge">${a.short}</div><h3>${a.label}</h3><ul>${a.tools.map((t) => `<li>${t.title}</li>`).join('')}</ul></div>`).join('');
+
+  /* ---- Cores ---- */
+  let pal = main;
+  const paintColors = () => {
+    const duo = $('#duo');
+    duo.classList.add('swap');
+    setTimeout(() => {
+      $('#duoCover').src = shot(pal, 'vertical', 'cover');
+      $('#duoPage').src = shot(pal, 'vertical', 'd-2027-01-06');
+      $('#coverRow').innerHTML = (P.covers || []).map((c) => `<div><img loading="lazy" src="/assets/covers/${pal}-${c}.webp" alt="Capa ${c}"><small>${c}</small></div>`).join('');
+      duo.classList.remove('swap');
+    }, reduce ? 0 : 350);
+    const p = (P.palettes || []).find((x) => x.key === pal);
+    if (p) $('#cores').style.background = p.softer;
+  };
+  $('#swatches').innerHTML = (P.palettes || []).map((p) => `<button class="swatch ${p.key === pal ? 'on' : ''}" data-p="${p.key}" style="background:linear-gradient(135deg, ${p.accent}, ${p.tab})" aria-label="${p.label}"><span>${p.label}</span></button>`).join('');
+  $$('.swatch').forEach((s) => s.addEventListener('click', () => { pal = s.dataset.p; $$('.swatch').forEach((x) => x.classList.toggle('on', x === s)); paintColors(); }));
+  paintColors();
+
+  /* ---- Test-drive ---- */
+  const frame = $('#driveFrame'); const tablet = $('#driveTablet');
+  let orient = 'vertical'; let linksOn = false; let loaded = false;
+  const SIZE = { vertical: [768, 1024], horizontal: [1024, 768] };
+  const fit = () => {
+    const [w, h] = SIZE[orient];
+    const maxW = Math.min(tablet.parentElement.clientWidth, orient === 'vertical' ? 520 : 760) - 32;
+    const maxH = Math.max(320, innerHeight * .78 - 32);
+    const s = Math.min(maxW / w, maxH / h);
+    frame.style.width = `${w}px`; frame.style.height = `${h}px`; frame.style.transform = `scale(${s})`;
+    tablet.style.width = `${w * s + 32}px`; tablet.style.height = `${h * s + 32}px`;
+  };
+  const load = (hash = 'cover') => { frame.src = `/assets/testdrive-${orient}.html#${hash}`; fit(); };
+  frame.addEventListener('load', () => { if (linksOn) frame.contentWindow.postMessage('links:on', '*'); });
+  addEventListener('message', (e) => {
+    if (typeof e.data === 'string' && e.data.startsWith('page:')) $$('#goList button').forEach((b) => b.classList.toggle('on', b.dataset.go === e.data.slice(5)));
+  });
+  new IntersectionObserver((en, ob) => { if (en[0].isIntersecting && !loaded) { loaded = true; load(); ob.disconnect(); } }, { rootMargin: '300px' }).observe(tablet);
+  $$('#orientSeg button').forEach((b) => b.addEventListener('click', () => {
+    orient = b.dataset.o; $$('#orientSeg button').forEach((x) => x.classList.toggle('on', x === b)); load();
+  }));
+  $$('#goList button').forEach((b) => b.addEventListener('click', () => frame.contentWindow && frame.contentWindow.postMessage(`go:${b.dataset.go}`, '*')));
+  $('#linksToggle').addEventListener('click', (e) => {
+    e.preventDefault(); linksOn = !linksOn; e.currentTarget.classList.toggle('on', linksOn);
+    frame.contentWindow && frame.contentWindow.postMessage(linksOn ? 'links:on' : 'links:off', '*');
+  });
+  addEventListener('resize', () => loaded && fit());
+
+  /* ---- Contadores ---- */
+  const values = { pages: P.pages, links: P.links, tools: P.tools, palettes: (P.palettes || []).length, areas: (P.areas || []).length, coversTotal: (P.covers || []).length * (P.palettes || []).length * 2 };
+  const countUp = (el) => {
+    const key = el.dataset.count; let target = values[key]; if (!target) return;
+    if (el.hasAttribute('data-k')) target = Math.floor(target / 1000);
+    if (reduce) { el.textContent = target.toLocaleString('pt-BR'); return; }
+    const t0 = performance.now();
+    const step = (t) => { const k = Math.min(1, (t - t0) / 1600); el.textContent = Math.round(target * (1 - Math.pow(1 - k, 3))).toLocaleString('pt-BR'); if (k < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  };
+
+  /* ---- Revelar ao rolar ---- */
+  const io = new IntersectionObserver((entries) => entries.forEach((en) => {
+    if (!en.isIntersecting) return;
+    en.target.classList.add('in');
+    $$('[data-count]', en.target).forEach(countUp);
+    if (en.target.matches('[data-count]')) countUp(en.target);
+    io.unobserve(en.target);
+  }), { threshold: .15 });
+  $$('.reveal').forEach((el) => io.observe(el));
+
+  /* ---- Nav e barra fixa ---- */
+  const sticky = $('#sticky'); const nav = $('#nav'); const offer = $('#oferta');
+  addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', scrollY > 10);
+    const o = offer.getBoundingClientRect();
+    sticky.classList.toggle('show', scrollY > innerHeight * .8 && !(o.top < innerHeight && o.bottom > 0));
+  }, { passive: true });
+
+  /* ---- Parallax suave dos blobs ---- */
+  if (!reduce) addEventListener('scroll', () => { $$('.blob').forEach((b, i) => { b.style.translate = `0 ${scrollY * (0.08 + i * 0.05)}px`; }); }, { passive: true });
+})();
+</script>
+</body>
+</html>

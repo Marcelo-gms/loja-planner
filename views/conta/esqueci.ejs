@@ -1,0 +1,19 @@
+<%- include('../partials/top') %>
+<div class="wrap narrow">
+  <section class="card">
+    <h1>Criar ou redefinir senha</h1>
+    <% if (sent) { %>
+      <div class="notice ok">Pronto! Se houver uma compra confirmada com esse e-mail, o link chega em alguns minutos. Olhe também o spam e a aba Promoções.</div>
+      <p class="center mt"><a href="/entrar">Voltar para entrar</a></p>
+    <% } else { %>
+      <p class="muted mt-s">Digite o e-mail usado na compra. Enviamos um link para você criar uma senha nova.</p>
+      <form method="post" action="/esqueci-senha">
+        <input type="hidden" name="_csrf" value="<%= csrfToken() %>">
+        <label for="email">E-mail da compra</label>
+        <input type="email" id="email" name="email" autocomplete="email" required value="<%= email %>">
+        <p class="mt"><button class="btn block" type="submit">Enviar link</button></p>
+      </form>
+    <% } %>
+  </section>
+</div>
+<%- include('../partials/bottom') %>

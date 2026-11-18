@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#8a80b8">
+<title><%= typeof title !== 'undefined' && title ? `${title} · ` : '' %><%= product %></title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Fraunces:wght@500&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+<header class="topbar"><div class="wrap">
+  <a class="logo" href="<%= typeof admin !== 'undefined' && admin ? '/admin' : '/' %>"><i>✿</i><%= productName %></a>
+  <nav>
+    <% if (typeof admin !== 'undefined' && admin) { %>
+      <a href="/admin">Pedidos</a><a href="/admin/webhooks">Webhooks</a>
+      <form method="post" action="/admin/sair"><input type="hidden" name="_csrf" value="<%= csrfToken() %>"><button class="linkbtn">Sair</button></form>
+    <% } else if (loggedIn) { %>
+      <a href="/area">Meu planner</a>
+      <form method="post" action="/sair"><input type="hidden" name="_csrf" value="<%= csrfToken() %>"><button class="linkbtn">Sair</button></form>
+    <% } else { %>
+      <a href="/entrar">Área de membros</a>
+    <% } %>
+  </nav>
+</div></header>
+<main>
